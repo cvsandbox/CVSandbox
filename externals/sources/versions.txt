@@ -1,0 +1,3 @@
+* libjpeg-turbo   (2018-05-21)
+https://github.com/libjpeg-turbo/libjpeg-turbo
+Latest commit: 1a85fc497db85e1bf8b026d51cf6e5dec391d224
