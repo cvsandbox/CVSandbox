@@ -1,3 +1,7 @@
-* libjpeg-turbo   (2018-05-21)
+* libjpeg-turbo       (2018-05-21)
 https://github.com/libjpeg-turbo/libjpeg-turbo
 Latest commit: 1a85fc497db85e1bf8b026d51cf6e5dec391d224
+
+
+* libexif - 0.6.21    (2012-07-12)
+https://libexif.github.io/
