@@ -1,0 +1,39 @@
+OUT_FOLDER=../../../../build/mingw
+BUILD_FOLDER=libjpeg-turbo-build
+SRC_FOLDER=../../libjpeg-turbo
+
+if [ "$1" != "clean" ] ; then
+    MY_PATH=$(pwd)
+    
+    mkdir -p ${BUILD_FOLDER}
+    cd ${BUILD_FOLDER}
+
+    cmake -G "MSYS Makefiles" -D ENABLE_SHARED:BOOL=ON \
+        -D WITH_ARITH_DEC:BOOL=ON \
+        -D WITH_ARITH_ENC:BOOL=ON \
+        -D WITH_JPEG7:BOOL=ON \
+        -D WITH_JPEG8:BOOL=ON \
+        -D WITH_MEM_SRCDST:BOOL=ON \
+        -D WITH_SIMD:BOOL=ON \
+        -D WITH_TURBOJPEG:BOOL=ON \
+        ${MY_PATH}/${SRC_FOLDER}
+    make
+
+    cd -
+
+    OUT_REL=${OUT_FOLDER}/release
+    
+    mkdir -p ${OUT_REL}/include
+    mkdir -p ${OUT_REL}/bin
+    mkdir -p ${OUT_REL}/lib
+
+    cp -f ${BUILD_FOLDER}/libjpeg-8.dll ${OUT_REL}/bin
+    cp -f ${BUILD_FOLDER}/libjpeg.dll.a ${OUT_REL}/lib
+    cp -f ${BUILD_FOLDER}/jconfig.h ${OUT_REL}/include
+    cp -f ${SRC_FOLDER}/jpeglib.h ${OUT_REL}/include
+    cp -f ${SRC_FOLDER}/jmorecfg.h ${OUT_REL}/include
+    cp -f ${SRC_FOLDER}/jerror.h ${OUT_REL}/include
+else
+    rm -rf ${BUILD_FOLDER}
+fi
+
