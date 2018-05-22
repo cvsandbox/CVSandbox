@@ -5,3 +5,7 @@ Latest commit: 1a85fc497db85e1bf8b026d51cf6e5dec391d224
 
 * libexif - 0.6.21    (2012-07-12)
 https://libexif.github.io/
+
+
+* zlib - 1.2.11       (2017-01-15)
+http://zlib.net/
