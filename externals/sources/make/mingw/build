@@ -1,0 +1,3 @@
+./build-libjpeg-turbo $*
+./build-libexif $*
+./build-zlib $*
