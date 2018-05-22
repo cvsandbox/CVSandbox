@@ -1,0 +1,45 @@
+OUT_FOLDER=../../../../build/mingw
+
+if [ "$1" != "clean" ] ; then
+    cd ../../libexif
+
+    ./configure --prefix=/local
+    make
+    make install
+
+    cd -
+
+    OUT_REL=${OUT_FOLDER}/release
+    
+    mkdir -p ${OUT_REL}/include
+    mkdir -p ${OUT_REL}/bin
+    mkdir -p ${OUT_REL}/lib
+
+    cp -f /local/bin/libexif-12.dll ${OUT_REL}/bin
+    cp -f /local/lib/libexif.dll.a ${OUT_REL}/lib
+    cp -f -r /local/include/libexif ${OUT_REL}/include
+else
+    cd ../../libexif
+
+    make uninstall
+    make clean
+
+    rm -f config.h
+    rm -f config.log
+    rm -f config.status
+    rm -f libexif-uninstalled.pc
+    rm -f libexif.pc
+    rm -f libtool
+    rm -f Makefile
+    rm -f stamp-h1
+    rm -f libexif/*.o
+    rm -f libexif/*.lo
+    rm -f libexif/*.la
+    rm -f po/Makefile.in
+    rm -f po/POTFILES
+    find . -name "Makefile" -type f -delete
+    find . -name ".deps" -type d -exec rm -rf {} +
+    find . -name ".libs" -type d -exec rm -rf {} +
+
+    cd -
+fi
