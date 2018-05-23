@@ -9,3 +9,7 @@ https://libexif.github.io/
 
 * zlib - 1.2.11       (2017-01-15)
 http://zlib.net/
+
+
+* libpng - 1.6.34     (2017-09-29)
+http://www.libpng.org/pub/png/libpng.html
