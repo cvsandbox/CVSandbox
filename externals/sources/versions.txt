@@ -13,3 +13,4 @@ http://zlib.net/
 
 * libpng - 1.6.34     (2017-09-29)
 http://www.libpng.org/pub/png/libpng.html
+(tar.gz version, since ZIP version for Windows is missing some files)
