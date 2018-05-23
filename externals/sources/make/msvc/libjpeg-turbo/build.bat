@@ -32,11 +32,9 @@ if "%1"=="clean" (
 
     xcopy /Y "%BUILD_FOLDER%\Release\jpeg8.dll" "%OUT_REL%\bin\"
     xcopy /Y "%BUILD_FOLDER%\Release\jpeg.lib" "%OUT_REL%\lib\"
-    xcopy /Y "%BUILD_FOLDER%\Release\jpeg-static.lib" "%OUT_REL%\lib\"
 
     xcopy /Y "%BUILD_FOLDER%\Debug\jpeg8.dll" "%OUT_DBG%\bin\"
     xcopy /Y "%BUILD_FOLDER%\Debug\jpeg.lib" "%OUT_DBG%\lib\"
-    xcopy /Y "%BUILD_FOLDER%\Debug\jpeg-static.lib" "%OUT_DBG%\lib\"
 
     xcopy /Y "%BUILD_FOLDER%\jconfig.h" "%OUT_REL%\include\"
     xcopy /Y "%SRC_FOLDER%\jpeglib.h" "%OUT_REL%\include\"
