@@ -1,33 +1,33 @@
 OUT_FOLDER=../../../../build/mingw
 
 if [ "$1" != "clean" ] ; then
-	cd ../../zlib
+    cd ../../zlib
 
-	make -f win32/Makefile.gcc
+    make -f win32/Makefile.gcc
 
-	mkdir -p /local/bin
-	mkdir -p /local/include
-	mkdir -p /local/lib
+    mkdir -p /local/bin
+    mkdir -p /local/include
+    mkdir -p /local/lib
 
-	cp zlib1.dll /local/bin
-	cp zconf.h zlib.h /local/include
-	cp libz.a /local/lib
-	cp libz.dll.a /local/lib
+    cp zlib1.dll /local/bin
+    cp zconf.h zlib.h /local/include
+    cp libz.a /local/lib
+    cp libz.dll.a /local/lib
 
-	cd -
+    cd -
 
     OUT_REL=${OUT_FOLDER}/release
 
-	mkdir -p ${OUT_REL}/include
-	mkdir -p ${OUT_REL}/bin
-	mkdir -p ${OUT_REL}/lib
+    mkdir -p ${OUT_REL}/include
+    mkdir -p ${OUT_REL}/bin
+    mkdir -p ${OUT_REL}/lib
 
-	cp -f /local/bin/zlib1.dll ${OUT_REL}/bin
-	cp -f /local/lib/libz.dll.a ${OUT_REL}/lib
-	cp -f /local/include/zconf.h ${OUT_REL}/include
-	cp -f /local/include/zlib.h ${OUT_REL}/include
+    cp -f /local/bin/zlib1.dll ${OUT_REL}/bin
+    cp -f /local/lib/libz.dll.a ${OUT_REL}/lib
+    cp -f /local/include/zconf.h ${OUT_REL}/include
+    cp -f /local/include/zlib.h ${OUT_REL}/include
 else
-	cd ../../zlib
-	make -f win32/Makefile.gcc clean
-	cd -
+    cd ../../zlib
+    make -f win32/Makefile.gcc clean
+    cd -
 fi
