@@ -32,7 +32,7 @@
 #define IS_ALIGNED_SSE(ptr)  (IS_ALIGNED(ptr, 4)) /* 16 byte alignment */
 #define IS_ALIGNED_AVX(ptr)  (IS_ALIGNED(ptr, 5)) /* 32 byte alignment */
 
-static unsigned int simd_support = (unsigned int)(~0);
+static unsigned int simd_support = ~0;
 static unsigned int simd_huffman = 1;
 
 /*
@@ -1210,10 +1210,15 @@ jsimd_can_encode_mcu_AC_first_prepare(void)
     return 0;
   if (SIZEOF_SIZE_T != 4)
     return 0;
-  if (simd_support & JSIMD_SSE2)
-    return 1;
-
+  if (!(simd_support & JSIMD_SSE2))
+    return 0;
+#if defined(HAVE_BUILTIN_CTZL)
+  return 1;
+#elif defined(HAVE_BITSCANFORWARD)
+  return 1;
+#else
   return 0;
+#endif
 }
 
 GLOBAL(void)
@@ -1236,10 +1241,15 @@ jsimd_can_encode_mcu_AC_refine_prepare(void)
     return 0;
   if (SIZEOF_SIZE_T != 4)
     return 0;
-  if (simd_support & JSIMD_SSE2)
-    return 1;
-
+  if (!(simd_support & JSIMD_SSE2))
+    return 0;
+#if defined(HAVE_BUILTIN_CTZL)
+  return 1;
+#elif defined(HAVE_BITSCANFORWARD)
+  return 1;
+#else
   return 0;
+#endif
 }
 
 GLOBAL(int)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C)2011-2013, 2017-2018 D. R. Commander.  All Rights Reserved.
+ * Copyright (C)2011-2013, 2017 D. R. Commander.  All Rights Reserved.
  * Copyright (C)2015 Viktor Szathmáry.  All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,8 +33,6 @@ package org.libjpegturbo.turbojpeg;
  * TurboJPEG utility class (cannot be instantiated)
  */
 public final class TJ {
-
-  private TJ() {}
 
   /**
    * The number of chrominance subsampling options
@@ -91,10 +89,10 @@ public final class TJ {
    */
   public static int getMCUWidth(int subsamp) {
     checkSubsampling(subsamp);
-    return MCU_WIDTH[subsamp];
+    return mcuWidth[subsamp];
   }
 
-  private static final int[] MCU_WIDTH = {
+  private static final int[] mcuWidth = {
     8, 16, 16, 8, 8, 32
   };
 
@@ -111,10 +109,10 @@ public final class TJ {
    */
   public static int getMCUHeight(int subsamp) {
     checkSubsampling(subsamp);
-    return MCU_HEIGHT[subsamp];
+    return mcuHeight[subsamp];
   }
 
-  private static final int[] MCU_HEIGHT = {
+  private static final int[] mcuHeight = {
     8, 8, 16, 8, 16, 8
   };
 
@@ -219,10 +217,10 @@ public final class TJ {
    */
   public static int getPixelSize(int pixelFormat) {
     checkPixelFormat(pixelFormat);
-    return PIXEL_SIZE[pixelFormat];
+    return pixelSize[pixelFormat];
   }
 
-  private static final int[] PIXEL_SIZE = {
+  private static final int[] pixelSize = {
     3, 3, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4
   };
 
@@ -241,10 +239,10 @@ public final class TJ {
    */
   public static int getRedOffset(int pixelFormat) {
     checkPixelFormat(pixelFormat);
-    return RED_OFFSET[pixelFormat];
+    return redOffset[pixelFormat];
   }
 
-  private static final int[] RED_OFFSET = {
+  private static final int[] redOffset = {
     0, 2, 0, 2, 3, 1, -1, 0, 2, 3, 1, -1
   };
 
@@ -263,10 +261,10 @@ public final class TJ {
    */
   public static int getGreenOffset(int pixelFormat) {
     checkPixelFormat(pixelFormat);
-    return GREEN_OFFSET[pixelFormat];
+    return greenOffset[pixelFormat];
   }
 
-  private static final int[] GREEN_OFFSET = {
+  private static final int[] greenOffset = {
     1, 1, 1, 1, 2, 2, -1, 1, 1, 2, 2, -1
   };
 
@@ -285,10 +283,10 @@ public final class TJ {
    */
   public static int getBlueOffset(int pixelFormat) {
     checkPixelFormat(pixelFormat);
-    return BLUE_OFFSET[pixelFormat];
+    return blueOffset[pixelFormat];
   }
 
-  private static final int[] BLUE_OFFSET = {
+  private static final int[] blueOffset = {
     2, 0, 2, 0, 1, 3, -1, 2, 0, 1, 3, -1
   };
 
@@ -307,10 +305,10 @@ public final class TJ {
    */
   public static int getAlphaOffset(int pixelFormat) {
     checkPixelFormat(pixelFormat);
-    return ALPHA_OFFSET[pixelFormat];
+    return alphaOffset[pixelFormat];
   }
 
-  private static final int[] ALPHA_OFFSET = {
+  private static final int[] alphaOffset = {
     -1, -1, -1, -1, -1, -1, -1, 3, 3, 0, 0, -1
   };
 
@@ -342,7 +340,6 @@ public final class TJ {
    * can be compressed from and decompressed to any of the extended RGB pixel
    * formats or grayscale, or they can be decompressed to YUV planar images.
    */
-  @SuppressWarnings("checkstyle:ConstantName")
   public static final int CS_YCbCr = 1;
   /**
    * Grayscale colorspace.  The JPEG image retains only the luminance data (Y
@@ -377,16 +374,12 @@ public final class TJ {
    */
   public static final int FLAG_BOTTOMUP      = 2;
 
-  @SuppressWarnings("checkstyle:JavadocVariable")
   @Deprecated
   public static final int FLAG_FORCEMMX      = 8;
-  @SuppressWarnings("checkstyle:JavadocVariable")
   @Deprecated
   public static final int FLAG_FORCESSE      = 16;
-  @SuppressWarnings("checkstyle:JavadocVariable")
   @Deprecated
   public static final int FLAG_FORCESSE2     = 32;
-  @SuppressWarnings("checkstyle:JavadocVariable")
   @Deprecated
   public static final int FLAG_FORCESSE3     = 128;
 
@@ -497,7 +490,6 @@ public final class TJ {
   /**
    * @deprecated Use {@link #bufSizeYUV(int, int, int, int)} instead.
    */
-  @SuppressWarnings("checkstyle:JavadocMethod")
   @Deprecated
   public static native int bufSizeYUV(int width, int height, int subsamp);
 

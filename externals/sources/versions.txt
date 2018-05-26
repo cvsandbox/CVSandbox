@@ -1,16 +1,15 @@
-* libjpeg-turbo       (2018-05-21)
+* libjpeg-turbo - 0.6.21  (2018-03-25)
 https://github.com/libjpeg-turbo/libjpeg-turbo
-Latest commit: 1a85fc497db85e1bf8b026d51cf6e5dec391d224
 
 
-* libexif - 0.6.21    (2012-07-12)
+* libexif - 0.6.21        (2012-07-12)
 https://libexif.github.io/
 
 
-* zlib - 1.2.11       (2017-01-15)
+* zlib - 1.2.11           (2017-01-15)
 http://zlib.net/
 
 
-* libpng - 1.6.34     (2017-09-29)
+* libpng - 1.6.34         (2017-09-29)
 http://www.libpng.org/pub/png/libpng.html
 (tar.gz version, since ZIP version for Windows is missing some files)

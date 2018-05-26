@@ -1,5 +1,5 @@
 /*
- * Copyright (C)2009-2014, 2016-2018 D. R. Commander.  All Rights Reserved.
+ * Copyright (C)2009-2014, 2016-2017 D. R. Commander.  All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,53 +32,51 @@ import javax.imageio.*;
 import java.util.*;
 import org.libjpegturbo.turbojpeg.*;
 
-final class TJBench {
+class TJBench {
 
-  private TJBench() {}
+  static int flags = 0, quiet = 0, pf = TJ.PF_BGR, yuvPad = 1;
+  static boolean compOnly, decompOnly, doTile, doYUV, write = true;
 
-  private static int flags = 0, quiet = 0, pf = TJ.PF_BGR, yuvPad = 1;
-  private static boolean compOnly, decompOnly, doTile, doYUV, write = true;
-
-  static final String[] PIXFORMATSTR = {
+  static final String[] pixFormatStr = {
     "RGB", "BGR", "RGBX", "BGRX", "XBGR", "XRGB", "GRAY"
   };
 
-  static final String[] SUBNAME_LONG = {
+  static final String[] subNameLong = {
     "4:4:4", "4:2:2", "4:2:0", "GRAY", "4:4:0", "4:1:1"
   };
 
-  static final String[] SUBNAME = {
+  static final String[] subName = {
     "444", "422", "420", "GRAY", "440", "411"
   };
 
-  static final String[] CSNAME = {
+  static final String[] csName = {
     "RGB", "YCbCr", "GRAY", "CMYK", "YCCK"
   };
 
-  private static TJScalingFactor sf;
-  private static int xformOp = TJTransform.OP_NONE, xformOpt = 0;
-  private static double benchTime = 5.0, warmup = 1.0;
+  static TJScalingFactor sf;
+  static int xformOp = TJTransform.OP_NONE, xformOpt = 0;
+  static double benchTime = 5.0, warmup = 1.0;
 
 
-  static double getTime() {
+  static final double getTime() {
     return (double)System.nanoTime() / 1.0e9;
   }
 
 
-  private static String tjErrorMsg;
-  private static int tjErrorCode = -1;
+  static String tjErrorMsg;
+  static int tjErrorCode = -1;
 
   static void handleTJException(TJException e) throws TJException {
-    String errorMsg = e.getMessage();
-    int errorCode = e.getErrorCode();
+    String _tjErrorMsg = e.getMessage();
+    int _tjErrorCode = e.getErrorCode();
 
     if ((flags & TJ.FLAG_STOPONWARNING) == 0 &&
-        errorCode == TJ.ERR_WARNING) {
-      if (tjErrorMsg == null || !tjErrorMsg.equals(errorMsg) ||
-          tjErrorCode != errorCode) {
-        tjErrorMsg = errorMsg;
-        tjErrorCode = errorCode;
-        System.out.println("WARNING: " + errorMsg);
+        _tjErrorCode == TJ.ERR_WARNING) {
+      if (tjErrorMsg == null || !tjErrorMsg.equals(_tjErrorMsg) ||
+          tjErrorCode != _tjErrorCode) {
+        tjErrorMsg = _tjErrorMsg;
+        tjErrorCode = _tjErrorCode;
+        System.out.println("WARNING: " + _tjErrorMsg);
       }
     } else
       throw e;
@@ -87,11 +85,11 @@ final class TJBench {
 
   static String formatName(int subsamp, int cs) {
     if (cs == TJ.CS_YCbCr)
-      return SUBNAME_LONG[subsamp];
+      return subNameLong[subsamp];
     else if (cs == TJ.CS_YCCK)
-      return CSNAME[cs] + " " + SUBNAME_LONG[subsamp];
+      return csName[cs] + " " + subNameLong[subsamp];
     else
-      return CSNAME[cs];
+      return csName[cs];
   }
 
 
@@ -278,7 +276,7 @@ final class TJBench {
     if (decompOnly)
       tempStr = new String(fileName + "_" + sizeStr + ".bmp");
     else
-      tempStr = new String(fileName + "_" + SUBNAME[subsamp] + qualStr +
+      tempStr = new String(fileName + "_" + subName[subsamp] + qualStr +
                            "_" + sizeStr + ".bmp");
 
     saveImage(tempStr, dstBuf, scaledw, scaledh, pf);
@@ -326,7 +324,7 @@ final class TJBench {
     int totalJpegSize = 0, tilew, tileh, i, iter;
     int ps = TJ.getPixelSize(pf);
     int ntilesw = 1, ntilesh = 1, pitch = w * ps;
-    String pfStr = PIXFORMATSTR[pf];
+    String pfStr = pixFormatStr[pf];
     YUVImage yuvImage = null;
 
     tmpBuf = new byte[pitch * h];
@@ -335,7 +333,7 @@ final class TJBench {
       System.out.format(">>>>>  %s (%s) <--> JPEG %s Q%d  <<<<<\n", pfStr,
                         (flags & TJ.FLAG_BOTTOMUP) != 0 ?
                         "Bottom-up" : "Top-down",
-                        SUBNAME_LONG[subsamp], jpegQual);
+                        subNameLong[subsamp], jpegQual);
 
     tjc = new TJCompressor();
 
@@ -355,7 +353,7 @@ final class TJBench {
       if (quiet == 1)
         System.out.format("%-4s (%s)  %-5s    %-3d   ", pfStr,
                           (flags & TJ.FLAG_BOTTOMUP) != 0 ? "BU" : "TD",
-                          SUBNAME_LONG[subsamp], jpegQual);
+                          subNameLong[subsamp], jpegQual);
       for (i = 0; i < h; i++)
         System.arraycopy(srcBuf, w * ps * i, tmpBuf, pitch * i, w * ps);
       tjc.setJPEGQuality(jpegQual);
@@ -455,7 +453,7 @@ final class TJBench {
                           (double)iter / elapsed);
       }
       if (tilew == w && tileh == h && write) {
-        String tempStr = fileName + "_" + SUBNAME[subsamp] + "_" + "Q" +
+        String tempStr = fileName + "_" + subName[subsamp] + "_" + "Q" +
                          jpegQual + ".jpg";
         FileOutputStream fos = new FileOutputStream(tempStr);
 
@@ -481,12 +479,11 @@ final class TJBench {
     byte[] srcBuf;
     int[] jpegSize = null;
     int totalJpegSize;
+    int w = 0, h = 0, subsamp = -1, cs = -1, _w, _h, _tilew, _tileh,
+      _ntilesw, _ntilesh, _subsamp, x, y, iter;
+    int ntilesw = 1, ntilesh = 1;
     double start, elapsed;
-    int ps = TJ.getPixelSize(pf), tile, x, y, iter;
-    // Original image
-    int w = 0, h = 0, ntilesw = 1, ntilesh = 1, subsamp = -1, cs = -1;
-    // Transformed image
-    int tw, th, ttilew, ttileh, tntilesw, tntilesh, tsubsamp;
+    int ps = TJ.getPixelSize(pf), tile;
 
     FileInputStream fis = new FileInputStream(fileName);
     int srcSize = (int)fis.getChannel().size();
@@ -520,7 +517,7 @@ final class TJBench {
       System.out.println("\n");
     } else if (quiet == 0)
       System.out.format(">>>>>  JPEG %s --> %s (%s)  <<<<<\n",
-                        formatName(subsamp, cs), PIXFORMATSTR[pf],
+                        formatName(subsamp, cs), pixFormatStr[pf],
                         (flags & TJ.FLAG_BOTTOMUP) != 0 ?
                         "Bottom-up" : "Top-down");
 
@@ -533,66 +530,66 @@ final class TJBench {
       ntilesw = (w + tilew - 1) / tilew;
       ntilesh = (h + tileh - 1) / tileh;
 
-      tw = w;  th = h;  ttilew = tilew;  ttileh = tileh;
+      _w = w;  _h = h;  _tilew = tilew;  _tileh = tileh;
       if (quiet == 0) {
         System.out.format("\n%s size: %d x %d", (doTile ? "Tile" : "Image"),
-                          ttilew, ttileh);
+                          _tilew, _tileh);
         if (sf.getNum() != 1 || sf.getDenom() != 1)
-          System.out.format(" --> %d x %d", sf.getScaled(tw),
-                            sf.getScaled(th));
+          System.out.format(" --> %d x %d", sf.getScaled(_w),
+                            sf.getScaled(_h));
         System.out.println("");
       } else if (quiet == 1) {
-        System.out.format("%-4s (%s)  %-5s  %-5s    ", PIXFORMATSTR[pf],
+        System.out.format("%-4s (%s)  %-5s  %-5s    ", pixFormatStr[pf],
                           (flags & TJ.FLAG_BOTTOMUP) != 0 ? "BU" : "TD",
-                          CSNAME[cs], SUBNAME_LONG[subsamp]);
+                          csName[cs], subNameLong[subsamp]);
         System.out.format("%-5d  %-5d   ", tilew, tileh);
       }
 
-      tsubsamp = subsamp;
+      _subsamp = subsamp;
       if (doTile || xformOp != TJTransform.OP_NONE || xformOpt != 0) {
         if (xformOp == TJTransform.OP_TRANSPOSE ||
             xformOp == TJTransform.OP_TRANSVERSE ||
             xformOp == TJTransform.OP_ROT90 ||
             xformOp == TJTransform.OP_ROT270) {
-          tw = h;  th = w;  ttilew = tileh;  ttileh = tilew;
+          _w = h;  _h = w;  _tilew = tileh;  _tileh = tilew;
         }
 
         if ((xformOpt & TJTransform.OPT_GRAY) != 0)
-          tsubsamp = TJ.SAMP_GRAY;
+          _subsamp = TJ.SAMP_GRAY;
         if (xformOp == TJTransform.OP_HFLIP ||
             xformOp == TJTransform.OP_ROT180)
-          tw = tw - (tw % TJ.getMCUWidth(tsubsamp));
+          _w = _w - (_w % TJ.getMCUWidth(_subsamp));
         if (xformOp == TJTransform.OP_VFLIP ||
             xformOp == TJTransform.OP_ROT180)
-          th = th - (th % TJ.getMCUHeight(tsubsamp));
+          _h = _h - (_h % TJ.getMCUHeight(_subsamp));
         if (xformOp == TJTransform.OP_TRANSVERSE ||
             xformOp == TJTransform.OP_ROT90)
-          tw = tw - (tw % TJ.getMCUHeight(tsubsamp));
+          _w = _w - (_w % TJ.getMCUHeight(_subsamp));
         if (xformOp == TJTransform.OP_TRANSVERSE ||
             xformOp == TJTransform.OP_ROT270)
-          th = th - (th % TJ.getMCUWidth(tsubsamp));
-        tntilesw = (tw + ttilew - 1) / ttilew;
-        tntilesh = (th + ttileh - 1) / ttileh;
+          _h = _h - (_h % TJ.getMCUWidth(_subsamp));
+        _ntilesw = (_w + _tilew - 1) / _tilew;
+        _ntilesh = (_h + _tileh - 1) / _tileh;
 
         if (xformOp == TJTransform.OP_TRANSPOSE ||
             xformOp == TJTransform.OP_TRANSVERSE ||
             xformOp == TJTransform.OP_ROT90 ||
             xformOp == TJTransform.OP_ROT270) {
-          if (tsubsamp == TJ.SAMP_422)
-            tsubsamp = TJ.SAMP_440;
-          else if (tsubsamp == TJ.SAMP_440)
-            tsubsamp = TJ.SAMP_422;
+          if (_subsamp == TJ.SAMP_422)
+            _subsamp = TJ.SAMP_440;
+          else if (_subsamp == TJ.SAMP_440)
+            _subsamp = TJ.SAMP_422;
         }
 
-        TJTransform[] t = new TJTransform[tntilesw * tntilesh];
+        TJTransform[] t = new TJTransform[_ntilesw * _ntilesh];
         jpegBuf =
-          new byte[tntilesw * tntilesh][TJ.bufSize(ttilew, ttileh, subsamp)];
+          new byte[_ntilesw * _ntilesh][TJ.bufSize(_tilew, _tileh, subsamp)];
 
-        for (y = 0, tile = 0; y < th; y += ttileh) {
-          for (x = 0; x < tw; x += ttilew, tile++) {
+        for (y = 0, tile = 0; y < _h; y += _tileh) {
+          for (x = 0; x < _w; x += _tilew, tile++) {
             t[tile] = new TJTransform();
-            t[tile].width = Math.min(ttilew, tw - x);
-            t[tile].height = Math.min(ttileh, th - y);
+            t[tile].width = Math.min(_tilew, _w - x);
+            t[tile].height = Math.min(_tileh, _h - y);
             t[tile].x = x;
             t[tile].y = y;
             t[tile].op = xformOp;
@@ -621,7 +618,7 @@ final class TJBench {
         }
         t = null;
 
-        for (tile = 0, totalJpegSize = 0; tile < tntilesw * tntilesh; tile++)
+        for (tile = 0, totalJpegSize = 0; tile < _ntilesw * _ntilesh; tile++)
           totalJpegSize += jpegSize[tile];
 
         if (quiet != 0) {
@@ -646,19 +643,19 @@ final class TJBench {
       } else {
         if (quiet == 1)
           System.out.print("N/A     N/A     ");
-        jpegBuf = new byte[1][TJ.bufSize(ttilew, ttileh, subsamp)];
+        jpegBuf = new byte[1][TJ.bufSize(_tilew, _tileh, subsamp)];
         jpegSize = new int[1];
         jpegBuf[0] = srcBuf;
         jpegSize[0] = srcSize;
       }
 
       if (w == tilew)
-        ttilew = tw;
+        _tilew = _w;
       if (h == tileh)
-        ttileh = th;
+        _tileh = _h;
       if ((xformOpt & TJTransform.OPT_NOOUTPUT) == 0)
-        decomp(null, jpegBuf, jpegSize, null, tw, th, tsubsamp, 0,
-               fileName, ttilew, ttileh);
+        decomp(null, jpegBuf, jpegSize, null, _w, _h, _subsamp, 0,
+               fileName, _tilew, _tileh);
       else if (quiet == 1)
         System.out.println("N/A");
 
