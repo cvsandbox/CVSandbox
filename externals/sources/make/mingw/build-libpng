@@ -1,0 +1,42 @@
+OUT_FOLDER=../../../../build/mingw
+
+if [ "$1" != "clean" ] ; then
+    cd ../../libpng
+
+    export "CPPFLAGS=-I/local/include"
+    export "LDFLAGS=-L/local/lib"
+    ./configure --prefix=/local
+
+    make check
+    make install
+
+    cd -
+
+    OUT_REL=${OUT_FOLDER}/release
+
+    mkdir -p ${OUT_REL}/include
+    mkdir -p ${OUT_REL}/bin
+    mkdir -p ${OUT_REL}/lib
+
+    cp -f /local/bin/libpng16-16.dll ${OUT_REL}/bin
+    cp -f /local/lib/libpng.dll.a ${OUT_REL}/lib
+    cp -f /local/include/png.h ${OUT_REL}/include
+    cp -f /local/include/pngconf.h ${OUT_REL}/include
+    cp -f /local/include/pnglibconf.h ${OUT_REL}/include
+else
+    cd ../../libpng
+
+    make clean
+
+    rm -f -r .deps
+    rm -f config.h
+    rm -f config.log
+    rm -f config.status
+    rm -f libpng.pc
+    rm -f libpng-config
+    rm -f libtool
+    rm -f Makefile
+    rm -f stamp-h1
+
+    cd -
+fi
