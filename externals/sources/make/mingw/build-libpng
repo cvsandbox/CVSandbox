@@ -37,6 +37,8 @@ else
     rm -f libtool
     rm -f Makefile
     rm -f stamp-h1
+    find . -name ".deps" -type d -exec rm -rf {} +
+    find . -name ".dirstamp" -type f -delete
 
     cd -
 fi
