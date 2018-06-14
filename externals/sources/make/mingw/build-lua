@@ -1,0 +1,30 @@
+OUT_FOLDER=../../../../build/mingw
+
+if [ "$1" != "clean" ] ; then
+	cd ../../lua
+
+	make mingw
+	make install INSTALL_TOP=/local
+
+	cd -
+    
+    OUT_REL=${OUT_FOLDER}/release
+
+    mkdir -p ${OUT_REL}/include
+    mkdir -p ${OUT_REL}/lib
+
+	cp -f /local/lib/liblua.a ${OUT_REL}/lib
+	cp -f /local/include/lauxlib.h ${OUT_REL}/include
+	cp -f /local/include/lua.h ${OUT_REL}/include
+	cp -f /local/include/luaconf.h ${OUT_REL}/include
+	cp -f /local/include/lualib.h ${OUT_REL}/include
+	cp -f /local/include/lua.hpp ${OUT_REL}/include
+else
+	cd ../../lua
+
+	make clean
+	rm -f src/*.exe
+	rm -f src/*.dll
+	
+	cd -
+fi

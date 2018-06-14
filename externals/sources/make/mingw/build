@@ -2,3 +2,4 @@
 ./build-libexif $*
 ./build-zlib $*
 ./build-libpng $*
+./build-lua $*
