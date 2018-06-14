@@ -26,6 +26,11 @@
 
 #include "lauxlib.h"
 
+/* cvsandbox >>>> */
+#ifdef WIN32
+    #include <windows.h>
+#endif
+/* <<<<<<<<<<<<<< */
 
 /*
 ** {======================================================
@@ -712,7 +717,28 @@ LUALIB_API int luaL_loadfilex (lua_State *L, const char *filename,
   }
   else {
     lua_pushfstring(L, "@%s", filename);
-    lf.f = fopen(filename, "r");
+    /* cvsandbox >>>> */
+    #ifdef WIN32
+        lf.f = NULL;
+        {
+            int charsRequired = MultiByteToWideChar( CP_UTF8, 0, filename, -1, NULL, 0 );
+
+            if ( charsRequired > 0 )
+            {
+                WCHAR* filenameUtf16 = (WCHAR*) malloc( sizeof( WCHAR ) * charsRequired );
+
+                if ( MultiByteToWideChar( CP_UTF8, 0, filename, -1, filenameUtf16, charsRequired ) > 0 )
+                {
+                    lf.f = _wfopen( filenameUtf16, L"r" );
+                }
+
+                free( filenameUtf16 );
+            }
+        }
+    #else
+        lf.f = fopen(filename, "r");
+    #endif
+    /* <<<<<<<<<<<<<< */
     if (lf.f == NULL) return errfile(L, "open", fnameindex);
   }
   if (skipcomment(&lf, &c))  /* read initial portion */

@@ -4,3 +4,30 @@ This is Lua 5.3.4, released on 12 Jan 2017.
 For installation instructions, license details, and
 further information about Lua, see doc/readme.html.
 
+Changes made by cvsandbox project:
+1) Added support for UTF8 file path on Win32. In luaL_loadfilex() (lauxlib.c)
+
+lf.f = fopen(filename, "r");
+
+changed to 
+
+#ifdef WIN32
+    lf.f = NULL;
+    {
+        int charsRequired = MultiByteToWideChar( CP_UTF8, 0, filename, -1, NULL, 0 );
+
+        if ( charsRequired > 0 )
+        {
+            WCHAR* filenameUtf16 = (WCHAR*) malloc( sizeof( WCHAR ) * charsRequired );
+
+            if ( MultiByteToWideChar( CP_UTF8, 0, filename, -1, filenameUtf16, charsRequired ) > 0 )
+            {
+                lf.f = _wfopen( filenameUtf16, L"r" );
+            }
+
+            free( filenameUtf16 );
+        }
+    }
+#else
+    lf.f = fopen(filename, "r");
+#endif
