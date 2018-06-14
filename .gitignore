@@ -3,3 +3,4 @@ build
 *.suo
 *.sdf
 *.opensdf
+*.VC.db

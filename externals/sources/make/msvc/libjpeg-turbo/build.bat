@@ -1,4 +1,4 @@
-@echo off
+    @echo off
 
 set OUT_FOLDER=..\..\..\..\..\build\msvc
 set BUILD_FOLDER=build
@@ -12,7 +12,7 @@ if "%1"=="clean" (
     mkdir %BUILD_FOLDER%
     pushd %BUILD_FOLDER%
 
-    cmake -G "Visual Studio 12 2013" -D ENABLE_SHARED:BOOL=ON ^
+    cmake -G "Visual Studio 14 2015" -D ENABLE_SHARED:BOOL=ON ^
         -D WITH_ARITH_DEC:BOOL=ON ^
         -D WITH_ARITH_ENC:BOOL=ON ^
         -D WITH_JPEG7:BOOL=ON ^
