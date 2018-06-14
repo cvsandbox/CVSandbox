@@ -13,3 +13,7 @@ http://zlib.net/
 * libpng - 1.6.34         (2017-09-29)
 http://www.libpng.org/pub/png/libpng.html
 (tar.gz version, since ZIP version for Windows is missing some files)
+
+
+* lua - 5.3.4             (2017-01-12)
+http://www.lua.org/
