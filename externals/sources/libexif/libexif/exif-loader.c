@@ -29,9 +29,11 @@
 #include <string.h>
 #include <stdio.h>
 
+/* cvsandbox >>>> */
 #ifdef WIN32
     #include <windows.h>
 #endif
+/* <<<<<<<<<<<<<< */
 
 #undef JPEG_MARKER_DHT
 #define JPEG_MARKER_DHT  0xc4
@@ -117,25 +119,27 @@ exif_loader_write_file (ExifLoader *l, const char *path)
 	if (!l) 
 		return;
 
+/* cvsandbox >>>> */
 #ifdef WIN32
-    {
-        int charsRequired = MultiByteToWideChar( CP_UTF8, 0, path, -1, NULL, 0 );
+	{
+		int charsRequired = MultiByteToWideChar( CP_UTF8, 0, path, -1, NULL, 0 );
 
-        if ( charsRequired > 0 )
-        {
-            WCHAR* filenameUtf16 = (WCHAR*) malloc( sizeof( WCHAR ) * charsRequired );
+		if ( charsRequired > 0 )
+		{
+			WCHAR* filenameUtf16 = (WCHAR*) malloc( sizeof( WCHAR ) * charsRequired );
 
-            if ( MultiByteToWideChar( CP_UTF8, 0, path, -1, filenameUtf16, charsRequired ) > 0 )
-            {
-                f = _wfopen( filenameUtf16, L"r" );
-            }
+			if ( MultiByteToWideChar( CP_UTF8, 0, path, -1, filenameUtf16, charsRequired ) > 0 )
+			{
+				f = _wfopen( filenameUtf16, L"r" );
+			}
 
-            free( filenameUtf16 );
-        }
-    }
+			free( filenameUtf16 );
+		}
+	}
 #else
 	f = fopen (path, "rb");
 #endif
+/* <<<<<<<<<<<<<< */
 
 	if (!f) {
 		exif_log (l->log, EXIF_LOG_CODE_NONE, "ExifLoader",
