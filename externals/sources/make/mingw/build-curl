@@ -1,0 +1,37 @@
+OUT_FOLDER=../../../../build/mingw
+SRC_FOLDER=../../curl
+CURL_FOLDER=curl
+
+if [ "$1" != "clean" ] ; then
+    cd ${SRC_FOLDER}
+
+    /mingw/bin/mingw32-make -C lib -f Makefile.m32
+    cd -
+
+    OUT_REL=${OUT_FOLDER}/release
+
+    mkdir -p ${OUT_REL}/include/curl
+    mkdir -p ${OUT_REL}/bin
+    mkdir -p ${OUT_REL}/lib
+
+    cp -f ${SRC_FOLDER}/lib/libcurl.dll ${OUT_REL}/bin
+    cp -f ${SRC_FOLDER}/lib/libcurldll.a ${OUT_REL}/lib
+    
+    cp -f ${SRC_FOLDER}/include/curl/curl.h ${OUT_REL}/include/curl
+    cp -f ${SRC_FOLDER}/include/curl/system.h ${OUT_REL}/include/curl
+    cp -f ${SRC_FOLDER}/include/curl/curlver.h ${OUT_REL}/include/curl
+    cp -f ${SRC_FOLDER}/include/curl/easy.h ${OUT_REL}/include/curl
+    cp -f ${SRC_FOLDER}/include/curl/multi.h ${OUT_REL}/include/curl
+else
+    cd ${SRC_FOLDER}
+
+    mingw32-make mingw32-clean
+    rm -f lib/*.a
+    rm -f lib/*.dll
+    rm -f lib/*.exe
+    rm -f lib/*.def
+    rm -f src/*.exe
+
+    cd -
+fi
+
