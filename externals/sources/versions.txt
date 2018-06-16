@@ -17,3 +17,7 @@ http://www.libpng.org/pub/png/libpng.html
 
 * lua - 5.3.4             (2017-01-12)
 http://www.lua.org/
+
+
+* libcurl - 7.60.0        (2018-05-16)
+http://curl.haxx.se/
