@@ -3,3 +3,4 @@
 ./build-zlib $*
 ./build-libpng $*
 ./build-lua $*
+./build-curl $*

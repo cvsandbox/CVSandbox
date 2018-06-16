@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpng", "libpng\libpng.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua", "lua\lua.vcxproj", "{DCD4A0DB-16DF-4838-AC1E-D2E2F91711A6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcurl", "curl\libcurl.vcxproj", "{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -30,6 +32,10 @@ Global
 		{DCD4A0DB-16DF-4838-AC1E-D2E2F91711A6}.Debug|Win32.Build.0 = Debug|Win32
 		{DCD4A0DB-16DF-4838-AC1E-D2E2F91711A6}.Release|Win32.ActiveCfg = Release|Win32
 		{DCD4A0DB-16DF-4838-AC1E-D2E2F91711A6}.Release|Win32.Build.0 = Release|Win32
+		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Debug|Win32.ActiveCfg = DLL Debug|Win32
+		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Debug|Win32.Build.0 = DLL Debug|Win32
+		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Release|Win32.ActiveCfg = DLL Release|Win32
+		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Release|Win32.Build.0 = DLL Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
