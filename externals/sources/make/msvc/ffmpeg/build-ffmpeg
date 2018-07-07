@@ -1,0 +1,65 @@
+OUT_FOLDER=../../../../../build/msvc
+SRC_FOLDER=../../../ffmpeg
+
+if [ "$1" != "clean" ] ; then
+
+    if [ "$1" != "debug" ] ; then
+        CONFIG_OPTIONS=--disable-debug
+        BUILD_FOLDER=${OUT_FOLDER}/release
+    else
+        BUILD_FOLDER=${OUT_FOLDER}/debug
+    fi
+    
+    cd ../../../ffmpeg
+
+    ./configure --toolchain=msvc --enable-shared --disable-static \
+                --arch=i386 --disable-programs --disable-doc \
+                --disable-avdevice --disable-bzlib --disable-iconv \
+                --disable-zlib --disable-pthreads --disable-postproc \
+                --prefix=./build ${CONFIG_OPTIONS}
+    
+    make
+    make install
+
+    cd -
+    
+    mkdir -p ${BUILD_FOLDER}/include
+    mkdir -p ${BUILD_FOLDER}/bin
+    mkdir -p ${BUILD_FOLDER}/lib
+
+    cp -f ${SRC_FOLDER}/build/bin/*.dll ${BUILD_FOLDER}/bin
+    cp -f ${SRC_FOLDER}/build/bin/*.lib ${BUILD_FOLDER}/lib
+    cp -rf ${SRC_FOLDER}/build/include/* ${BUILD_FOLDER}/include
+    
+else
+    cd ${SRC_FOLDER}
+
+    make uninstall
+    make clean
+    make distclean
+    rm -rf build
+    rm ffbuild/config.log
+    rm libavcodec/*.ilk
+    rm libavcodec/*.pdb
+    rm libavcodec/*.exp
+    rm libavfilter/*.ilk
+    rm libavfilter/*.pdb
+    rm libavfilter/*.exp
+    rm libavformat/*.ilk
+    rm libavformat/*.pdb
+    rm libavformat/*.exp
+    rm libavutil/*.ilk
+    rm libavutil/*.pdb
+    rm libavutil/*.exp
+    rm libswresample/*.ilk
+    rm libswresample/*.pdb
+    rm libswresample/*.exp
+    rm libswscale/*.ilk
+    rm libswscale/*.pdb
+    rm libswscale/*.exp
+    rm libavdevice/indev_list.c
+    rm libavdevice/outdev_list.c
+    rm libavfilter/filter_list.c
+    
+    cd -
+fi

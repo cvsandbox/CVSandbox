@@ -1,0 +1,5 @@
+./build-ffmpeg clean
+./build-ffmpeg release
+./build-ffmpeg clean
+./build-ffmpeg debug
+./build-ffmpeg clean
