@@ -21,3 +21,7 @@ http://www.lua.org/
 
 * libcurl - 7.60.0        (2018-05-16)
 http://curl.haxx.se/
+
+
+* ffmpeg - 4.0.1          (2018-06-16)
+https://www.ffmpeg.org/
