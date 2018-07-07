@@ -1,0 +1,36 @@
+OUT_FOLDER=../../../../build/mingw/
+SRC_FOLDER=../../ffmpeg
+
+if [ "$1" != "clean" ] ; then
+    cd ${SRC_FOLDER}
+
+    ./configure --enable-shared --disable-static --arch=i386 --disable-programs --disable-doc --disable-avdevice --prefix=./build
+
+    make
+    make install
+
+    cd -
+    
+    OUT_REL=${OUT_FOLDER}/release
+
+    mkdir -p ${OUT_REL}/include
+    mkdir -p ${OUT_REL}/bin
+    mkdir -p ${OUT_REL}/lib
+
+    cp -f ${SRC_FOLDER}/build/bin/*.dll ${OUT_REL}/bin
+    cp -f ${SRC_FOLDER}/build/lib/*.a ${OUT_REL}/lib
+    cp -r ../../ffmpeg/build/include/* ${OUT_REL}/include
+    
+else
+    cd ${SRC_FOLDER}
+
+    make uninstall
+    make clean
+    make distclean
+    rm -rf build
+    rm libavdevice/indev_list.c
+    rm libavdevice/outdev_list.c
+    rm libavfilter/filter_list.c
+
+    cd -
+fi

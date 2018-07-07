@@ -4,3 +4,4 @@
 ./build-libpng $*
 ./build-lua $*
 ./build-curl $*
+./build-ffmpeg $*
