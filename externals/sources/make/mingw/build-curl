@@ -1,6 +1,5 @@
 OUT_FOLDER=../../../../build/mingw
 SRC_FOLDER=../../curl
-CURL_FOLDER=curl
 
 if [ "$1" != "clean" ] ; then
     cd ${SRC_FOLDER}
@@ -34,4 +33,3 @@ else
 
     cd -
 fi
-
