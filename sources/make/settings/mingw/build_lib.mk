@@ -11,6 +11,8 @@ else
 OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\release\lib\"
 endif 
 
+CFLAGS += $(INCLUDES)
+
 all: build
 
 debug: build

@@ -11,6 +11,9 @@ else
 OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\release\bin\"
 endif 
 
+CFLAGS += $(INCLUDES)
+LDFLAGS += $(LIBDIR) $(LIBS)
+
 all: build post_build
 
 debug: build post_build

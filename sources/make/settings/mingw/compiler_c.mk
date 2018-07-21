@@ -3,6 +3,8 @@
 TARGET = mingw
 SRC_FILE_EXT = %.c
 
+OBJ = $(SRC:.c=.o)
+
 # compiler
 COMPILER = $(MINGW_BIN)\gcc.exe
 # lib archiver
