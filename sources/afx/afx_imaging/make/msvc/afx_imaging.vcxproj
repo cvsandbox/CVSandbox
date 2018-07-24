@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ximaging.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\additive_noise.c" />
+    <ClCompile Include="..\..\alpha.c" />
+    <ClCompile Include="..\..\binary2grayscale.c" />
+    <ClCompile Include="..\..\binary_dilatation_3x3.c" />
+    <ClCompile Include="..\..\binary_erosion_3x3.c" />
+    <ClCompile Include="..\..\blob_counter.c" />
+    <ClCompile Include="..\..\blur_image.c" />
+    <ClCompile Include="..\..\canny_edge_detector.c" />
+    <ClCompile Include="..\..\color2grayscale.c" />
+    <ClCompile Include="..\..\color_conversion.c" />
+    <ClCompile Include="..\..\color_filtering.c" />
+    <ClCompile Include="..\..\color_maps.c" />
+    <ClCompile Include="..\..\color_remapping.c" />
+    <ClCompile Include="..\..\contrast_stretching.c" />
+    <ClCompile Include="..\..\convolution.c" />
+    <ClCompile Include="..\..\dilatation_3x3.c" />
+    <ClCompile Include="..\..\distance_transform.c" />
+    <ClCompile Include="..\..\drawing.c" />
+    <ClCompile Include="..\..\drawing_text.c" />
+    <ClCompile Include="..\..\edge_detectors.c" />
+    <ClCompile Include="..\..\erosion_3x3.c" />
+    <ClCompile Include="..\..\error_diffusion_dithering.c" />
+    <ClCompile Include="..\..\extract_channel.c" />
+    <ClCompile Include="..\..\extract_channel_nrgb.c" />
+    <ClCompile Include="..\..\gaussian.c" />
+    <ClCompile Include="..\..\grayscale2color.c" />
+    <ClCompile Include="..\..\gray_world.c" />
+    <ClCompile Include="..\..\histogram_equalization.c" />
+    <ClCompile Include="..\..\hsl_color_filtering.c" />
+    <ClCompile Include="..\..\image_statistics.c" />
+    <ClCompile Include="..\..\indexed2color.c" />
+    <ClCompile Include="..\..\invert.c" />
+    <ClCompile Include="..\..\mean_3x3.c" />
+    <ClCompile Include="..\..\mean_shift.c" />
+    <ClCompile Include="..\..\mirror.c" />
+    <ClCompile Include="..\..\morphology.c" />
+    <ClCompile Include="..\..\ordered_dithering.c" />
+    <ClCompile Include="..\..\otsu.c" />
+    <ClCompile Include="..\..\pixellate.c" />
+    <ClCompile Include="..\..\quadrilateral_transform.c" />
+    <ClCompile Include="..\..\resize_bilinear.c" />
+    <ClCompile Include="..\..\resize_nearest_neightbor.c" />
+    <ClCompile Include="..\..\rotate90.c" />
+    <ClCompile Include="..\..\rotate_bilinear.c" />
+    <ClCompile Include="..\..\rotate_rgb.c" />
+    <ClCompile Include="..\..\run_length_smoothing.c" />
+    <ClCompile Include="..\..\salt_and_pepper_noise.c" />
+    <ClCompile Include="..\..\sepia.c" />
+    <ClCompile Include="..\..\set_hue.c" />
+    <ClCompile Include="..\..\shape_checker.c" />
+    <ClCompile Include="..\..\shift_image.c" />
+    <ClCompile Include="..\..\simple_posterization.c" />
+    <ClCompile Include="..\..\swap_rgb.c" />
+    <ClCompile Include="..\..\threshold.c" />
+    <ClCompile Include="..\..\two_source_image_routines.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>afx_imaging</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\afx_types</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\build\msvc\debug\lib\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\afx_types</AdditionalIncludeDirectories>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\build\msvc\release\lib\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
