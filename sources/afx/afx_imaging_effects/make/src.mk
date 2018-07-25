@@ -17,5 +17,3 @@ SRC = colorize.c \
 
 # additional include folders
 INCLUDES = -I../../../afx_types -I../../../afx_imaging
-
-CFLAGS += $(INCLUDES)

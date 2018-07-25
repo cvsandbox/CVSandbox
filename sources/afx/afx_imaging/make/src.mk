@@ -24,5 +24,3 @@ SRC =  additive_noise.c alpha.c \
 
 # additional include folders
 INCLUDES = -I../../../afx_types
-
-CFLAGS += $(INCLUDES)
