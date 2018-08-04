@@ -24,4 +24,7 @@ if "%1"=="clean" (
     pushd libjpeg-turbo
     call build
     popd
+    
+    xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\debug\include\"
+    xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\release\include\"
 )

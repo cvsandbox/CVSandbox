@@ -5,3 +5,4 @@
 ./build-lua $*
 ./build-curl $*
 ./build-ffmpeg $*
+./build-other $*

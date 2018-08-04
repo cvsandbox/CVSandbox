@@ -1,0 +1,13 @@
+OUT_FOLDER=../../../../build/mingw
+SRC_FOLDER=../../directshow
+
+if [ "$1" != "clean" ] ; then
+
+    OUT_REL=${OUT_FOLDER}/release
+    
+    mkdir -p ${OUT_REL}/include
+
+    cp -f ${SRC_FOLDER}/* ${OUT_REL}/include
+else
+    echo Nothing to clean for others
+fi
