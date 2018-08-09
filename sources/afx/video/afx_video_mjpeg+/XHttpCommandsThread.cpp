@@ -1,5 +1,5 @@
 /*
-    DirectShow video source library of Computer Vision Sandbox
+    MJPEG streams video source library of Computer Vision Sandbox
 
     Copyright (C) 2011-2018, cvsandbox
     http://www.cvsandbox.com/contacts.html
