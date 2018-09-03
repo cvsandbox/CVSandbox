@@ -1,0 +1,105 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_types", "..\..\afx_types\make\msvc\afx_types.vcxproj", "{D87E3CCB-4712-4FBC-9100-15161745292D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_types+", "..\..\afx_types+\make\msvc\afx_types+.vcxproj", "{D912DF2C-F58C-4F05-B615-7BD85006BB33}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D87E3CCB-4712-4FBC-9100-15161745292D} = {D87E3CCB-4712-4FBC-9100-15161745292D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_imaging", "..\..\afx_imaging\make\msvc\afx_imaging.vcxproj", "{00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D87E3CCB-4712-4FBC-9100-15161745292D} = {D87E3CCB-4712-4FBC-9100-15161745292D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_imaging_formats", "..\..\afx_imaging_formats\make\msvc\afx_imaging_formats.vcxproj", "{FA8FC04A-3B58-424B-A2EA-62F9A6D654A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D87E3CCB-4712-4FBC-9100-15161745292D} = {D87E3CCB-4712-4FBC-9100-15161745292D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_platform+", "..\..\afx_platform+\make\msvc\afx_platform+.vcxproj", "{549DE7D7-4731-4368-9093-0B71A5D09CD8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33} = {D912DF2C-F58C-4F05-B615-7BD85006BB33}
+		{D87E3CCB-4712-4FBC-9100-15161745292D} = {D87E3CCB-4712-4FBC-9100-15161745292D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video+", "..\..\afx_video+\make\msvc\afx_video+.vcxproj", "{B91BE898-6710-45B3-87B6-DAF0487CC831}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33} = {D912DF2C-F58C-4F05-B615-7BD85006BB33}
+		{D87E3CCB-4712-4FBC-9100-15161745292D} = {D87E3CCB-4712-4FBC-9100-15161745292D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video_mjpeg+", "..\..\video\afx_video_mjpeg+\make\msvc\afx_video_mjpeg+.vcxproj", "{0A456669-9111-40A6-8993-C9FDAB0F984C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33} = {D912DF2C-F58C-4F05-B615-7BD85006BB33}
+		{FA8FC04A-3B58-424B-A2EA-62F9A6D654A0} = {FA8FC04A-3B58-424B-A2EA-62F9A6D654A0}
+		{B91BE898-6710-45B3-87B6-DAF0487CC831} = {B91BE898-6710-45B3-87B6-DAF0487CC831}
+		{D87E3CCB-4712-4FBC-9100-15161745292D} = {D87E3CCB-4712-4FBC-9100-15161745292D}
+		{00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE} = {00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE}
+		{549DE7D7-4731-4368-9093-0B71A5D09CD8} = {549DE7D7-4731-4368-9093-0B71A5D09CD8}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video_dshow+", "..\..\video\afx_video_dshow+\make\msvc\afx_video_dshow+.vcxproj", "{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33} = {D912DF2C-F58C-4F05-B615-7BD85006BB33}
+		{B91BE898-6710-45B3-87B6-DAF0487CC831} = {B91BE898-6710-45B3-87B6-DAF0487CC831}
+		{549DE7D7-4731-4368-9093-0B71A5D09CD8} = {549DE7D7-4731-4368-9093-0B71A5D09CD8}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_imaging_effects", "..\..\afx_imaging_effects\make\msvc\afx_imaging_effects.vcxproj", "{7E9CB444-BF14-4B0F-A621-184C036E0929}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video_ffmpeg+", "..\..\video\afx_video_ffmpeg+\make\msvc\afx_video_ffmpeg+.vcxproj", "{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D87E3CCB-4712-4FBC-9100-15161745292D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D87E3CCB-4712-4FBC-9100-15161745292D}.Debug|Win32.Build.0 = Debug|Win32
+		{D87E3CCB-4712-4FBC-9100-15161745292D}.Release|Win32.ActiveCfg = Release|Win32
+		{D87E3CCB-4712-4FBC-9100-15161745292D}.Release|Win32.Build.0 = Release|Win32
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33}.Debug|Win32.Build.0 = Debug|Win32
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33}.Release|Win32.ActiveCfg = Release|Win32
+		{D912DF2C-F58C-4F05-B615-7BD85006BB33}.Release|Win32.Build.0 = Release|Win32
+		{00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE}.Debug|Win32.Build.0 = Debug|Win32
+		{00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE}.Release|Win32.ActiveCfg = Release|Win32
+		{00E5D8D2-DDE9-4DC5-A57F-B0A6C55FC2CE}.Release|Win32.Build.0 = Release|Win32
+		{FA8FC04A-3B58-424B-A2EA-62F9A6D654A0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA8FC04A-3B58-424B-A2EA-62F9A6D654A0}.Debug|Win32.Build.0 = Debug|Win32
+		{FA8FC04A-3B58-424B-A2EA-62F9A6D654A0}.Release|Win32.ActiveCfg = Release|Win32
+		{FA8FC04A-3B58-424B-A2EA-62F9A6D654A0}.Release|Win32.Build.0 = Release|Win32
+		{549DE7D7-4731-4368-9093-0B71A5D09CD8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{549DE7D7-4731-4368-9093-0B71A5D09CD8}.Debug|Win32.Build.0 = Debug|Win32
+		{549DE7D7-4731-4368-9093-0B71A5D09CD8}.Release|Win32.ActiveCfg = Release|Win32
+		{549DE7D7-4731-4368-9093-0B71A5D09CD8}.Release|Win32.Build.0 = Release|Win32
+		{B91BE898-6710-45B3-87B6-DAF0487CC831}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B91BE898-6710-45B3-87B6-DAF0487CC831}.Debug|Win32.Build.0 = Debug|Win32
+		{B91BE898-6710-45B3-87B6-DAF0487CC831}.Release|Win32.ActiveCfg = Release|Win32
+		{B91BE898-6710-45B3-87B6-DAF0487CC831}.Release|Win32.Build.0 = Release|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Debug|Win32.Build.0 = Debug|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Release|Win32.ActiveCfg = Release|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Release|Win32.Build.0 = Release|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Debug|Win32.Build.0 = Debug|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Release|Win32.ActiveCfg = Release|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Release|Win32.Build.0 = Release|Win32
+		{7E9CB444-BF14-4B0F-A621-184C036E0929}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E9CB444-BF14-4B0F-A621-184C036E0929}.Debug|Win32.Build.0 = Debug|Win32
+		{7E9CB444-BF14-4B0F-A621-184C036E0929}.Release|Win32.ActiveCfg = Release|Win32
+		{7E9CB444-BF14-4B0F-A621-184C036E0929}.Release|Win32.Build.0 = Release|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|Win32.Build.0 = Debug|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|Win32.ActiveCfg = Release|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
