@@ -2,14 +2,7 @@
 
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
-# compiler options
-ifneq "$(findstring debug, $(MAKECMDGOALS))" ""
-# "Debug" build - no optimization, and debugging symbols 
-OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\debug\bin\"
-else 
-# "Release" build - optimization, and no debug symbols 
-OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\release\bin\"
-endif 
+OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\bin\"
 
 CFLAGS += $(INCLUDES)
 LDFLAGS += $(LIBDIR) $(LIBS)
