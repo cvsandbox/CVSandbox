@@ -41,10 +41,13 @@ static void WriteVideoFile( const shared_ptr<XFFmpegVideoFileWriter>& fileWriter
 
 int main( int /* argc */, char** /* argv */ )
 {
-    printf( "Testing video ...\r\n" );
+    printf( "Testing video writing ...\r\n" );
 
     {
         shared_ptr<XFFmpegVideoFileWriter> fileWriter = XFFmpegVideoFileWriter::Create( );
+
+        printf( "Writing %d frames of %dx%d size\r\n", VideoFramesToWrite,
+                VideoFrameWidth, VideoFrameHeight );
 
         for ( int i = -1; i < static_cast<int>( XFFmpegVideoFileWriter::Codec::LastValue ) ; i++ )
         {
