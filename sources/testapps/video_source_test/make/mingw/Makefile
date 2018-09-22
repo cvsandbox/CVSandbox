@@ -3,7 +3,7 @@
 include ../src.mk
 include ../../../../make/settings/mingw/compiler_cpp.mk
 
-OUT = video_read_test.exe
+OUT = video_source_test.exe
 
 LIBDIR = -L..\..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\lib
 

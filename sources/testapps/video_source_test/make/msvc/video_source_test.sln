@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "video_source_test", "video_source_test.vcxproj", "{9424E59F-ABDB-47C9-A01F-E612301768DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225} = {3EFCC752-7F7F-47E4-9800-8B2AFEB35225}
+		{0A456669-9111-40A6-8993-C9FDAB0F984C} = {0A456669-9111-40A6-8993-C9FDAB0F984C}
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04} = {A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video_mjpeg+", "..\..\..\..\afx\video\afx_video_mjpeg+\make\msvc\afx_video_mjpeg+.vcxproj", "{0A456669-9111-40A6-8993-C9FDAB0F984C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video_ffmpeg+", "..\..\..\..\afx\video\afx_video_ffmpeg+\make\msvc\afx_video_ffmpeg+.vcxproj", "{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video_dshow+", "..\..\..\..\afx\video\afx_video_dshow+\make\msvc\afx_video_dshow+.vcxproj", "{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Debug|Win32.Build.0 = Debug|Win32
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Release|Win32.ActiveCfg = Release|Win32
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Release|Win32.Build.0 = Release|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Debug|Win32.Build.0 = Debug|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Release|Win32.ActiveCfg = Release|Win32
+		{0A456669-9111-40A6-8993-C9FDAB0F984C}.Release|Win32.Build.0 = Release|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|Win32.Build.0 = Debug|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|Win32.ActiveCfg = Release|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|Win32.Build.0 = Release|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Debug|Win32.Build.0 = Debug|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Release|Win32.ActiveCfg = Release|Win32
+		{3EFCC752-7F7F-47E4-9800-8B2AFEB35225}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
