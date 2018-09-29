@@ -78,7 +78,7 @@ class IImageProcessingFilterPlugin : public IPluginBase
 {
 public:
     // Check if image processing filter can process image itself (not putting result to another image)
-    virtual xbool CanProcessInPlace( ) = 0;
+    virtual bool CanProcessInPlace( ) = 0;
     // Get pixel format translation table - supported input formats and result output formats
     virtual XErrorCode GetPixelFormatTranslations( XPixelFormat* inputFormats, XPixelFormat* outputFormats, int32_t* count ) = 0;
     // Process specified source image leaving it as it is, but creating new image as a result
@@ -92,7 +92,7 @@ class IImageProcessingFilterPlugin2 : public IPluginBase
 {
 public:
     // Check if image processing filter can process image itself (not putting result to another image)
-    virtual xbool CanProcessInPlace( ) = 0;
+    virtual bool CanProcessInPlace( ) = 0;
     // Get pixel format translation table - supported input formats and result output formats
     virtual XErrorCode GetPixelFormatTranslations( XPixelFormat* inputFormats, XPixelFormat* outputFormats, int32_t* count ) = 0;
     // Get human understandable description/purpose of the second image required by the filter
@@ -154,7 +154,7 @@ public:
     // Wait till video source (its thread) stops
     virtual void WaitForStop( ) = 0;
     // Check if video source (its thread) is still running
-    virtual xbool IsRunning( ) = 0;
+    virtual bool IsRunning( ) = 0;
 
     // Terminate video source - call *ONLY* if video source looks to be frozen and does not stop
     // by itself when signaled (ideally this method should not exist and be called at all)
@@ -184,7 +184,7 @@ public:
     // Disconnect from device
     virtual void Disconnect( ) = 0;
     // Check if connected to a device
-    virtual xbool IsConnected( ) = 0;
+    virtual bool IsConnected( ) = 0;
 };
 
 // ===== Interface for video processing plug-in =====
@@ -192,7 +192,7 @@ class IVideoProcessingPlugin : public IPluginBase
 {
 public:
     // Check if the plug-in does changes to input video frames or not
-    virtual xbool IsReadOnlyMode( ) = 0;
+    virtual bool IsReadOnlyMode( ) = 0;
     // Get pixel formats supported by the video processing plug-in
     virtual XErrorCode GetSupportedPixelFormats( XPixelFormat* pixelFormats, int32_t* count ) = 0;
     // Process the specified image
