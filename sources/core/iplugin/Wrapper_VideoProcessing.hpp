@@ -82,7 +82,7 @@ private:
     }
 
     // Wrapper for IsReadOnlyMode() method
-    static xbool Wrapper_IsReadOnlyMode( SVideoProcessingPlugin* me )
+    static bool Wrapper_IsReadOnlyMode( SVideoProcessingPlugin* me )
     {
         return reinterpret_cast<CppVideoProcessingWrapper*>( me )->PluginObject->IsReadOnlyMode( );
     }

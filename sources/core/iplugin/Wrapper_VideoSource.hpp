@@ -100,7 +100,7 @@ private:
     }
 
     // Wrapper for IsRunning() method
-    static xbool Wrapper_IsRunning( SVideoSourcePlugin* me )
+    static bool Wrapper_IsRunning( SVideoSourcePlugin* me )
     {
         return reinterpret_cast<CppVideoSourceWrapper*>( me )->PluginObject->IsRunning( );
     }

@@ -82,7 +82,7 @@ private:
     }
 
     // Wrapper for CanProcessInPlace() method
-    static xbool Wrapper_CanProcessInPlace( SImageProcessingFilterPlugin* me )
+    static bool Wrapper_CanProcessInPlace( SImageProcessingFilterPlugin* me )
     {
         return reinterpret_cast<CppImageProcessingFilterWrapper*>( me )->PluginObject->CanProcessInPlace( );
     }

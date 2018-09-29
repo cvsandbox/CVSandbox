@@ -81,20 +81,20 @@ private:
         return reinterpret_cast<CppDeviceWrapper*>( me )->PluginObject->UpdateDescription( descriptor );
     }
 
-    // Wrapper fot Connect() method
+    // Wrapper for Connect() method
     static XErrorCode Wrapper_Connect( SDevicePlugin* me )
     {
         return reinterpret_cast<CppDeviceWrapper*>( me )->PluginObject->Connect( );
     }
 
-    // Wrapper fot Disconnect() method
+    // Wrapper for Disconnect() method
     static void Wrapper_Disconnect( SDevicePlugin* me )
     {
         reinterpret_cast<CppDeviceWrapper*>( me )->PluginObject->Disconnect( );
     }
 
-    // Wrapper fot IsConnected() method
-    static xbool Wrapper_IsConnected( SDevicePlugin* me )
+    // Wrapper for IsConnected() method
+    static bool Wrapper_IsConnected( SDevicePlugin* me )
     {
         return reinterpret_cast<CppDeviceWrapper*>( me )->PluginObject->IsConnected( );
     }
