@@ -23,4 +23,4 @@ CFLAGS += -O3 -s -DNDEBUG
 BUILD_TYPE = release
 endif 
 
-CFLAGS += -std=gnu++0x -Wall
+CFLAGS += -std=gnu++0x -Wall -fno-rtti
