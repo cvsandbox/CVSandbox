@@ -1,0 +1,140 @@
+Standard Image Processing 1.0.8
+-------------------------------------------
+23.12.2017
+
+Version updates and fixes:
+
+* Added "Objects Thinning" plug-in, which makes objects thinner by removing specified amount of their edges.
+  The idea is similar to "Erosion" morphology operator, however objects thinning plug-in operates on
+  distance transformation and so its performance does not depend on the thinning amount.
+* Added "Objects Thickening" plug-in, which grows objects by the specified amount. Idea is similar to
+  "Dilatation" morphology, but implemented using distance transformation.
+* Added "Objects Edges" plug-in, which uses distance transformation in order to keep specified amount of
+  objects' edge pixels.
+* Added "Objects Outline" plug-in, which uses distance transformation in order to create outline of objects.
+  It is similar to "Objects Edges", but outline is around object, not part of it.
+
+
+
+Standard Image Processing 1.0.7
+-------------------------------------------
+11.10.2017
+
+Version updates and fixes:
+
+* Minor performance improvements by using SSE instructions for Grayscale, Threshold and
+  Otsu Threshold plug-ins.
+* Fixed edge hysteresis in Canny Edged Detector plug-in, so it uses temporary edge image while
+  calculating final edges.
+* Added Erode Edges plug-in, which can be used to remove horizontal/vertical lines.
+* Added Run Length Smoothing plug-in to fill horizontal/vertical gaps between objects.
+
+
+
+Standard Image Processing 1.0.6
+-------------------------------------------
+07.03.2017.
+
+Version updates and fixes:
+
+* Added "Morphology Operator" plug-in, which allows to perform Erosion, Dilatation, Opening, Closing,
+  Top Hat and Bottom Hat operators, using custom specified structuring element.
+* Added "Hit and Miss" plug-in, which provides the hit-and-miss morphology operator.  
+* Added "Convolution" plug-in, which allows to perform image convolution using custom specified kernel.
+* Added "Gaussian Blur" and "Gaussian Sharpen" plug-ins to perform image blurring/sharpening using
+  Gaussian kernel of the specified size and standard deviation.
+* Renamed "Difference Edge Detector" plug-in into "Edge Detector". It now provides few different edge
+  detection modes: Difference, Homogeneity and Sobel.
+* Added "Canny Edge Detector" plug-in, which does edge detection using the Canny algorithm.
+* Added "Gray World Normalization" plug-in, which does image color normalization using the Gray World
+  algorithm.
+* Added "Mean Shift" image processing filter plug-in, which calculates mean value of pixels in a window
+  of the specified size, but taking only pixels which satisfy the specified color distance criteria.
+
+
+
+Standard Image Processing 1.0.5 
+-------------------------------------------
+13.10.2016.
+
+Version updates and fixes:
+
+* Updated "Mask Image" plug-in, so it provides two modes of masking: fill source image when mask values
+  are zeros or fill it when non-zeros. If a mask image is aimed to separate objects from background,
+  for example, then both parts (objects and background) can be extracted using the same mask (no longer
+  required to invert it).
+* Added "Color Channels Filter" plug-in, which performs filtering of RGB channels.
+* Added "HSL Color Filter" plug-in, which filters pixels in HSL color space.
+* Added "HSV Color Filter" plug-in, which does pixels' filtering in HSV color space.
+* Added "Distance Color Filter" plug-in, which does Euclidean and Manhattan distance color filtering.
+
+
+
+Standard Image Processing 1.0.4 
+-------------------------------------------
+03.07.2016.
+
+Version updates and fixes:
+
+* Added "Shift Image" plug-in, which allows shifting images by the specified number of pixels.
+* Added "Extract Quadrilateral" plug-in, which allows extraction quadrilateral image specified by
+  coordinates of 4 corners from a source image.
+* Added "Embed Quadrilateral" plug-in, which allows putting specified image into quadrilateral of
+  the target image.
+* Added "Image Statistics" plug-in, which allows calculating RGB histograms for color images and
+  intensity histogram for grayscale images. Also calculates statistical values like Minimum, Maximum,
+  Mean and Standard Deviation.
+* Enabled and described "Level Linear" an "Level Linear Grayscale" plug-ins, which allow performing
+  linear correction of RGB channels for color images and intensities for grayscale image.
+* Enabled and described next two source image processing filter plug-ins: "Add Images", "Subtract Images",
+  "Intersect Images" (minimum of two images), "Merge Images" (maximum of two images).
+* Enabled and described "Diff Images" two source image processing filter plug-in, which calculates
+  absolute difference between two images.
+* Added "Diff Images Thresholded" two source image processing filter plug-in, which calculates thresholded
+  absolute difference between two images.
+* Enabled and described "Extract RGB Channel" and "Extract nRGB Channel" plug-ins, which extract specified
+  RGB/nRGB channel from a color image and provide it as a grayscale image.
+* Added "Replace RGB Channel" plug-in, which allows replacing specified RGB channel with a specified
+  grayscale image.
+* Added "Mask Image" plug-in, which sets pixels of a source image to the specified fill color if corresponding
+  pixels of a mask image are equal to 0.
+
+
+
+Standard Image Processing 1.0.3 
+-------------------------------------------
+19.02.2016.
+
+Version updates and fixes:
+
+* Enabled and documented "Grayscale To RGB" ("GrayscaleToRgb" for scripting) plug-in.
+
+
+
+Standard Image Processing 1.0.2 
+-------------------------------------------
+27.11.2015.
+
+Version updates and fixes:
+
+* Added Rotate Image plug-in, which rotates an image by the specified angle.
+
+
+
+Standard Image Processing 1.0.1 
+-------------------------------------------
+28.09.2015.
+
+Version updates and fixes:
+* Renamed Gamma Correction plug-in to Brightness Correction, so it better reflects what it does.
+* Reworked both Brightness and Contrast correction plug-ins, so they have single "factor" property,
+  which allows both to increase and decrease brightness/contrast depending on its value's sign (the
+  "inverse" property was removed).
+
+
+
+Standard Image Processing 1.0.0 
+-------------------------------------------
+06.07.2015.
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.

@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\AddImagesPlugin.cpp" />
+    <ClCompile Include="..\..\AddImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\BinaryDilatation3x3Plugin.cpp" />
+    <ClCompile Include="..\..\BinaryDilatation3x3PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\BinaryErosion3x3Plugin.cpp" />
+    <ClCompile Include="..\..\BinaryErosion3x3PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\BlurPlugin.cpp" />
+    <ClCompile Include="..\..\BlurPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\BrightnessCorrectionPlugin.cpp" />
+    <ClCompile Include="..\..\BrightnessCorrectionPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\CannyEdgeDetectorPlugin.cpp" />
+    <ClCompile Include="..\..\CannyEdgeDetectorPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ColorChannelsFilterPlugin.cpp" />
+    <ClCompile Include="..\..\ColorChannelsFilterPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ColorFilterPlugin.cpp" />
+    <ClCompile Include="..\..\ColorFilterPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ContrastCorrectionPlugin.cpp" />
+    <ClCompile Include="..\..\ContrastCorrectionPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ContrastStretchingPlugin.cpp" />
+    <ClCompile Include="..\..\ContrastStretchingPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ConvolutionPlugin.cpp" />
+    <ClCompile Include="..\..\ConvolutionPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\DiffImagesPlugin.cpp" />
+    <ClCompile Include="..\..\DiffImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\DiffImagesThresholdedPlugin.cpp" />
+    <ClCompile Include="..\..\DiffImagesThresholdedPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\Dilatation3x3Plugin.cpp" />
+    <ClCompile Include="..\..\Dilatation3x3PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\DilatationPlugin.cpp" />
+    <ClCompile Include="..\..\DilatationPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\DistanceColorFilterPlugin.cpp" />
+    <ClCompile Include="..\..\DistanceColorFilterPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\dllmain.c" />
+    <ClCompile Include="..\..\EdgeDetectorPlugin.cpp" />
+    <ClCompile Include="..\..\EdgeDetectorPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\EmbedQuadrilateralPlugin.cpp" />
+    <ClCompile Include="..\..\EmbedQuadrilateralPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ErodeEdgesPlugin.cpp" />
+    <ClCompile Include="..\..\ErodeEdgesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\Erosion3x3Plugin.cpp" />
+    <ClCompile Include="..\..\Erosion3x3PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ErosionPlugin.cpp" />
+    <ClCompile Include="..\..\ErosionPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ExtractNRGBChannelPlugin.cpp" />
+    <ClCompile Include="..\..\ExtractNRGBChannelPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ExtractQuadrilateralPlugin.cpp" />
+    <ClCompile Include="..\..\ExtractQuadrilateralPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ExtractRGBChannelPlugin.cpp" />
+    <ClCompile Include="..\..\ExtractRGBChannelPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GaussianBlurPlugin.cpp" />
+    <ClCompile Include="..\..\GaussianBlurPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GaussianSharpenPlugin.cpp" />
+    <ClCompile Include="..\..\GaussianSharpenPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GrayscalePlugin.cpp" />
+    <ClInclude Include="..\..\AddImagesPlugin.hpp" />
+    <ClInclude Include="..\..\BinaryDilatation3x3Plugin.hpp" />
+    <ClInclude Include="..\..\BinaryErosion3x3Plugin.hpp" />
+    <ClInclude Include="..\..\BlurPlugin.hpp" />
+    <ClInclude Include="..\..\BrightnessCorrectionPlugin.hpp" />
+    <ClInclude Include="..\..\CannyEdgeDetectorPlugin.hpp" />
+    <ClInclude Include="..\..\ColorChannelsFilterPlugin.hpp" />
+    <ClInclude Include="..\..\ColorFilterPlugin.hpp" />
+    <ClInclude Include="..\..\ContrastCorrectionPlugin.hpp" />
+    <ClInclude Include="..\..\ContrastStretchingPlugin.hpp" />
+    <ClInclude Include="..\..\ConvolutionPlugin.hpp" />
+    <ClInclude Include="..\..\DiffImagesPlugin.hpp" />
+    <ClInclude Include="..\..\DiffImagesThresholdedPlugin.hpp" />
+    <ClInclude Include="..\..\Dilatation3x3Plugin.hpp" />
+    <ClInclude Include="..\..\DilatationPlugin.hpp" />
+    <ClInclude Include="..\..\DistanceColorFilterPlugin.hpp" />
+    <ClInclude Include="..\..\DistanceTransformationPlugin.hpp" />
+    <ClInclude Include="..\..\EdgeDetectorPlugin.hpp" />
+    <ClInclude Include="..\..\EmbedQuadrilateralPlugin.hpp" />
+    <ClInclude Include="..\..\ErodeEdgesPlugin.hpp" />
+    <ClInclude Include="..\..\Erosion3x3Plugin.hpp" />
+    <ClInclude Include="..\..\ErosionPlugin.hpp" />
+    <ClInclude Include="..\..\ExtractNRGBChannelPlugin.hpp" />
+    <ClInclude Include="..\..\ExtractQuadrilateralPlugin.hpp" />
+    <ClInclude Include="..\..\ExtractRGBChannelPlugin.hpp" />
+    <ClInclude Include="..\..\GaussianBlurPlugin.hpp" />
+    <ClInclude Include="..\..\GaussianSharpenPlugin.hpp" />
+    <ClInclude Include="..\..\GrayscalePlugin.hpp" />
+    <ClCompile Include="..\..\GrayscalePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GrayscaleToRgbPlugin.cpp" />
+    <ClCompile Include="..\..\GrayscaleToRgbPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GrayWorldNormalizationPlugin.cpp" />
+    <ClCompile Include="..\..\GrayWorldNormalizationPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\HistogramEqualizationPlugin.cpp" />
+    <ClCompile Include="..\..\HistogramEqualizationPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\HitAndMissPlugin.cpp" />
+    <ClCompile Include="..\..\HitAndMissPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\HslColorFilterPlugin.cpp" />
+    <ClCompile Include="..\..\HslColorFilterPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\HsvColorFilterPlugin.cpp" />
+    <ClCompile Include="..\..\HsvColorFilterPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ImageStatisticsPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ImageStatisticsPlugin.cpp" />
+    <ClCompile Include="..\..\IntersectImagesPlugin.cpp" />
+    <ClCompile Include="..\..\IntersectImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\InvertPlugin.cpp" />
+    <ClCompile Include="..\..\InvertPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\LevelsLinearGrayscalePlugin.cpp" />
+    <ClCompile Include="..\..\LevelsLinearGrayscalePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\LevelsLinearPlugin.cpp" />
+    <ClCompile Include="..\..\LevelsLinearPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ip_stdimaging.cpp" />
+    <ClCompile Include="..\..\MaskImagePlugin.cpp" />
+    <ClCompile Include="..\..\MaskImagePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\Mean3x3Plugin.cpp" />
+    <ClCompile Include="..\..\Mean3x3PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\MeanShiftPlugin.cpp" />
+    <ClCompile Include="..\..\MeanShiftPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\MergeImagesPlugin.cpp" />
+    <ClCompile Include="..\..\MergeImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\MirrorPlugin.cpp" />
+    <ClCompile Include="..\..\MirrorPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\MorphologyOperatorPlugin.cpp" />
+    <ClCompile Include="..\..\MorphologyOperatorPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ObjectsEdgesPlugin.cpp" />
+    <ClCompile Include="..\..\ObjectsEdgesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ObjectsOutlinePlugin.cpp" />
+    <ClCompile Include="..\..\ObjectsOutlinePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ObjectsThickeningPlugin.cpp" />
+    <ClCompile Include="..\..\ObjectsThickeningPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ObjectsThinningPlugin.cpp" />
+    <ClCompile Include="..\..\ObjectsThinningPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\OtsuThresholdPlugin.cpp" />
+    <ClCompile Include="..\..\OtsuThresholdPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\PixellatePlugin.cpp" />
+    <ClCompile Include="..\..\PixellatePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ReplaceRGBChannelPlugin.cpp" />
+    <ClCompile Include="..\..\ReplaceRGBChannelPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ResizeImagePlugin.cpp" />
+    <ClCompile Include="..\..\ResizeImagePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\RotateImage90Plugin.cpp" />
+    <ClCompile Include="..\..\RotateImage90PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\RotateImagePlugin.cpp" />
+    <ClCompile Include="..\..\RotateImagePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\RunLengthSmoothingPlugin.cpp" />
+    <ClCompile Include="..\..\RunLengthSmoothingPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ShiftImagePlugin.cpp" />
+    <ClCompile Include="..\..\ShiftImagePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\SubtractImagesPlugin.cpp" />
+    <ClCompile Include="..\..\SubtractImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ThresholdPlugin.cpp" />
+    <ClCompile Include="..\..\ThresholdPluginDescriptor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\GrayscaleToRgbPlugin.hpp" />
+    <ClInclude Include="..\..\GrayWorldNormalizationPlugin.hpp" />
+    <ClInclude Include="..\..\ObjectsOutlinePlugin.hpp" />
+    <ClInclude Include="..\..\HistogramEqualizationPlugin.hpp" />
+    <ClInclude Include="..\..\HitAndMissPlugin.hpp" />
+    <ClInclude Include="..\..\HslColorFilterPlugin.hpp" />
+    <ClInclude Include="..\..\HsvColorFilterPlugin.hpp" />
+    <ClInclude Include="..\..\ImageStatisticsPlugin.hpp" />
+    <ClInclude Include="..\..\IntersectImagesPlugin.hpp" />
+    <ClInclude Include="..\..\InvertPlugin.hpp" />
+    <ClInclude Include="..\..\LevelsLinearGrayscalePlugin.hpp" />
+    <ClInclude Include="..\..\LevelsLinearPlugin.hpp" />
+    <ClInclude Include="..\..\MaskImagePlugin.hpp" />
+    <ClInclude Include="..\..\Mean3x3Plugin.hpp" />
+    <ClInclude Include="..\..\MeanShiftPlugin.hpp" />
+    <ClInclude Include="..\..\MergeImagesPlugin.hpp" />
+    <ClInclude Include="..\..\MirrorPlugin.hpp" />
+    <ClInclude Include="..\..\MorphologyOperatorPlugin.hpp" />
+    <ClInclude Include="..\..\ObjectsEdgesPlugin.hpp" />
+    <ClInclude Include="..\..\ObjectsThickeningPlugin.hpp" />
+    <ClInclude Include="..\..\ObjectsThinningPlugin.hpp" />
+    <ClInclude Include="..\..\OtsuThresholdPlugin.hpp" />
+    <ClInclude Include="..\..\PixellatePlugin.hpp" />
+    <ClInclude Include="..\..\ReplaceRGBChannelPlugin.hpp" />
+    <ClInclude Include="..\..\ResizeImagePlugin.hpp" />
+    <ClInclude Include="..\..\RotateImage90Plugin.hpp" />
+    <ClInclude Include="..\..\RotateImagePlugin.hpp" />
+    <ClInclude Include="..\..\RunLengthSmoothingPlugin.hpp" />
+    <ClInclude Include="..\..\ShiftImagePlugin.hpp" />
+    <ClInclude Include="..\..\SubtractImagesPlugin.hpp" />
+    <ClInclude Include="..\..\ThresholdPlugin.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\plugins_list.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Release Notes.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{53FB8077-B638-42CB-82B0-D6101B8D600A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ip_stdimaging</RootNamespace>
+    <ProjectName>ip_stdimaging</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;STDIMAGING_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_imaging;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <OpenMPSupport>
+      </OpenMPSupport>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_imaging.lib;afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"
+xcopy /Y "$(ProjectDir)..\..\Release Notes.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;STDIMAGING_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_imaging;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_imaging.lib;afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"
+xcopy /Y "$(ProjectDir)..\..\Release Notes.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

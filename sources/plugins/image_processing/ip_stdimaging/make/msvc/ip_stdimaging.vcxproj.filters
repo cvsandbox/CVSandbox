@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Module Files">
+      <UniqueIdentifier>{617bba67-a97b-471d-b6af-e41135bee9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Plugin Descriptors">
+      <UniqueIdentifier>{c5150284-1f19-4a3d-be1b-fa046679a287}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ThresholdPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\InvertPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dllmain.c">
+      <Filter>Source Files\Module Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ip_stdimaging.cpp">
+      <Filter>Source Files\Module Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\InvertPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThresholdPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GrayscalePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GrayscalePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LevelsLinearPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LevelsLinearPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExtractRGBChannelPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExtractRGBChannelPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ColorFilterPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ColorFilterPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BinaryErosion3x3Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BinaryDilatation3x3Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExtractNRGBChannelPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExtractNRGBChannelPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\OtsuThresholdPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\OtsuThresholdPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MirrorPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MirrorPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PixellatePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PixellatePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Erosion3x3Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dilatation3x3Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Erosion3x3PluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dilatation3x3PluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BinaryDilatation3x3PluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BinaryErosion3x3PluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Mean3x3Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Mean3x3PluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ContrastStretchingPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ContrastStretchingPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HistogramEqualizationPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HistogramEqualizationPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BlurPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BlurPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LevelsLinearGrayscalePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LevelsLinearGrayscalePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ResizeImagePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ResizeImagePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MergeImagesPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MergeImagesPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\IntersectImagesPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\IntersectImagesPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DiffImagesPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DiffImagesPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GaussianBlurPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GaussianBlurPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GaussianSharpenPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ErosionPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ErosionPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DilatationPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DilatationPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GaussianSharpenPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RotateImage90PluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RotateImage90Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GrayscaleToRgbPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GrayscaleToRgbPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ContrastCorrectionPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ContrastCorrectionPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BrightnessCorrectionPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BrightnessCorrectionPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RotateImagePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RotateImagePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ShiftImagePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ShiftImagePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExtractQuadrilateralPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExtractQuadrilateralPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\EmbedQuadrilateralPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\EmbedQuadrilateralPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ImageStatisticsPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ImageStatisticsPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DiffImagesThresholdedPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DiffImagesThresholdedPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AddImagesPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\SubtractImagesPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AddImagesPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\SubtractImagesPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ReplaceRGBChannelPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ReplaceRGBChannelPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MaskImagePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MaskImagePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ColorChannelsFilterPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ColorChannelsFilterPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HslColorFilterPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HslColorFilterPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HsvColorFilterPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HsvColorFilterPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DistanceColorFilterPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\DistanceColorFilterPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MorphologyOperatorPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MorphologyOperatorPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ConvolutionPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ConvolutionPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HitAndMissPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\HitAndMissPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\EdgeDetectorPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\EdgeDetectorPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CannyEdgeDetectorPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CannyEdgeDetectorPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MeanShiftPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MeanShiftPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GrayWorldNormalizationPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GrayWorldNormalizationPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ErodeEdgesPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ErodeEdgesPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RunLengthSmoothingPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RunLengthSmoothingPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsThinningPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsThinningPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsEdgesPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsEdgesPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsThickeningPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsThickeningPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsOutlinePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectsOutlinePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\GrayscalePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\InvertPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ThresholdPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExtractRGBChannelPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LevelsLinearPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ColorFilterPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BinaryErosion3x3Plugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BinaryDilatation3x3Plugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExtractNRGBChannelPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\OtsuThresholdPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MirrorPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PixellatePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Erosion3x3Plugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dilatation3x3Plugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Mean3x3Plugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ContrastStretchingPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\HistogramEqualizationPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BlurPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LevelsLinearGrayscalePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ResizeImagePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MergeImagesPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\IntersectImagesPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DiffImagesPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\GaussianBlurPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\GaussianSharpenPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ErosionPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DilatationPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RotateImage90Plugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DistanceTransformationPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\GrayscaleToRgbPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ContrastCorrectionPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BrightnessCorrectionPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RotateImagePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ShiftImagePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExtractQuadrilateralPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EmbedQuadrilateralPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ImageStatisticsPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DiffImagesThresholdedPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AddImagesPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\SubtractImagesPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ReplaceRGBChannelPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MaskImagePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ColorChannelsFilterPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\HslColorFilterPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\HsvColorFilterPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\DistanceColorFilterPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MorphologyOperatorPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ConvolutionPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\HitAndMissPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EdgeDetectorPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CannyEdgeDetectorPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\GrayWorldNormalizationPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MeanShiftPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ErodeEdgesPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RunLengthSmoothingPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ObjectsThinningPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ObjectsEdgesPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ObjectsThickeningPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ObjectsOutlinePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\plugins_list.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Release Notes.txt" />
+  </ItemGroup>
+</Project>
