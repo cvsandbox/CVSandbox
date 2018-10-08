@@ -180,6 +180,8 @@ XErrorCode XImageSetLine( ximage* src, int32_t lineIndex, uint8_t* line, uint32_
 
 // Get specified pixel's color
 XErrorCode XImageGetPixelColor( const ximage* image, int32_t x, int32_t y, xargb* color );
+// Set specified pixel's color
+XErrorCode XImageSetPixelColor( const ximage* image, int32_t x, int32_t y, xargb color );
 // Get specified pixel's color index
 XErrorCode XImageGetPixelColorIndex( const ximage* image, int32_t x, int32_t y, int32_t* colorIndex );
 

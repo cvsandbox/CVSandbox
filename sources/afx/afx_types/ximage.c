@@ -751,6 +751,76 @@ XErrorCode XImageGetPixelColor( const ximage* image, int32_t x, int32_t y, xargb
     return ret;
 }
 
+// Set specified pixel's color
+XErrorCode XImageSetPixelColor( const ximage* image, int32_t x, int32_t y, xargb color )
+{
+    XErrorCode ret = SuccessCode;
+
+    if ( image == 0 )
+    {
+        ret = ErrorNullParameter;
+    }
+    else if ( ( x < 0 ) || ( y < 0 ) || ( x >= image->width ) || ( y >= image->height ) )
+    {
+        ret = ErrorArgumentOutOfRange;
+    }
+    else if ( XImageIsPixelFormatIndexed( image->format ) == true )
+    {
+        ret = ErrorUnsupportedPixelFormat;
+    }
+    else
+    {
+        int32_t  stride    = image->stride;
+        uint8_t* ptr       = image->data;
+        uint8_t  grayValue = RGB_TO_GRAY( color.components.r, color.components.g, color.components.b );
+
+        switch ( image->format )
+        {
+        case XPixelFormatGrayscale8:
+            ptr += stride * y + x;
+
+            *ptr = (uint8_t) ( grayValue * 255 / color.components.a );
+            break;
+
+        case XPixelFormatRGB24:
+            ptr += stride * y + x * 3;
+
+            ptr[RedIndex]   = (uint8_t) ( color.components.r * 255 / color.components.a );
+            ptr[GreenIndex] = (uint8_t) ( color.components.g * 255 / color.components.a );
+            ptr[BlueIndex]  = (uint8_t) ( color.components.b * 255 / color.components.a );
+            break;
+
+        case XPixelFormatRGBA32:
+            ptr += stride * y + x * 4;
+
+            ptr[RedIndex]   = color.components.r;
+            ptr[GreenIndex] = color.components.g;
+            ptr[BlueIndex]  = color.components.b;
+            ptr[AlphaIndex] = color.components.a;
+            break;
+
+        case XPixelFormatBinary1:
+            {
+                uint8_t shift  = 7 - ( x & 7 );
+                uint8_t setBit = ( ( ( grayValue * 255 / color.components.a ) >= 128 ) ? 1 : 0 ) << shift;
+                uint8_t mask   = 1 << shift;
+
+                ptr += stride * y + ( (uint32_t) x >> 3 );
+
+                *ptr &= ~mask;
+                *ptr |= setBit;
+            }
+            break;
+
+        default:
+            ret = ErrorUnsupportedPixelFormat;
+            break;
+        }
+    }
+
+    return ret;
+}
+
 // Get specified pixel's color index
 XErrorCode XImageGetPixelColorIndex( const ximage* image, int32_t x, int32_t y, int32_t* colorIndex )
 {
