@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{463E07FC-49B0-4032-BD17-A60531307806}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ip_effects</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IP_EFFECTS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_imaging;..\..\..\..\..\afx\afx_imaging_effects;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_imaging.lib;afx_imaging_effects.lib;afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"
+xcopy /Y "$(ProjectDir)..\..\Release Notes.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IP_EFFECTS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_imaging;..\..\..\..\..\afx\afx_imaging_effects;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_imaging.lib;afx_imaging_effects.lib;afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"
+xcopy /Y "$(ProjectDir)..\..\Release Notes.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ApplyTexturePlugin.cpp" />
+    <ClCompile Include="..\..\ApplyTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ColorizePlugin.cpp" />
+    <ClCompile Include="..\..\ColorizePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ip_effects.cpp" />
+    <ClCompile Include="..\..\dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\DropLightPlugin.cpp" />
+    <ClCompile Include="..\..\DropLightPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\EmbossPlugin.cpp" />
+    <ClCompile Include="..\..\EmbossPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\FuzzyBorderPlugin.cpp" />
+    <ClCompile Include="..\..\FuzzyBorderPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GenerateCloudsTexturePlugin.cpp" />
+    <ClCompile Include="..\..\GenerateCloudsTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GenerateFuzzyBorderTexturePlugin.cpp" />
+    <ClCompile Include="..\..\GenerateFuzzyBorderTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GenerateGrainTexturePlugin.cpp" />
+    <ClCompile Include="..\..\GenerateGrainTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GenerateMarbleTexturePlugin.cpp" />
+    <ClCompile Include="..\..\GenerateMarbleTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GenerateRoundedBorderTexturePlugin.cpp" />
+    <ClCompile Include="..\..\GenerateRoundedBorderTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GenerateTextileTexturePlugin.cpp" />
+    <ClCompile Include="..\..\GenerateTextileTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GrainPlugin.cpp" />
+    <ClCompile Include="..\..\GrainPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\JitterPlugin.cpp" />
+    <ClCompile Include="..\..\JitterPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\OilPaintingPlugin.cpp" />
+    <ClCompile Include="..\..\OilPaintingPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\RotateHuePlugin.cpp" />
+    <ClCompile Include="..\..\RotateHuePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\RotateRgbChannelsPlugin.cpp" />
+    <ClCompile Include="..\..\RotateRgbChannelsPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\RoundedBorderPlugin.cpp" />
+    <ClCompile Include="..\..\RoundedBorderPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\SaturatePlugin.cpp" />
+    <ClCompile Include="..\..\SaturatePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\SepiaPlugin.cpp" />
+    <ClCompile Include="..\..\SepiaPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\SetHuePlugin.cpp" />
+    <ClCompile Include="..\..\SetHuePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\TextileTexturePlugin.cpp" />
+    <ClCompile Include="..\..\TextileTexturePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\VignettingPlugin.cpp" />
+    <ClCompile Include="..\..\VignettingPluginDescriptor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ApplyTexturePlugin.hpp" />
+    <ClInclude Include="..\..\ColorizePlugin.hpp" />
+    <ClInclude Include="..\..\DropLightPlugin.hpp" />
+    <ClInclude Include="..\..\EmbossPlugin.hpp" />
+    <ClInclude Include="..\..\FuzzyBorderPlugin.hpp" />
+    <ClInclude Include="..\..\GenerateCloudsTexturePlugin.hpp" />
+    <ClInclude Include="..\..\GenerateFuzzyBorderTexturePlugin.hpp" />
+    <ClInclude Include="..\..\GenerateGrainTexturePlugin.hpp" />
+    <ClInclude Include="..\..\GenerateMarbleTexturePlugin.hpp" />
+    <ClInclude Include="..\..\GenerateRoundedBorderTexturePlugin.hpp" />
+    <ClInclude Include="..\..\GenerateTextileTexturePlugin.hpp" />
+    <ClInclude Include="..\..\GrainPlugin.hpp" />
+    <ClInclude Include="..\..\JitterPlugin.hpp" />
+    <ClInclude Include="..\..\OilPaintingPlugin.hpp" />
+    <ClInclude Include="..\..\RotateHuePlugin.hpp" />
+    <ClInclude Include="..\..\RotateRgbChannelsPlugin.hpp" />
+    <ClInclude Include="..\..\RoundedBorderPlugin.hpp" />
+    <ClInclude Include="..\..\SaturatePlugin.hpp" />
+    <ClInclude Include="..\..\SepiaPlugin.hpp" />
+    <ClInclude Include="..\..\SetHuePlugin.hpp" />
+    <ClInclude Include="..\..\TextileTexturePlugin.hpp" />
+    <ClInclude Include="..\..\VignettingPlugin.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\plugins_list.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Release Notes.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

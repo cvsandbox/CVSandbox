@@ -1,0 +1,21 @@
+Image Processing Effects 1.0.1
+-------------------------------------------
+27.11.2015
+
+Version updates and fixes:
+
+* Added Vignetting plug-in, which creates vignetting effect - image gets darker or desaturated
+  on its edges.
+* Added Grain plug-in, which adds vertical or horizontal grain to create effect of scratches on
+  an old film.
+* Added Rotate Image Hue plug-in, which shifts (rotates) hue value by the specified value.
+* Added Emboss plug-in, which creates an emboss effect -  bright areas are raised and
+  dark areas are carved.
+
+
+
+Image Processing Effects 1.0.0 
+-------------------------------------------
+06.07.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
