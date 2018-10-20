@@ -1,0 +1,57 @@
+Blobs' Processing 1.0.4
+-------------------------------------------
+23.12.2018
+
+* Added "Filter Circle Blobs" plug-in, which allows keeping objects having circle shape and remove
+  anything else. It does allow filtering by size - minimum/maximum radius. For each found circle,
+  its center and radius are provided.
+
+* Added "Filter Quadrilateral Blobs" plug-in, which allows keeping objects having quadrilateral shape
+  (having 4 corners) and remove anything else. It does provide setting to look for rectangles or
+  squares. For each found quadrilateral, coordinates of its corners are provided.
+
+* Deprecated the "Find Blobs By Size" plug-in. "Filter Blobs By Size" plug-in must be used instead,
+  specifying it needs only to find blobs, not do the actual filtering.
+
+
+
+Blobs' Processing 1.0.3
+-------------------------------------------
+11.10.2017
+
+* Fixed core blob processing routine, so it does not disjoin parts of a single object due to broken
+  labelling algorithm.
+
+
+
+Blobs' Processing 1.0.2
+-------------------------------------------
+07.03.2017
+
+* Fixed core blob processing routine, which could stuck in an endless loop on certain images.
+
+
+
+Blobs' Processing 1.0.1
+-------------------------------------------
+13.10.2016
+
+* Updated "Find Biggest Blob" plug-in, so it allows also searching for background areas (holes) as well.
+  This allows to find the biggest background area, which is not touching image edges (a hole in an object).
+  Previously it would be required to invert objects' image for that.
+* Added "Find Blobs By Size" plug-in, which is similar to "Filter Blobs By Size", but does only blobs' searching
+  (image is not changed).
+
+
+
+Blobs' Processing 1.0.0
+-------------------------------------------
+03.07.2016
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It provides the next plug-ins:
+  # "Keep Biggest Blob" - Keeps only the biggest blob in the image while removing the rest.
+  # "Find Biggest Blob" - Finds the biggest blob in the image. Similar to the above, but this plug-in
+    does not do any changes to the provided image - only finds coordinates of the biggest blob.
+  # "Filter Blobs By Size" - Keeps only the blobs within the specified size limits.
+  # "Fill Holes" - Fills holes in objects found in the specified image.
