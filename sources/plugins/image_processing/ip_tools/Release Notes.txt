@@ -1,0 +1,45 @@
+Image Processing Tools 1.0.3
+-------------------------------------------
+07.03.2017
+
+Version updates and fixes:
+
+* Added "Color Dodge" and "Color Burn" blending modes to the "Blend Images" plug-in.
+
+
+
+Image Processing Tools 1.0.2
+-------------------------------------------
+13.10.2016
+
+Version updates and fixes:
+
+* Added new functions into "Image Drawing" plug-in: FillFrame, FillRing, FillPie and FillConvexPolygon.
+
+
+
+Image Processing Tools 1.0.1
+-------------------------------------------
+03.07.2016
+
+Version updates and fixes:
+
+* Added "Put Image" plug-in, which can be used to put up to 5 lines of text on an image at
+  the specified coordinates or in image's corners.
+* Added "Image Drawing" plug-in of Scripting APIs type (can be used only from scripting). It exposes different
+  functions to draw on images (through CallFunction() call):
+      DrawLine, DrawRectangle, DrawCircle, DrawEllipse, DrawText, DrawImage, DrawPolyline, DrawPolygon,
+      FillRectangle, FillCircle, FillEllipse.
+* Enabled "Blend Images" plug-in, which blends source image with another image of the same size/format. Supported
+  blend modes are: Multiple, Screen and Overlay.
+* Enabled "Fade Images" plug-in, which fades one image into another creating transition effect.
+* Added "Move Towards Images" plug-in, which changes one image in the direction of anther - decreases difference
+  by the specified amount.
+
+
+
+Image Processing Tools 1.0.0
+-------------------------------------------
+06.07.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.

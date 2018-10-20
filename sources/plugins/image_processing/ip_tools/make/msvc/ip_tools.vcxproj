@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\BlendImagesPlugin.cpp" />
+    <ClCompile Include="..\..\BlendImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ImageDrawingPlugin.cpp" />
+    <ClCompile Include="..\..\ImageDrawingPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\ip_tools.cpp" />
+    <ClCompile Include="..\..\dllmain.cpp" />
+    <ClCompile Include="..\..\FadeImagesPlugin.cpp" />
+    <ClCompile Include="..\..\FadeImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GradientReColoring2Plugin.cpp" />
+    <ClCompile Include="..\..\GradientReColoring2PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GradientReColoring4Plugin.cpp" />
+    <ClCompile Include="..\..\GradientReColoring4PluginDescriptor.cpp" />
+    <ClCompile Include="..\..\GradientReColoringPlugin.cpp" />
+    <ClCompile Include="..\..\GradientReColoringPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\HeatGradientPlugin.cpp" />
+    <ClCompile Include="..\..\HeatGradientPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\MoveTowardsImagesPlugin.cpp" />
+    <ClCompile Include="..\..\MoveTowardsImagesPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\PutTextPlugin.cpp" />
+    <ClCompile Include="..\..\PutTextPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\SaltAndPepperNoisePlugin.cpp" />
+    <ClCompile Include="..\..\SaltAndPepperNoisePluginDescriptor.cpp" />
+    <ClCompile Include="..\..\SimplePosterizationPlugin.cpp" />
+    <ClCompile Include="..\..\SimplePosterizationPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\UniformAdditiveNoisePlugin.cpp" />
+    <ClCompile Include="..\..\UniformAdditiveNoisePluginDescriptor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\BlendImagesPlugin.hpp" />
+    <ClInclude Include="..\..\FadeImagesPlugin.hpp" />
+    <ClInclude Include="..\..\GradientReColoring2Plugin.hpp" />
+    <ClInclude Include="..\..\GradientReColoring4Plugin.hpp" />
+    <ClInclude Include="..\..\GradientReColoringPlugin.hpp" />
+    <ClInclude Include="..\..\HeatGradientPlugin.hpp" />
+    <ClInclude Include="..\..\ImageDrawingPlugin.hpp" />
+    <ClInclude Include="..\..\MoveTowardsImagesPlugin.hpp" />
+    <ClInclude Include="..\..\PutTextPlugin.hpp" />
+    <ClInclude Include="..\..\SaltAndPepperNoisePlugin.hpp" />
+    <ClInclude Include="..\..\SimplePosterizationPlugin.hpp" />
+    <ClInclude Include="..\..\UniformAdditiveNoisePlugin.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\plugins_list.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Release Notes.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7592A498-CE82-43D7-B37E-E3EE060A786E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ip_tools</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IP_TOOLS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_imaging;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_imaging.lib;afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IP_TOOLS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_imaging;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_imaging.lib;afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
