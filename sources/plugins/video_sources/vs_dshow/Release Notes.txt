@@ -1,0 +1,45 @@
+DirectShow Video Sources 1.1.1
+-------------------------------------------
+11.10.2017
+
+Version updates and fixes:
+
+* Minor performance improvements by using SSE instructions for BGR to RGB conversion.
+
+
+
+DirectShow Video Sources 1.1.0
+-------------------------------------------
+03.08.2017
+
+Version updates and fixes:
+
+* Allow overriding frame rate of Local Capture Device video source plug-in, if those support range of frame
+  rates for the selected video resolution. Although it is now supported, don't expect every possible frame
+  rate to work. First, the are funny cameras/drivers. Second, the DirectShow API to get supported frame rates
+  has certain limitations. For example, some drivers may claim they support frame rates in the [1-30] range
+  and they really respect it - they can provide images at the rate set. Other cameras, may claim they support
+  frame rates in the [15-30] range, but they will only work either at 15 or 30 rate, nothing in between.
+  And there are other drivers, which say they can do up to 100 frames a second, but they can never do anything
+  more than 30.
+* Added run time properties for Local Capture Device video source plug-in, which allow changing camera's
+  properties like brightness, contrast, saturation, etc. (if the camera driver supports those properties).
+
+
+
+DirectShow Video Sources 1.0.1
+-------------------------------------------
+03.07.2016
+
+Version updates and fixes:
+
+* Disabled resolutions with 12 bits per pixel and less - the "Local Capture Device" plug-in fails capturing
+  those anyway for now.
+
+
+  
+DirectShow Video Sources 1.0.0
+-------------------------------------------
+27.04.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.

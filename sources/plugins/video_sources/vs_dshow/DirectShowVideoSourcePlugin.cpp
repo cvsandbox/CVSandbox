@@ -1,0 +1,454 @@
+/*
+    DirectShow video source plug-ins of Computer Vision Sandbox
+
+    Copyright (C) 2011-2018, cvsandbox
+    http://www.cvsandbox.com/contacts.html
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+*/
+
+#include "DirectShowVideoSourcePlugin.hpp"
+#include <string.h>
+#include <XVariant.hpp>
+#include <algorithm>
+
+using namespace std;
+using namespace CVSandbox;
+using namespace CVSandbox::Video;
+using namespace CVSandbox::Video::DirectShow;
+
+// Some of the camera's properties available through plug-in's API
+static const XVideoProperty cameraIntProperties[] =
+{
+    XVideoProperty::Brightness, XVideoProperty::Contrast, XVideoProperty::Saturation,
+    XVideoProperty::Hue, XVideoProperty::Sharpness, XVideoProperty::Gamma
+};
+static const XVideoProperty cameraBoolProperties[] =
+{
+    XVideoProperty::ColorEnable, XVideoProperty::BacklightCompensation
+};
+
+// extern some API defines in the plug-in descriptor source file
+extern string DeviceNameToString( const XDeviceName& device );
+extern XDeviceName DeviceNameFromString( const string& str );
+extern string ResolutionToString( const XDeviceCapabilities& cap );
+extern XDeviceCapabilities ResolutionFromString( const string& str, bool* foundMinMaxFps = nullptr );
+extern vector<XDeviceCapabilities> GetDeviceCapabillities( const string& deviceMoniker );
+
+// Some private data
+namespace Private
+{
+    class DirectShowVideoSourcePluginData : public IVideoSourceListener
+    {
+    public:
+        DirectShowVideoSourcePluginData( ) :
+            UserCallbacks( { 0 } ), UserParam( 0 )
+        {
+        }
+
+        ~DirectShowVideoSourcePluginData( )
+        {
+        }
+
+        virtual void OnNewImage( const std::shared_ptr<const XImage>& image );
+        virtual void OnError( const std::string& errorMessage );
+
+    public:
+        VideoSourcePluginCallbacks  UserCallbacks;
+        void*                       UserParam;
+    };
+}
+
+
+DirectShowVideoSourcePlugin::DirectShowVideoSourcePlugin( ) :
+    mData( new ::Private::DirectShowVideoSourcePluginData( ) ),
+    mDevice( XLocalVideoDevice::Create( ) ), mDeviceName( ), mResolution( ), mFrameRate( 0 ), mVideoInput( 0 )
+{
+    vector<XDeviceName> devices = XLocalVideoDevice::GetAvailableDevices( );
+
+    if ( devices.size( ) > 0 )
+    {
+        mDevice->SetDeviceMoniker( devices[0].Moniker( ) );
+        // remember the name for further interaction with property manager
+        mDeviceName = DeviceNameToString( devices[0] );
+        mResolution = ResolutionToString( XDeviceCapabilities( ) );
+    }
+}
+
+DirectShowVideoSourcePlugin::~DirectShowVideoSourcePlugin( )
+{
+    delete mData;
+}
+
+void DirectShowVideoSourcePlugin::Dispose( )
+{
+    delete this;
+}
+
+// Get property of the plug-in
+XErrorCode DirectShowVideoSourcePlugin::GetProperty( int32_t id, xvariant* value ) const
+{
+    XErrorCode ret = SuccessCode;
+
+    switch ( id )
+    {
+    case 0:
+        value->type         = XVT_String;
+        value->value.strVal = XStringAlloc( mDeviceName.c_str( ) );
+        break;
+
+    case 1:
+        value->type         = XVT_String;
+        value->value.strVal = XStringAlloc( mResolution.c_str( ) );
+        break;
+
+    case 2:
+        value->type         = XVT_U2;
+        value->value.usVal  = mFrameRate;
+        break;
+
+    case 3:
+        value->type         = XVT_U1;
+        value->value.ubVal  = mVideoInput;
+        break;
+
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        ret = mDevice->GetVideoProperty( cameraIntProperties[id - 4], &( value->value.iVal ) );
+
+        if ( ret == SuccessCode )
+        {
+            value->type = XVT_I4;
+        }
+        break;
+
+    case 10:
+    case 11:
+        {
+            int32_t propertyValue = 0;
+
+            ret = mDevice->GetVideoProperty( cameraBoolProperties[id - 10], &propertyValue );
+
+            if ( ret == SuccessCode )
+            {
+                value->type = XVT_Bool;
+                value->value.boolVal = ( propertyValue == 1 );
+            }
+        }
+        break;
+
+    default:
+        ret = ErrorInvalidProperty;
+    }
+
+    return ret;
+}
+
+// Set property of the plug-in
+XErrorCode DirectShowVideoSourcePlugin::SetProperty( int32_t id, const xvariant* value )
+{
+    XErrorCode ret = SuccessCode;
+    XVariant   xvar( *value );
+
+    switch ( id )
+    {
+    // video device
+    case 0:
+        if ( xvar.Type( ) == XVT_String )
+        {
+            string      str         = xvar.ToString( &ret );
+            XDeviceName deviceName = DeviceNameFromString( str );
+
+            if ( !deviceName.Moniker( ).empty( ) )
+            {
+                if ( mDevice->SetDeviceMoniker( deviceName.Moniker( ) ) )
+                {
+                    mDeviceName = str;
+                }
+                else
+                {
+                    ret = ErrorCannotSetPropertyWhileRunning;
+                }
+            }
+            else
+            {
+                ret = ErrorInvalidFormat;
+            }
+        }
+        else
+        {
+            ret = ErrorIncompatibleTypes;
+        }
+        break;
+
+    // resolution
+    case 1:
+        if ( xvar.Type( ) == XVT_String )
+        {
+            string              str           = xvar.ToString( &ret );
+            bool                foundMinMax   = false;
+            XDeviceCapabilities resolutionSet = ResolutionFromString( str, &foundMinMax );
+
+            // in case the resolution string is missing min/max frame rate info, try finding it
+            if ( !foundMinMax )
+            {
+                XDeviceName                 deviceName    = DeviceNameFromString( mDeviceName );
+                vector<XDeviceCapabilities> supportedCaps = GetDeviceCapabillities( deviceName.Moniker( ) );
+
+                vector<XDeviceCapabilities>::const_iterator capsIt = std::find( supportedCaps.begin( ), supportedCaps.end( ), resolutionSet );
+
+                if ( capsIt != supportedCaps.end( ) )
+                {
+                    resolutionSet = *capsIt;
+                }
+            }
+
+            if ( ( mFrameRate < resolutionSet.MinimumFrameRate( ) ) || ( mFrameRate > resolutionSet.MaximumFrameRate( ) ) )
+            {
+                mFrameRate = static_cast<uint16_t>( resolutionSet.AverageFrameRate( ) );
+            }
+
+            if ( mDevice->SetResolution( resolutionSet, mFrameRate ) )
+            {
+                mResolution = str;
+            }
+            else
+            {
+                ret = ErrorCannotSetPropertyWhileRunning;
+            }
+        }
+
+        break;
+
+    // frame rate
+    case 2:
+        {
+            uint16_t requestedFps = xvar.ToUShort( &ret );
+
+            if ( ret == SuccessCode )
+            {
+                XDeviceCapabilities cap = ResolutionFromString( mResolution );
+
+                if ( mDevice->SetResolution( cap, requestedFps ) )
+                {
+                    mFrameRate = requestedFps;
+                }
+                else
+                {
+                    ret = ErrorCannotSetPropertyWhileRunning;
+                }
+            }
+        }
+        break;
+
+    // video input
+    case 3:
+        mVideoInput = xvar.ToUByte( );
+        break;
+
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        {
+            int32_t propertyValue = xvar.ToInt( &ret );
+
+            if ( ret == SuccessCode )
+            {
+                ret = mDevice->SetVideoProperty( cameraIntProperties[id - 4], propertyValue );
+            }
+        }
+        break;
+
+    case 10:
+    case 11:
+        {
+            bool propertyBoolValue = xvar.ToBool( &ret );
+
+            if ( ret == SuccessCode )
+            {
+                ret = mDevice->SetVideoProperty( cameraBoolProperties[id - 10], ( propertyBoolValue ) ? 1 : 0 );
+            }
+        }
+        break;
+
+    default:
+        ret = ErrorInvalidProperty;
+        break;
+    }
+
+    return ret;
+}
+
+// Update description of device run time configuration properties
+XErrorCode DirectShowVideoSourcePlugin::UpdateDescription( PluginDescriptor* descriptor )
+{
+    XErrorCode ret = SuccessCode;
+
+    if ( descriptor == nullptr )
+    {
+        ret = ErrorNullParameter;
+    }
+    else if ( !mDevice->IsDeviceRunning( ) )
+    {
+        ret = ErrorDeivceNotReady;
+    }
+    else
+    {
+        if ( !mDevice->IsVideoConfigSupported( ) )
+        {
+            // device does not support any configuration, hide all properties
+            for ( int i = 4; i <= 11; i++ )
+            {
+                descriptor->Properties[i]->Flags |= PropertyFlag_Hidden;
+            }
+        }
+        else
+        {
+            int32_t minValue, maxValue, defaultValue, stepSize;
+            bool    isAutoSupported;
+
+            for ( int i = 4; i <= 9; i++ )
+            {
+                if ( mDevice->GetVideoPropertyRange( cameraIntProperties[i - 4], &minValue, &maxValue, &stepSize, &defaultValue, &isAutoSupported ) != SuccessCode )
+                {
+                    descriptor->Properties[i]->Flags |= PropertyFlag_Hidden;
+                }
+                else
+                {
+                    descriptor->Properties[i]->Flags &= ( ~PropertyFlag_Hidden );
+
+                    descriptor->Properties[i]->DefaultValue.type = XVT_I4;
+                    descriptor->Properties[i]->DefaultValue.value.iVal = defaultValue;
+
+                    descriptor->Properties[i]->MinValue.type = XVT_I4;
+                    descriptor->Properties[i]->MinValue.value.iVal = minValue;
+
+                    descriptor->Properties[i]->MaxValue.type = XVT_I4;
+                    descriptor->Properties[i]->MaxValue.value.iVal = maxValue;
+                }
+            }
+
+            for ( int i = 10; i <= 11; i++ )
+            {
+                if ( mDevice->GetVideoPropertyRange( cameraBoolProperties[i - 10], &minValue, &maxValue, &stepSize, &defaultValue, &isAutoSupported ) != SuccessCode )
+                {
+                    descriptor->Properties[i]->Flags |= PropertyFlag_Hidden;
+                }
+                else
+                {
+                    descriptor->Properties[i]->Flags &= ( ~PropertyFlag_Hidden );
+
+                    descriptor->Properties[i]->DefaultValue.type = XVT_Bool;
+                    descriptor->Properties[i]->DefaultValue.value.boolVal = ( defaultValue == 1 );
+                }
+            }
+        }
+    }
+
+    return ret;
+}
+
+// Start video source so it initializes and begins providing video frames
+XErrorCode DirectShowVideoSourcePlugin::Start( )
+{
+    vector<XDevicePinInfo> inputs = mDevice->GetInputVideoPins( );
+
+    if ( ( !inputs.empty( ) ) && ( mVideoInput < static_cast<uint8_t>( inputs.size( ) ) ) )
+    {
+        mDevice->SetVideoInput( inputs[mVideoInput] );
+    }
+
+    return mDevice->Start( );
+}
+
+// Signal video to stop, so it could finalize and cleanup
+void DirectShowVideoSourcePlugin::SignalToStop( )
+{
+    mDevice->SignalToStop( );
+}
+
+// Wait till video source (its thread) stops
+void DirectShowVideoSourcePlugin::WaitForStop( )
+{
+    mDevice->WaitForStop( );
+}
+
+// Check if video source (its thread) is still running
+bool DirectShowVideoSourcePlugin::IsRunning( )
+{
+    return mDevice->IsRunning( );
+}
+
+// Terminate video source - call *ONLY* if video source looks to be frozen and does not stop
+// by itself when signaled (ideally this method should not exist and be called at all)
+void DirectShowVideoSourcePlugin::Terminate( )
+{
+    mDevice->Terminate( );
+}
+
+// Get number of frames received since the the start of the video source
+uint32_t DirectShowVideoSourcePlugin::FramesReceived( )
+{
+    return mDevice->FramesReceived( );
+}
+
+// Set callbacks for the video source
+void DirectShowVideoSourcePlugin::SetCallbacks( const VideoSourcePluginCallbacks* callbacks, void* userParam )
+{
+    // first unsubscribe from events - this will make sure our local events are done
+    mDevice->SetListener( 0 );
+
+    if ( callbacks != 0 )
+    {
+        memcpy( &mData->UserCallbacks, callbacks, sizeof( mData->UserCallbacks ) );
+        mData->UserParam = userParam;
+
+        mDevice->SetListener( mData );
+    }
+    else
+    {
+        memset( &mData->UserCallbacks, 0, sizeof( mData->UserCallbacks ) );
+        mData->UserParam = 0;
+    }
+}
+
+namespace Private
+{
+
+// Handle new image arrived from video source
+void DirectShowVideoSourcePluginData::OnNewImage( const std::shared_ptr<const XImage>& image )
+{
+    if ( ( UserCallbacks.NewImageCallback != 0 ) && ( image ) )
+    {
+        UserCallbacks.NewImageCallback( UserParam, image->ImageData( ) );
+    }
+}
+
+void DirectShowVideoSourcePluginData::OnError( const std::string& errorMessage )
+{
+    if ( UserCallbacks.ErrorMessageCallback != 0 )
+    {
+        UserCallbacks.ErrorMessageCallback( UserParam, errorMessage.c_str( ) );
+    }
+}
+
+} // namespace Private
