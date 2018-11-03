@@ -1,0 +1,5 @@
+PNG Format Handler 1.0.0 
+-------------------------------------------
+19.02.2016
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
