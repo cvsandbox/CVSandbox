@@ -1,0 +1,16 @@
+JPEG Format Handler 1.0.1 
+-------------------------------------------
+03.07.2016
+
+Version updates and fixes:
+
+* Updated JPEG loading plug-in so it respects orientation EXIF tag and transforms images
+  appropriately when loading.
+
+
+
+JPEG Format Handler 1.0.0 
+-------------------------------------------
+19.02.2016
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
