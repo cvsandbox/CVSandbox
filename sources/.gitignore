@@ -1,5 +1,6 @@
 *.o
 *.a
+*.exe
 **/.vs
 **/msvc/Debug
 **/msvc/Release
