@@ -2,7 +2,7 @@
 
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
-OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\bin\$(OUT_SUB_FOLDER)\"
+OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\bin\$(OUT_SUB_FOLDER)"
 
 CFLAGS += $(INCLUDES)
 LDFLAGS += $(LIBDIR) $(LIBS)

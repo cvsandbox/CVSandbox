@@ -4,7 +4,7 @@ include ../src.mk
 include ../../../../../make/settings/mingw/compiler_cpp.mk
 
 OUT = dev_sysinfo.dll
-OUT_SUB_FOLDER = cvsplugins\dev_sysinfo
+OUT_SUB_FOLDER = cvsplugins\dev_sysinfo\
 
 LIBDIR = -L..\..\..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\lib
 

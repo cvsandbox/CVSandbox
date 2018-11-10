@@ -4,7 +4,7 @@ include ../src.mk
 include ../../../../../make/settings/mingw/compiler_cpp.mk
 
 OUT = ip_stdimaging.dll
-OUT_SUB_FOLDER = cvsplugins\ip_stdimaging
+OUT_SUB_FOLDER = cvsplugins\ip_stdimaging\
 
 LIBDIR = -L..\..\..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\lib
 

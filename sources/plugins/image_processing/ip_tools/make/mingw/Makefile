@@ -4,7 +4,7 @@ include ../src.mk
 include ../../../../../make/settings/mingw/compiler_cpp.mk
 
 OUT = ip_tools.dll
-OUT_SUB_FOLDER = cvsplugins\ip_tools
+OUT_SUB_FOLDER = cvsplugins\ip_tools\
 
 LIBDIR = -L..\..\..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\lib
 
