@@ -1,2 +1,5 @@
 *.o
 *.a
+**/.vs
+**/msvc/Debug
+**/msvc/Release
