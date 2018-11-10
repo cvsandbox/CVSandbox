@@ -1,0 +1,27 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scripting_test", "scripting_test.vcxproj", "{B04A8E57-118D-4B9D-A50B-65CC50BB840F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pluginscripting", "..\..\..\..\core\pluginscripting\make\msvc\pluginscripting.vcxproj", "{D2C21E82-B63E-49C1-95D6-18F157D4BB06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Debug|Win32.Build.0 = Debug|Win32
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Release|Win32.ActiveCfg = Release|Win32
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Release|Win32.Build.0 = Release|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Debug|Win32.Build.0 = Debug|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Release|Win32.ActiveCfg = Release|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
