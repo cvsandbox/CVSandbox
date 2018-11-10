@@ -16,6 +16,3 @@ INCLUDES = -I../../../../afx/afx_types -I../../../../afx/afx_types+ \
 LIBS = -lafx_video_dshow+ -lafx_video_mjpeg+ -lafx_video_ffmpeg+ -lafx_platform+ \
 	-lafx_imaging_formats -lafx_types+ -lafx_types \
 	-lavcodec -lavformat -lavutil -lswscale -lpng -lz
-
-CFLAGS += $(INCLUDES)
-LDFLAGS += $(LIBS)

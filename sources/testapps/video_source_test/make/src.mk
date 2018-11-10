@@ -19,6 +19,3 @@ LIBS = -lafx_video_dshow+ -lafx_video_mjpeg+ -lafx_video_ffmpeg+ -lafx_platform+
 	-lole32 -loleaut32 -lstrmiids -luuid \
 	-ljpeg -lcurldll -lws2_32 \
 	-lavcodec -lavformat -lavutil -lswscale
-
-CFLAGS += $(INCLUDES)
-LDFLAGS += $(LIBS)
