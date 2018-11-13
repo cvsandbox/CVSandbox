@@ -16,6 +16,3 @@ INCLUDES = -I../../../../../afx/afx_types -I../../../../../afx/afx_types+ \
 # libraries to use
 LIBS = -liplugin -lafx_video_dshow+ -lafx_platform+ -lafx_types+ -lafx_types \
 	-lole32 -loleaut32 -lstrmiids -luuid
-
-CFLAGS += $(INCLUDES)
-LDFLAGS += $(LIBS)

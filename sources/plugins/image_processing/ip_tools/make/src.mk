@@ -24,6 +24,3 @@ INCLUDES = -I../../../../../afx/afx_types -I../../../../../afx/afx_imaging \
 
 # libraries to use
 LIBS = -liplugin -lafx_imaging -lafx_types
-
-CFLAGS += $(INCLUDES)
-LDFLAGS += $(LIBS)

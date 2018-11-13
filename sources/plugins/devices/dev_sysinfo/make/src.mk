@@ -15,6 +15,3 @@ INCLUDES = -I../../../../../afx/afx_types \
 
 # libraries to use
 LIBS = -lwinmm -lpdh -liplugin -lafx_types
-
-CFLAGS += $(INCLUDES)
-LDFLAGS += $(LIBS)
