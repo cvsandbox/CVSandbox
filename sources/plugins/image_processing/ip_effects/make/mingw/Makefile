@@ -4,9 +4,9 @@ include ../src.mk
 include ../../../../../make/settings/mingw/compiler_cpp.mk
 
 OUT = ip_effects.dll
-OUT_SUB_FOLDER = cvsplugins\ip_effects\
+OUT_SUB_FOLDER = cvsplugins\ip_effects
 
-LIBDIR = -L..\..\..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\lib
+LIBDIR = -L../../../../../../build/$(TARGET)/$(BUILD_TYPE)/lib
 
 LDFLAGS += -shared -fopenmp
 

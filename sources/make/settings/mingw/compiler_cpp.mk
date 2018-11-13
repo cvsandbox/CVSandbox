@@ -6,11 +6,11 @@ SRC_FILE_EXT = %.cpp
 OBJ = $(SRC:.cpp=.o)
 
 # compiler
-COMPILER = $(MINGW_BIN)\g++.exe
+COMPILER = $(MINGW_BIN)/g++.exe
 # lib archiver
-ARCHIVER = $(MINGW_BIN)\ar.exe
+ARCHIVER = $(MINGW_BIN)/ar.exe
 
-CFLAGS += -Wall
+CFLAGS += -Wall -std=gnu++0x -fno-rtti
 
 # compiler options
 ifneq "$(findstring debug, $(MAKECMDGOALS))" ""
@@ -22,5 +22,3 @@ else
 CFLAGS += -O3 -s -DNDEBUG
 BUILD_TYPE = release
 endif 
-
-CFLAGS += -std=gnu++0x -Wall -fno-rtti

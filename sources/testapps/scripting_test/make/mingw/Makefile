@@ -5,7 +5,7 @@ include ../../../../make/settings/mingw/compiler_cpp.mk
 
 OUT = scripting_test.exe
 
-LIBDIR = -L..\..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\lib
+LIBDIR = -L../../../../../build/$(TARGET)/$(BUILD_TYPE)/lib
 
 LDFLAGS += $(LIBDIR)
 

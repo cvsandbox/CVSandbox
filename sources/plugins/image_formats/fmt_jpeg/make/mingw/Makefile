@@ -4,9 +4,9 @@ include ../src.mk
 include ../../../../../make/settings/mingw/compiler_cpp.mk
 
 OUT = fmt_jpeg.dll
-OUT_SUB_FOLDER = cvsplugins\fmt_jpeg\
+OUT_SUB_FOLDER = cvsplugins\fmt_jpeg
 
-LIBDIR = -L..\..\..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\lib
+LIBDIR = -L../../../../../../build/$(TARGET)/$(BUILD_TYPE)/lib
 
 LDFLAGS += -shared -fopenmp
 

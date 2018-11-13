@@ -6,9 +6,9 @@ SRC_FILE_EXT = %.c
 OBJ = $(SRC:.c=.o)
 
 # compiler
-COMPILER = $(MINGW_BIN)\gcc.exe
+COMPILER = $(MINGW_BIN)/gcc.exe
 # lib archiver
-ARCHIVER = $(MINGW_BIN)\ar.exe
+ARCHIVER = $(MINGW_BIN)/ar.exe
 
 CFLAGS += -Wall
 
