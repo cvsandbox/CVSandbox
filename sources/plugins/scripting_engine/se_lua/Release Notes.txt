@@ -1,0 +1,121 @@
+Lua Scripting Engine 1.0.6
+-------------------------------------------
+23.12.2017
+
+Version updates and fixes:
+
+* Scripting engine fixes:
+  # API revision (SCRIPTING_API_REVISION variable) is raised to 7.
+  # Added support for Point plug-in property type with real numbers.
+  # Fixed setting of negative integers from script into the running host (Host.SetVariable()).
+
+
+
+Lua Scripting Engine 1.0.5
+-------------------------------------------
+03.08.2017
+
+Version updates and fixes:
+
+* Scripting engine fixes:
+  # API revision (SCRIPTING_API_REVISION variable) is raised to 6.
+  # Added Host::GetVideoSource() API, which allows getting object of the video source for
+    which a script is running. This allows changing run time properties of a video source
+    from the script, which is set to perform image processing for the video source.
+
+
+
+Lua Scripting Engine 1.0.4
+-------------------------------------------
+07.03.2017
+
+Version updates and fixes:
+
+* Scripting engine fixes:
+  # API revision (SCRIPTING_API_REVISION variable) is raised to 5.
+  # Added support for plug-in's properties of 2D array type. Those are represented as "jagged table"
+    in Lua - table of tables, where all sub-tables must be of the same length.
+
+
+
+Lua Scripting Engine 1.0.3
+-------------------------------------------
+13.10.2016
+
+Version updates and fixes:
+
+* Scripting engine fixes:
+  # API revision (SCRIPTING_API_REVISION variable) is raised to 4.
+  # The scripting engine is changed to avoid implicit conversion of floating point numbers to
+    integers. If a plug-in's property or function expects an integer value, then such must be provided.
+    It is user's responsibility to use math.floor() when needed.
+
+
+
+Lua Scripting Engine 1.0.2
+-------------------------------------------
+03.07.2016
+
+Version updates and fixes:
+
+* Scripting engine fixes:
+  # API revision (SCRIPTING_API_REVISION variable) is raised to 3.
+  # Added support for array type properties. Plug-in API allow as getting/setting entire array using
+    GetProperty( propertyName ) and SetProperty( propertyName, value ), as getting/setting individual
+    values using GetProperty( propertyName, index ) and SetProperty( propertyName, index, value ).
+  # Added support for point and size property types, which are represented as Lua arrays with 2 values.
+  # Added APIs to store variables at host side:
+    Host.GetVariable( variableName ) and Host.SetVariable( variableName, value ). The APIs allow
+    storing variables of Lua scalar types, arrays (not tables with arbitrary indexing) and image objects.
+  # Extended plug-in's interface with new CallFunction() API, which allows calling arbitrary functions
+    exposed by a plug-in.
+  # Added support for image processing plug-ins. Unlike image processing filter plug-in, this new type is
+    for image processing routines which don't change image at all. Only for processing images with the aim
+    to calculate some values, which are then accessible as read-only properties.
+  # Added support for 2 source image processing filter plug-ins. These plug-ins operate with two image to
+    perform their task. For example, adding images, subtracting images, intersection (min), merge (max), etc.
+  # Fixed error reporting when using ExportImage() method of image exporting plug-ins.
+  # Fixed Lua scripting engine, which was badly creating instances of some plug-ins, causing crashes on various
+    APIs for different plug-in types: IsPixelFormatSupported(), GetOutputPixelFormat(), GetSecondImageSupportedSize(),
+    GetSecondImageSupportedFormat(), SupportedExtensions(), SupportedPixelFormats().
+
+* Lua Scripting plug-in fixes:
+  # Updated plug-in to support variables storage at host.
+  # Updated plug-in's description, so it tells about latest added APIs and new plug-in types' interfaces.
+
+
+
+Lua Scripting Engine 1.0.1
+-------------------------------------------
+19.02.2016
+
+Version updates and fixes:
+
+* Scripting engine fixes:
+  # Added SCRIPTING_API_REVISION global variable, which reports API revision, so scripts could check it
+    and raise an error if API revision does not match expectations. Current API revision is set to 2.
+  # New APIs added:
+    - Image:Clone() - clones an images.
+    - Image:GetSubImage() - gets sub image of the specified size.
+    - Image:PutImage() - puts an image into the specified image at the specified location.
+    - Image:Release() - releases reference to the image, so it can be disposed.
+    - Image:Release() - releases reference to the plug-in, so it can be disposed.
+  # Added check for number of parameters to all exposed APIs - calls will fail if number of passed
+    parameters is not equal to expected value.
+  # Extended the list of registered Lua libraries to: table, math, os, string, io, bit32.
+
+
+* Lua Scripting plug-in fixes:
+  # Added property which allows controlling frequency of forced Garbage Collection cycles.
+  # Documented API of Image Importing and Image Exporting plug-ins.
+  # Documented Host.Name() and Host.Version() APIs.
+  # Applied fix to Lua library, so it is possible to load scripts from folders containing
+    Unicode characters.
+
+
+
+Lua Scripting Engine 1.0.0 
+-------------------------------------------
+27.11.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
