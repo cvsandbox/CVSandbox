@@ -1,0 +1,3 @@
+{ 0xAF000003, 0x00000000, 0x00000009, 0x00000001 } - Fire Effect Virtual Video Source
+{ 0xAF000003, 0x00000000, 0x00000009, 0x00000002 } - Color Snake Virtual Video Source
+{ 0xAF000003, 0x00000000, 0x00000009, 0x00000003 } - Plasma Effect Virtual Video Source
