@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iplugin", "..\..\iplugin\make\msvc\iplugin.vcxproj", "{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pluginmgr", "..\..\pluginmgr\make\msvc\pluginmgr.vcxproj", "{6356CC85-FC4F-4289-9984-3DD0DED64873}"
+	ProjectSection(ProjectDependencies) = postProject
+		{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A} = {41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pluginscripting", "..\..\pluginscripting\make\msvc\pluginscripting.vcxproj", "{D2C21E82-B63E-49C1-95D6-18F157D4BB06}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6356CC85-FC4F-4289-9984-3DD0DED64873} = {6356CC85-FC4F-4289-9984-3DD0DED64873}
+		{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A} = {41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "automationserver", "..\..\automationserver\make\msvc\automationserver.vcxproj", "{61B2C76D-1F18-49FA-A215-A77A03084685}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6356CC85-FC4F-4289-9984-3DD0DED64873} = {6356CC85-FC4F-4289-9984-3DD0DED64873}
+		{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A} = {41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}.Debug|Win32.Build.0 = Debug|Win32
+		{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}.Release|Win32.ActiveCfg = Release|Win32
+		{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}.Release|Win32.Build.0 = Release|Win32
+		{6356CC85-FC4F-4289-9984-3DD0DED64873}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6356CC85-FC4F-4289-9984-3DD0DED64873}.Debug|Win32.Build.0 = Debug|Win32
+		{6356CC85-FC4F-4289-9984-3DD0DED64873}.Release|Win32.ActiveCfg = Release|Win32
+		{6356CC85-FC4F-4289-9984-3DD0DED64873}.Release|Win32.Build.0 = Release|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Debug|Win32.Build.0 = Debug|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Release|Win32.ActiveCfg = Release|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Release|Win32.Build.0 = Release|Win32
+		{61B2C76D-1F18-49FA-A215-A77A03084685}.Debug|Win32.ActiveCfg = Debug|Win32
+		{61B2C76D-1F18-49FA-A215-A77A03084685}.Debug|Win32.Build.0 = Debug|Win32
+		{61B2C76D-1F18-49FA-A215-A77A03084685}.Release|Win32.ActiveCfg = Release|Win32
+		{61B2C76D-1F18-49FA-A215-A77A03084685}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
