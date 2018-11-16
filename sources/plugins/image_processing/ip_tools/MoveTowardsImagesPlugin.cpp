@@ -90,7 +90,6 @@ XErrorCode MoveTowardsImagesPlugin::ProcessImage( const ximage* src, const ximag
 // Process the specified source image by changing it
 XErrorCode MoveTowardsImagesPlugin::ProcessImageInPlace( ximage* src, const ximage* src2 )
 {
-    printf( "step size: %d \n", stepSize );
     return MoveTowardsImages( src, src2, stepSize );
 }
 
