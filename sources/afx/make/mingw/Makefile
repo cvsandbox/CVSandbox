@@ -5,6 +5,7 @@ BUILDS = afx_types \
          afx_imaging \
          afx_imaging_effects \
          afx_imaging_formats \
+         afx_vision \
          afx_video+ \
          video/afx_video_mjpeg+ \
          video/afx_video_dshow+ \
