@@ -1,0 +1,3 @@
+{ 0xAF000003, 0x00000000, 0x00000005, 0x00000001 } - JPEG HTTP Video Source
+{ 0xAF000003, 0x00000000, 0x00000005, 0x00000002 } - MJPEG HTTP Video Source
+{ 0xAF000003, 0x00000000, 0x00000005, 0x00000003 } - (The plug-in was moved into vs_image_folder, so ID is busy)

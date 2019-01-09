@@ -1,0 +1,42 @@
+JPEG/MJPEG Video Sources 1.0.3
+-------------------------------------------
+03.08.2017
+
+Version updates and fixes:
+
+* JPEG/MJPEG video sources now report server's response message when getting HTTP error. So instead
+  of saying something like "HTTP response code: 500", they also add the text response if it was provided,
+  which may explain more about the failure reason.
+* Updated JPEG/MJPEG video sources to say "Connection failed" instead of "HTTP response code: 0".
+
+
+
+JPEG/MJPEG Video Sources 1.0.2
+-------------------------------------------
+13.10.2016
+
+Version updates and fixes:
+
+* The "JPEG Folder Video Source" plug-in is moved from this module into vs_image_folder.
+
+
+
+JPEG/MJPEG Video Sources 1.0.1
+-------------------------------------------
+03.07.2016
+
+Version updates and fixes:
+
+* Added "JPEG Folder Video Source" plug-in, which is a video source for providing JPEG images from
+  a specified folder. It can play found images once or repeat them in an end-less loop.
+
+
+
+JPEG/MJPEG Video Sources 1.0.0
+-------------------------------------------
+27.04.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It provides "JPEG HTTP Video Source" and "MJPEG HTTP Video Source" plug-ins, which allow retrieving
+  JPEGs and MJPEG streams from a given HTTP URL. Can be used to access IP cameras supporting these
+  interfaces.
