@@ -1,0 +1,20 @@
+Image Folder Video Sources 1.0.1
+-------------------------------------------
+03.08.2017
+
+Version updates and fixes:
+
+* Fixed year and month parts of file name formatting in Image Folder Writer plug-in.
+
+
+
+Image Folder Video Sources 1.0.0
+-------------------------------------------
+13.10.2016
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It provides "Image Folder Video Source" plug-in, which is an improved version of "JPEG Folder Video Source"
+  plug-in. The old plug-in was taken from "vs_mjpeg" module and extended to support both JPEG and PNG images.
+
+  Also it provides a new "Image Folder Writer" plug-in, which writes images into the specified folder at the
+  specified time intervals (supports JPEG and PNG codec). This may allow creating time lapse images, for example.

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Module Files">
+      <UniqueIdentifier>{9a95b98d-3709-45cb-9592-6f10100a6564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Plugin Descriptors">
+      <UniqueIdentifier>{d612ebdf-2a96-4f9c-b65a-4bfb5873ce4d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\dllmain.cpp">
+      <Filter>Source Files\Module Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vs_image_folder.cpp">
+      <Filter>Source Files\Module Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ImageFolderVideoSourcePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ImageFolderVideoSourcePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ImageFolderWriterPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ImageFolderWriterPluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\plugins_list.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ImageFolderVideoSourcePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ImageFolderWriterPlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Release Notes.txt" />
+  </ItemGroup>
+</Project>

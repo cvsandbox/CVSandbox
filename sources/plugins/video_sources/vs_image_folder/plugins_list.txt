@@ -1,0 +1,4 @@
+Note: the plug-in below was moved from another module after it was released, so its ID is kept.
+{ 0xAF000003, 0x00000000, 0x00000005, 0x00000003 } - Image Folder Video Source
+
+{ 0xAF000003, 0x00000000, 0x00000013, 0x00000001 } - Image Folder Writer

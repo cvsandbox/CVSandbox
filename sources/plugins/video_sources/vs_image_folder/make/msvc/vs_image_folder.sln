@@ -1,0 +1,21 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vs_image_folder", "vs_image_folder.vcxproj", "{FA864967-B568-4952-89D9-2F12C6FF5107}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA864967-B568-4952-89D9-2F12C6FF5107}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA864967-B568-4952-89D9-2F12C6FF5107}.Debug|Win32.Build.0 = Debug|Win32
+		{FA864967-B568-4952-89D9-2F12C6FF5107}.Release|Win32.ActiveCfg = Release|Win32
+		{FA864967-B568-4952-89D9-2F12C6FF5107}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
