@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Module Files">
+      <UniqueIdentifier>{59dbc41d-0cb0-4928-a7c4-4c25cb698b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Plugin Descriptors">
+      <UniqueIdentifier>{1f22fe01-8609-41dd-acc1-745955769ef3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\dllmain.cpp">
+      <Filter>Source Files\Module Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vs_screen_cap.cpp">
+      <Filter>Source Files\Module Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ScreenCapturePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ScreenCapturePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ScreenCapturePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\plugins_list.txt" />
+    <Text Include="..\..\Release Notes.txt" />
+  </ItemGroup>
+</Project>
