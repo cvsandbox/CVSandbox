@@ -1,0 +1,30 @@
+FFmpeg Based Video Sources 1.0.2
+-------------------------------------------
+23.12.2017
+
+Version updates and fixes:
+
+* Fixed video decoding in the "Video File" plug-in, which could result in infinite loop on some video files
+  and no video coming from them.
+* Fixed "Video File" plug-in so it reports "End of file reached", when same is reported by FFmpeg library.
+  The issue was happening only on some video files, where "IO failure" was reported instead of "End of file".
+
+
+
+FFmpeg Based Video Sources 1.0.1
+-------------------------------------------
+03.07.2016
+
+Version updates and fixes:
+
+* Added "Video File" plug-in, which is a video source for playing video files. Only video is provided.
+
+
+
+FFmpeg Based Video Sources 1.0.0
+-------------------------------------------
+27.04.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It provides "Network Stream Video Source" plug-in, which allows accessing different network video streams
+  (like RTSP) using FFmpeg library.
