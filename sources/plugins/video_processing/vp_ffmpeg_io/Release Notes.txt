@@ -1,0 +1,19 @@
+FFmpeg Based Video Writing 1.0.1
+-------------------------------------------
+11.10.2017
+
+Version updates and fixes:
+
+* Fixed Video File Writer plug-in, so it has correct property dependencies, which don't lead to
+  application crash when configuring the plug-in.
+
+
+
+FFmpeg Based Video Writing 1.0.0
+-------------------------------------------
+06.07.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It provides "Video File Writer" plug-in, which allows writing as single video file, as organizing
+  video archives (new video files are created while old are deleted to make sure size of the
+  archive does not cross the limit).
