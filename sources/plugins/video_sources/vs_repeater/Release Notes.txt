@@ -1,0 +1,9 @@
+Video Repeater Plug-ins 1.0.0
+-------------------------------------------
+03.07.2016
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It provides two plug-ins, which are aimed for building video repeating chains.
+  The "Video Repeater" plug-in is a video source, which does not provide any
+  video frames until something is pushed into them using "Video Repeater Push"
+  plug-in.
