@@ -1,0 +1,19 @@
+CVSandbox Virtual Camera Push Plug-in 1.1.0
+-------------------------------------------
+03.08.2017
+
+Version updates and fixes:
+
+* Updated the push plug-in to support 1.1.0 version of CVSandbox Virtual Camera, which now
+  supports multiple resolutions. The push plug-in only does color conversion if necessary, but
+  leaves any required resizing to the virtual camera. Images larger than 2000x1500 are rejected.
+
+
+
+CVSandbox Virtual Camera Push Plug-in 1.0.0
+-------------------------------------------
+27.11.2015
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It allows pushing images into CVSandbox Virtual Camera, which are then sreamed by the virtual
+  camera from any application supporting DirectShow interface.
