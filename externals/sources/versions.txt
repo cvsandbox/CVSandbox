@@ -27,6 +27,10 @@ http://curl.haxx.se/
 https://www.ffmpeg.org/
 
 
+* Scintilla - 3.7.6       (2017-08-08)
+http://www.scintilla.org/
+    
+
 * qtpropertybrowser
 QtPropertyBrowser comes as part of Qt Solutions Archive
 git://gitorious.org/qt-solutions/qt-solutions
