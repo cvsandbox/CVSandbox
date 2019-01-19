@@ -1,0 +1,7 @@
+Bar Codes Detection and Recognition 1.0.0 
+-------------------------------------------
+23.12.2017
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  The module for now contains only one plug-in, which detects 1D liner bar codes
+  (Bar Code Detector).

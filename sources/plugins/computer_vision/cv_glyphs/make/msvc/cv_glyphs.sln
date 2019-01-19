@@ -1,0 +1,21 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cv_glyphs", "cv_glyphs.vcxproj", "{5F0F0366-22B4-4E07-8221-C8ABC734B25E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F0F0366-22B4-4E07-8221-C8ABC734B25E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5F0F0366-22B4-4E07-8221-C8ABC734B25E}.Debug|Win32.Build.0 = Debug|Win32
+		{5F0F0366-22B4-4E07-8221-C8ABC734B25E}.Release|Win32.ActiveCfg = Release|Win32
+		{5F0F0366-22B4-4E07-8221-C8ABC734B25E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
