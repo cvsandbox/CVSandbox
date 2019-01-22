@@ -1,0 +1,8 @@
+Raspberry Pi plug-ins 1.0.0
+-------------------------------------------
+03.08.2017.
+
+* The first release of the plug-ins' module for Computer Vision Sandbox.
+  It provides "Raspberry Pi Camera" plug-in, which allows accessing Pi's camera in the
+  case it runs cam2web application.
+  https://github.com/cvsandbox/cam2web
