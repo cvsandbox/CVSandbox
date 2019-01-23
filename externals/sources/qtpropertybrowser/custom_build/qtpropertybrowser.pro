@@ -2,26 +2,41 @@ TARGET = qtpropertybrowser
 TEMPLATE = lib
 
 CONFIG += qt
-QT *= widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += embed_manifest_dll
 DEFINES += QT_QTPROPERTYBROWSER_EXPORT
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 
+message( $$MAKEFILE_GENERATOR )
+
 CONFIG (debug, debug|release) {
-    QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/unknow/debug
+    message( "Debug build" )
 
-    msvc:QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/msvc/debug
-    mingw:QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/mingw/debug
+    QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/unknown/debug
 
+    contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
+        QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/msvc/debug
+    }
+    contains(MAKEFILE_GENERATOR, "MINGW") {
+        QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/mingw/debug
+    }
 } else {
-    QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/unknow/release
+    message( "Release build" )
 
-    msvc:QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/msvc/release
-    mingw:QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/mingw/release
+    QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/unknown/release
+
+    contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
+        QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/msvc/release
+    }
+    contains(MAKEFILE_GENERATOR, "MINGW") {
+        QTPROPERTYBROWSER_LIBDIR = $$PWD/lib/mingw/release
+    }
 }
 
-msvc:QMAKE_CXXFLAGS += /FS
+contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
+    QMAKE_CXXFLAGS += /FS
+}
 
 DESTDIR = $$QTPROPERTYBROWSER_LIBDIR
 DLLDESTDIR = $$QTPROPERTYBROWSER_LIBDIR/bin
