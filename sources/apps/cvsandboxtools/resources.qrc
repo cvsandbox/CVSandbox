@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>icons/block.png</file>
+        <file>icons/idea.png</file>
+        <file>icons/back.png</file>
+        <file>icons/forward.png</file>
+        <file>icons/configure.png</file>
+        <file>icons/favourite.png</file>
+        <file>icons/folder.png</file>
+        <file>icons/script_file.png</file>
+        <file>icons/open_script_file.png</file>
+        <file>icons/file_close.png</file>
+        <file>icons/file_new.png</file>
+        <file>icons/file_save.png</file>
+        <file>icons/options.png</file>
+        <file>icons/edit_file.png</file>
+        <file>icons/copy.png</file>
+        <file>icons/cut.png</file>
+        <file>icons/paste.png</file>
+        <file>icons/redo.png</file>
+        <file>icons/undo.png</file>
+        <file>icons/compile.png</file>
+        <file>icons/goto.png</file>
+        <file>icons/hue_picker.png</file>
+        <file>icons/find.png</file>
+        <file>icons/table.png</file>
+    </qresource>
+</RCC>

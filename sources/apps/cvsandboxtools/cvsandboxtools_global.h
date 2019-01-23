@@ -1,0 +1,12 @@
+#ifndef CVSANDBOXTOOLS_GLOBAL_H
+#define CVSANDBOXTOOLS_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(CVSANDBOXTOOLS_LIBRARY)
+#  define CVS_SHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define CVS_SHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // CVSANDBOXTOOLS_GLOBAL_H
