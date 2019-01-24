@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>icons/view_tree.png</file>
+        <file>icons/camera.png</file>
+        <file>icons/folder_blue.png</file>
+        <file>icons/camera_32.png</file>
+        <file>icons/folder_blue_32.png</file>
+        <file>icons/delete.png</file>
+        <file>icons/hibernate.png</file>
+        <file>icons/play.png</file>
+        <file>icons/properties.png</file>
+        <file>icons/sandbox.png</file>
+        <file>icons/sandbox_32.png</file>
+        <file>icons/project_object_32.png</file>
+        <file>icons/new_indow.png</file>
+        <file>icons/ok.png</file>
+        <file>icons/full_screen.png</file>
+        <file>icons/stop.png</file>
+        <file>icons/fit_screen.png</file>
+        <file>icons/cvsandbox/cvsandbox_128x128.png</file>
+        <file>icons/wizard.png</file>
+        <file>icons/down.png</file>
+        <file>icons/up.png</file>
+        <file>icons/info.png</file>
+        <file>icons/add.png</file>
+        <file>icons/idea.png</file>
+        <file>icons/favourite_add.png</file>
+        <file>icons/favourite_remove.png</file>
+        <file>icons/video_processing_info.png</file>
+        <file>icons/remove.png</file>
+        <file>icons/configure.png</file>
+        <file>icons/script_file.png</file>
+        <file>icons/thumbnail.png</file>
+        <file>icons/file_close.png</file>
+        <file>icons/colors.png</file>
+        <file>icons/colors_gray.png</file>
+        <file>icons/coordinates.png</file>
+        <file>icons/copy.png</file>
+        <file>icons/file_save.png</file>
+        <file>icons/reload.png</file>
+        <file>icons/frame_rate_disabled.png</file>
+        <file>icons/frame_rate_enabled.png</file>
+        <file>icons/prevent_screen_saver.png</file>
+        <file>icons/run.png</file>
+        <file>icons/variables_list.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,50 @@
+#include "windows.h"
+
+IDI_ICON1 ICON DISCARDABLE "cvsandbox.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version information
+//
+
+#define VER_FILEVERSION         1,2,7,0
+#define VER_FILEVERSION_STR     "1.2.7"
+
+#define VER_PRODUCTVERSION      1,2,7,0
+#define VER_PRODUCTVERSION_STR  "1.2.7"
+
+#ifndef DEBUG
+    #define VER_DEBUG   0
+#else
+    #define VER_DEBUG   VS_FF_DEBUG
+#endif
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       VER_DEBUG
+FILEOS          VOS__WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "CVSandbox"
+            VALUE "FileDescription", "Computer Vision Sandbox"
+            VALUE "FileVersion", VER_FILEVERSION_STR
+            VALUE "InternalName", "CVSandbox"
+            VALUE "LegalCopyright", "(C) 2015-2018, Andrew Kirillov"
+            VALUE "OriginalFilename", "cvsandbox.exe"
+            VALUE "ProductName", "CVSandbox"
+            VALUE "ProductVersion", VER_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

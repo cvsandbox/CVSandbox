@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>917</width>
+    <height>539</height>
+   </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::PreventContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="MainViewFrame" name="mainFrame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>917</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionCloseObject"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionShowProjectView"/>
+    <addaction name="actionFullScreen"/>
+    <addaction name="actionFitTheWindow"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreventScreenSaver"/>
+    <addaction name="separator"/>
+    <addaction name="actionSandboxVariablesMonitor"/>
+   </widget>
+   <widget class="QMenu" name="menuProject">
+    <property name="title">
+     <string>&amp;Project</string>
+    </property>
+    <addaction name="actionAddFolder"/>
+    <addaction name="actionAddCamera"/>
+    <addaction name="actionAddSandbox"/>
+    <addaction name="separator"/>
+    <addaction name="actionDeleteProjectObject"/>
+    <addaction name="separator"/>
+    <addaction name="actionProjectItemProperties"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuContextMenus">
+    <property name="title">
+     <string>&amp;Context Menus</string>
+    </property>
+    <widget class="QMenu" name="menuCameraContextMenu">
+     <property name="title">
+      <string>Camera Context Menu</string>
+     </property>
+     <addaction name="actionOpenCamera"/>
+     <addaction name="separator"/>
+     <addaction name="actionDeleteCamera"/>
+     <addaction name="separator"/>
+     <addaction name="actionEditCamerasProperties"/>
+    </widget>
+    <widget class="QMenu" name="menuSandboxContextMenu">
+     <property name="title">
+      <string>Sandbox Context Menu</string>
+     </property>
+     <addaction name="actionOpenSandbox"/>
+     <addaction name="separator"/>
+     <addaction name="actionDeleteSandbox"/>
+     <addaction name="separator"/>
+     <addaction name="actionOpenSandboxWizard"/>
+     <addaction name="actionEditSandbox"/>
+    </widget>
+    <addaction name="menuCameraContextMenu"/>
+    <addaction name="menuSandboxContextMenu"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionScriptEditor"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuProject"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuHelp"/>
+   <addaction name="menuContextMenus"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionCloseObject"/>
+   <addaction name="separator"/>
+   <addaction name="actionShowProjectView"/>
+   <addaction name="actionFullScreen"/>
+   <addaction name="actionFitTheWindow"/>
+   <addaction name="separator"/>
+   <addaction name="actionPreventScreenSaver"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="projectTreeDockWidget">
+   <property name="windowIcon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/view_tree.png</normaloff>:/images/icons/view_tree.png</iconset>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Project View</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="camerasListDockContents">
+    <layout class="QVBoxLayout" name="verticalLayout_2"/>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="sandboxVariablesDockWidget">
+   <property name="windowIcon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/variables_list.png</normaloff>:/images/icons/variables_list.png</iconset>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Sandbox Variables</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/hibernate.png</normaloff>:/images/icons/hibernate.png</iconset>
+   </property>
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="statusTip">
+    <string>Exit from the application</string>
+   </property>
+  </action>
+  <action name="actionShowProjectView">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/view_tree.png</normaloff>:/images/icons/view_tree.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Project View</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide project view (F12)</string>
+   </property>
+   <property name="statusTip">
+    <string>Show/Hide project view</string>
+   </property>
+   <property name="shortcut">
+    <string>F12</string>
+   </property>
+  </action>
+  <action name="actionAddFolder">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/folder_blue.png</normaloff>:/images/icons/folder_blue.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add &amp;Folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Add project object/folder</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new project folder/subfolder</string>
+   </property>
+   <property name="font">
+    <font/>
+   </property>
+  </action>
+  <action name="actionDeleteProjectObject">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/delete.png</normaloff>:/images/icons/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Delete item</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete project object</string>
+   </property>
+   <property name="statusTip">
+    <string>Delete project object/folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionAddCamera">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/camera.png</normaloff>:/images/icons/camera.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add &amp;Camera</string>
+   </property>
+   <property name="toolTip">
+    <string>Add new camera into the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new camera into the project</string>
+   </property>
+  </action>
+  <action name="actionOpenCamera">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/play.png</normaloff>:/images/icons/play.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open camera</string>
+   </property>
+   <property name="iconText">
+    <string>Open the camera</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the camera</string>
+   </property>
+   <property name="statusTip">
+    <string>Open the camera showing its video</string>
+   </property>
+   <property name="font">
+    <font/>
+   </property>
+  </action>
+  <action name="actionDeleteCamera">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/delete.png</normaloff>:/images/icons/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Delete</string>
+   </property>
+   <property name="iconText">
+    <string>Delete the camera</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete the camera</string>
+   </property>
+   <property name="statusTip">
+    <string>Delete the camera from the project</string>
+   </property>
+  </action>
+  <action name="actionProjectItemProperties">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/properties.png</normaloff>:/images/icons/properties.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit item's properties</string>
+   </property>
+   <property name="toolTip">
+    <string>Show project item's properties editing form</string>
+   </property>
+   <property name="statusTip">
+    <string>Show project item's properties editing form</string>
+   </property>
+  </action>
+  <action name="actionEditCamerasProperties">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/properties.png</normaloff>:/images/icons/properties.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit camera's properties</string>
+   </property>
+   <property name="toolTip">
+    <string>Show camera's properties editing form</string>
+   </property>
+   <property name="statusTip">
+    <string>Show camera's properties editing form</string>
+   </property>
+  </action>
+  <action name="actionAddSandbox">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/sandbox.png</normaloff>:/images/icons/sandbox.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add &amp;Sandbox</string>
+   </property>
+   <property name="toolTip">
+    <string>Add new sandbox into the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new sandbox into the project</string>
+   </property>
+  </action>
+  <action name="actionOpenSandbox">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/play.png</normaloff>:/images/icons/play.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open sandbox</string>
+   </property>
+   <property name="iconText">
+    <string>Open the sandbox</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the sandbox</string>
+   </property>
+   <property name="statusTip">
+    <string>Open the sandbox showing its default view</string>
+   </property>
+   <property name="font">
+    <font/>
+   </property>
+  </action>
+  <action name="actionDeleteSandbox">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/delete.png</normaloff>:/images/icons/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete the sandbox</string>
+   </property>
+   <property name="statusTip">
+    <string>Delete the sandbox from the project</string>
+   </property>
+  </action>
+  <action name="actionEditSandbox">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/properties.png</normaloff>:/images/icons/properties.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit sandbox</string>
+   </property>
+   <property name="toolTip">
+    <string>Show sandbox editing form</string>
+   </property>
+   <property name="statusTip">
+    <string>Show sandbox editing form</string>
+   </property>
+  </action>
+  <action name="actionFullScreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/full_screen.png</normaloff>:/images/icons/full_screen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Full Screen</string>
+   </property>
+   <property name="toolTip">
+    <string>Show full screen (F11)</string>
+   </property>
+   <property name="statusTip">
+    <string>Show main view in full screen or normal mode</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
+   </property>
+  </action>
+  <action name="actionCloseObject">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/stop.png</normaloff>:/images/icons/stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close project object</string>
+   </property>
+   <property name="toolTip">
+    <string>Close currently open project object (Shift + F5)</string>
+   </property>
+   <property name="statusTip">
+    <string>Close currently open project object (video source, sandbox, etc)</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F5</string>
+   </property>
+  </action>
+  <action name="actionFitTheWindow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/fit_screen.png</normaloff>:/images/icons/fit_screen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fit the Window</string>
+   </property>
+   <property name="toolTip">
+    <string>Fit the view to the window (F10)</string>
+   </property>
+   <property name="statusTip">
+    <string>Fit the current view to the size of the window</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>&amp;About ...</string>
+   </property>
+   <property name="statusTip">
+    <string>About the program ...</string>
+   </property>
+  </action>
+  <action name="actionOpenSandboxWizard">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/wizard.png</normaloff>:/images/icons/wizard.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sandbox wizard</string>
+   </property>
+   <property name="toolTip">
+    <string>Open sandbox wizard</string>
+   </property>
+   <property name="statusTip">
+    <string>Open sandbox wizard dialog</string>
+   </property>
+  </action>
+  <action name="actionScriptEditor">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/script_file.png</normaloff>:/images/icons/script_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scripts &amp;Editor</string>
+   </property>
+   <property name="iconText">
+    <string>Script editor</string>
+   </property>
+   <property name="toolTip">
+    <string>Open scripts' editor</string>
+   </property>
+   <property name="statusTip">
+    <string>Open built-in scripts' editor</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionPreventScreenSaver">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/prevent_screen_saver.png</normaloff>:/images/icons/prevent_screen_saver.png</iconset>
+   </property>
+   <property name="text">
+    <string>Prevent Screen Saver</string>
+   </property>
+   <property name="toolTip">
+    <string>Prevent screen saver from starting</string>
+   </property>
+   <property name="statusTip">
+    <string>Don't allow screen saver or system sleep when running camera/sandbox</string>
+   </property>
+  </action>
+  <action name="actionSandboxVariablesMonitor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/variables_list.png</normaloff>:/images/icons/variables_list.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sandbox Variables</string>
+   </property>
+   <property name="toolTip">
+    <string>Show sandbox variables monitor (F3)</string>
+   </property>
+   <property name="statusTip">
+    <string>Show/Hide list of sandbox variables</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MainViewFrame</class>
+   <extends>QFrame</extends>
+   <header>MainViewFrame.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
