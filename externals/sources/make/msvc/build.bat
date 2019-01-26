@@ -11,6 +11,14 @@ if "%1"=="clean" (
     call build clean
     popd
 
+    pushd qtpropertybrowser
+    call build clean
+    popd
+
+    pushd scintilla
+    call build clean
+    popd
+
     for /D %%f in (*) do (
         echo %%f
         RD /Q /S %%f\Debug
@@ -24,7 +32,15 @@ if "%1"=="clean" (
     pushd libjpeg-turbo
     call build
     popd
-    
+
+    pushd qtpropertybrowser
+    call build
+    popd
+
+    pushd scintilla
+    call build
+    popd
+
     xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\debug\include\"
     xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\release\include\"
 )
