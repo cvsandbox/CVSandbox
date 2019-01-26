@@ -1,0 +1,74 @@
+// Microsoft Visual C++ generated resource script.
+//
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include <sdkddkver.h>
+#endif
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version information
+//
+
+#define VER_FILEVERSION         1,1,0,0
+#define VER_FILEVERSION_STR     "1.1.0"
+
+#define VER_PRODUCTVERSION      1,1,0,0
+
+#if _WIN64
+    #define VER_PRODUCTVERSION_STR  "1.1.0 (64 bit)"
+    #define ORIGINAL_FILE_NAME      "cvs_vcam64.dll"
+#else
+    #define VER_PRODUCTVERSION_STR  "1.1.0 (32 bit)"
+    #define ORIGINAL_FILE_NAME      "cvs_vcam.dll"
+#endif
+
+#ifndef DEBUG
+    #define VER_DEBUG   0
+#else
+    #define VER_DEBUG   VS_FF_DEBUG
+#endif
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       VER_DEBUG
+FILEOS          VOS__WINDOWS32
+FILETYPE        VFT_DLL
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "CVSandbox"
+            VALUE "FileDescription", "CVSandbox Virtual Camera"
+            VALUE "FileVersion", VER_FILEVERSION_STR
+            VALUE "InternalName", "cvs_vcam"
+            VALUE "LegalCopyright", "(C) 2015-2017, Andrew Kirillov"
+            VALUE "OriginalFilename", ORIGINAL_FILE_NAME
+            VALUE "ProductName", "cvs_vcam"
+            VALUE "ProductVersion", VER_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+#endif

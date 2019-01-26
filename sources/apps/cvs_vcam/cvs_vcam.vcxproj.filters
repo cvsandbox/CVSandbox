@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{c8d5e7e2-11e3-4ff9-aa4c-b8b6fa4083ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="afx">
+      <UniqueIdentifier>{6d9d626d-e5ce-4e52-a330-359e134c7e9e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cvs_vcam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="setup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\afx\afx_imaging\resize_bilinear.c">
+      <Filter>afx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\afx\afx_types\ximage.c">
+      <Filter>afx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\afx\afx_types\xalloc.c">
+      <Filter>afx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\afx\afx_types\xpalette.c">
+      <Filter>afx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\afx\afx_types\xstring.c">
+      <Filter>afx</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cvs_vcam.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="cvs_vcam64.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="regsvr.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cvs_vcam_guids.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cvs_vcam.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cvs_vcam.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Release Notes.txt" />
+  </ItemGroup>
+</Project>

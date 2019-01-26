@@ -1,0 +1,33 @@
+CVSandbox Virtual Camera 1.1.0
+-------------------------------------------
+03.08.2017
+
+Version updates and fixes:
+
+* Instead of supporting single 640x480 resolution with 15 FPS rate, the virtual
+  camera now supports number of different resolutions: 160x120, 320x240, 480x360,
+  640x480, 800x600, 1200x900, 1280x720, 1800x1350, 1920x1080. All resolutions
+  support frame rate from 1 to 30 frames a seconds, with default set to 30.
+* Arbitrary size images are allowed to be pushed into the virtual camera
+  (2000x1500 is the maximum though) - they will be resized automatically to the
+  size requested by a client when starting the camera.
+* In addition to the 32-bit build of the COM DLL, a 64-bit build is provided, so
+  the virtual camera is available from 64-bit applications as well.
+  Run provided "regsvr.bat" to register 64-bit version in the system.
+
+
+
+CVSandbox Virtual Camera 1.0.0
+-------------------------------------------
+27.11.2015
+
+Version updates and fixes:
+
+* First release of CVSandbox Virtual Camera. It creates a DirectShow compatible
+  virtual camera in the system, which by default produces black and white pixels.
+  However, images into it can be fed by "Virtual Camera Push" plug-in for
+  Computer Vision Sandbox. Original images can come from any video source,
+  then processed by different image processing filters and finally pushed into
+  the virtual camera, which then can be used from any application supporting
+  DirectShow video sources (like Skype, for example).
+  http://www.cvsandbox.com/tutorials/virtual_camera/
