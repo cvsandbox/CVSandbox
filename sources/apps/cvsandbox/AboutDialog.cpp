@@ -41,14 +41,6 @@ AboutDialog::AboutDialog( QWidget* parent ) :
 
     ui->emailLabel->setText( "<a href=\"mailto:cvsandbox@gmail.com\">cvsandbox@gmail.com</a>" );
     ui->emailLabel->setOpenExternalLinks( true );
-
-    ui->lgplComponentsEdit->setText( QString( "Qt Framework, v %0<br><a href=\"http://qt-project.org/\">qt-project.org</a>" ).arg( qVersion( ) ) );
-
-    QColor  bg = palette( ).color( QPalette::Background );
-    QString style;
-
-    ui->lgplComponentsEdit->setStyleSheet( style.sprintf( "QTextEdit { background-color:#%02X%02X%02X; }",
-                                                          bg.red( ), bg.green( ), bg.blue( ) ) );
 }
 
 AboutDialog::~AboutDialog( )

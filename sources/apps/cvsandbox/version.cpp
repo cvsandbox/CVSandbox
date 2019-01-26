@@ -24,4 +24,4 @@
 using namespace std;
 
 const string   AppTitle   = { "Computer Vision Sandbox" };
-const xversion AppVersion = { 1, 2, 7 };
+const xversion AppVersion = { 2, 0, 0 };

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>570</width>
-    <height>320</height>
+    <height>260</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -101,7 +101,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Copyright © 2015-2018, Andrew Kirillov</string>
+    <string>Copyright © 2015-2019, Andrew Kirillov</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -130,7 +130,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>280</y>
+     <y>210</y>
      <width>90</width>
      <height>28</height>
     </rect>
@@ -153,35 +153,6 @@
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>190</y>
-     <width>181</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>LGPL components in use:</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="lgplComponentsEdit">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>210</y>
-     <width>380</width>
-     <height>60</height>
-    </rect>
-   </property>
-   <property name="undoRedoEnabled">
-    <bool>false</bool>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
    </property>
   </widget>
  </widget>
