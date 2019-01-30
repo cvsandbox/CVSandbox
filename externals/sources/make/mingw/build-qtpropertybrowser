@@ -1,0 +1,24 @@
+PRO_NAME=qtpropertybrowser.pro
+PRO_FOLDER=../../qtpropertybrowser/custom_build
+BUILD_FOLDER=out_qtpropertybrowser
+OUT_FOLDER=../../../../build/mingw
+OUT_REL=${OUT_FOLDER}/release
+
+if [ "$1" != "clean" ] ; then
+    pushd .
+
+    mkdir ${BUILD_FOLDER}
+    cd ${BUILD_FOLDER}
+
+    ${QT_MINGW_BIN}/qmake.exe ../${PRO_FOLDER}/${PRO_NAME}
+    
+    make release
+
+    popd
+    
+    cp -f ${PRO_FOLDER}/lib/mingw/release/libqtpropertybrowser.a ${OUT_REL}/lib
+    cp -f ${PRO_FOLDER}/lib/mingw/release/qtpropertybrowser.dll ${OUT_REL}/bin
+else
+    rm -rf ${BUILD_FOLDER}
+    rm -rf ${PRO_FOLDER}/lib/mingw
+fi
