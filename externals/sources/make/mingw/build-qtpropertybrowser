@@ -12,7 +12,7 @@ if [ "$1" != "clean" ] ; then
 
     ${QT_MINGW_BIN}/qmake.exe ../${PRO_FOLDER}/${PRO_NAME}
     
-    make release
+    make -f Makefile.Release
 
     popd
     
