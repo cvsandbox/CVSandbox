@@ -552,9 +552,12 @@ XErrorCode FindGlyphs( const ximage* image, uint32_t glyphSize, uint32_t maxGlyp
 
                     if ( CheckPointsFitQuadrilateralHelper( data->BlobEdgePoints, edgePointsCount, blobRect, quadPoints ) )
                     {
-                        uint32_t blobHeight  = blobRect.y2 - blobRect.y1 + 1;
-                        xpoint*  leftPoints  = data->BlobEdgePoints;
-                        xpoint*  rightPoints = data->BlobEdgePoints + blobHeight;
+                        xpoint*  leftPoints;
+                        xpoint*  rightPoints;
+
+                        blobHeight  = blobRect.y2 - blobRect.y1 + 1;
+                        leftPoints  = data->BlobEdgePoints;
+                        rightPoints = data->BlobEdgePoints + blobHeight;
 
                         if ( GetAverageBrightnessDiffOnLeftRightEdges( leftPoints, rightPoints, blobHeight, grayImage ) > MIN_EDGE_CONTRAST )
                         {

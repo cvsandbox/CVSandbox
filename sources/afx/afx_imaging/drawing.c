@@ -1404,8 +1404,8 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                     int sy  = ( startCutY1 < startCutY2 ) ? 1 : -1;
                     int err = 0, et;
 
-                    int32_t  x = startCutX1;
-                    int32_t  y = startCutY1;
+                    int32_t  tx = startCutX1;
+                    int32_t  ty = startCutY1;
 
                     // correct deltas and calculate initial error
                     if ( dx < 0 ) { dx = -dx; }
@@ -1414,26 +1414,26 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
 
                     for ( ; ; )
                     {
-                        i = rmax - ( yc - y );
+                        i = rmax - ( yc - ty );
 
                         if ( startCutLineX1[i] > startCutLineX2[i] )
                         {
-                            startCutLineX1[i] = x;
-                            startCutLineX2[i] = x;
+                            startCutLineX1[i] = tx;
+                            startCutLineX2[i] = tx;
                         }
                         else
                         {
-                            if ( x < startCutLineX1[i] )
+                            if ( tx < startCutLineX1[i] )
                             {
-                                startCutLineX1[i] = x;
+                                startCutLineX1[i] = tx;
                             }
-                            if ( x > startCutLineX2[i] )
+                            if ( tx > startCutLineX2[i] )
                             {
-                                startCutLineX2[i] = x;
+                                startCutLineX2[i] = tx;
                             }
                         }
 
-                        if ( ( x == startCutX2 ) && ( y == startCutY2 ) )
+                        if ( ( tx == startCutX2 ) && ( ty == startCutY2 ) )
                         {
                             break;
                         }
@@ -1443,12 +1443,12 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                         if ( et > -dx )
                         {
                             err -= dy;
-                            x += sx;
+                            tx  += sx;
                         }
                         if ( et <  dy )
                         {
                             err += dx;
-                            y += sy;
+                            ty  += sy;
                         }
                     }
                 }
@@ -1461,8 +1461,8 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                     int sy  = ( endCutY1 < endCutY2 ) ? 1 : -1;
                     int err = 0, et;
 
-                    int32_t  x = endCutX1;
-                    int32_t  y = endCutY1;
+                    int32_t  tx = endCutX1;
+                    int32_t  ty = endCutY1;
 
                     // correct deltas and calculate initial error
                     if ( dx < 0 ) { dx = -dx; }
@@ -1471,26 +1471,26 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
 
                     for ( ; ; )
                     {
-                        i = rmax - ( yc - y );
+                        i = rmax - ( yc - ty );
 
                         if ( endCutLineX1[i] > endCutLineX2[i] )
                         {
-                            endCutLineX1[i] = x;
-                            endCutLineX2[i] = x;
+                            endCutLineX1[i] = tx;
+                            endCutLineX2[i] = tx;
                         }
                         else
                         {
-                            if ( x < endCutLineX1[i] )
+                            if ( tx < endCutLineX1[i] )
                             {
-                                endCutLineX1[i] = x;
+                                endCutLineX1[i] = tx;
                             }
-                            if ( x > endCutLineX2[i] )
+                            if ( tx > endCutLineX2[i] )
                             {
-                                endCutLineX2[i] = x;
+                                endCutLineX2[i] = tx;
                             }
                         }
 
-                        if ( ( x == endCutX2 ) && ( y == endCutY2 ) )
+                        if ( ( tx == endCutX2 ) && ( ty == endCutY2 ) )
                         {
                             break;
                         }
@@ -1500,19 +1500,19 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                         if ( et > -dx )
                         {
                             err -= dy;
-                            x += sx;
+                            tx  += sx;
                         }
                         if ( et <  dy )
                         {
                             err += dx;
-                            y += sy;
+                            ty  += sy;
                         }
                     }
                 }
 
                 // perform segments cutting at the start angle
                 {
-                    int32_t  x;
+                    int32_t  tx;
                     int32_t* xCoords = startCutLineX2;
 
                     if ( ( angleStartMod >= 180 ) && ( angleStartMod < 360 ) )
@@ -1525,11 +1525,11 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                         // check the cut line exists at this hight
                         if ( startCutLineX1[i] <= startCutLineX2[i] )
                         {
-                            x = xCoords[i];
+                            tx = xCoords[i];
 
                             // the X coordinate must belong to 1st or 2nd segment
-                            if ( ( ( x >= line1x1[i] ) && ( x <= line1x2[i] ) ) ||
-                                 ( ( x >= line2x1[i] ) && ( x <= line2x2[i] ) ) )
+                            if ( ( ( tx >= line1x1[i] ) && ( tx <= line1x2[i] ) ) ||
+                                 ( ( tx >= line2x1[i] ) && ( tx <= line2x2[i] ) ) )
                             {
                                 if ( ( angleStartMod >= 180 ) && ( angleStartMod < 360 ) )
                                 {
@@ -1539,9 +1539,9 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                         if ( useSegment3ForSingleLine )
                                         {
                                             line3x1[i] = line1x1[i];
-                                            line3x2[i] = x;
+                                            line3x2[i] = tx;
                                         }
-                                        line1x1[i] = x;
+                                        line1x1[i] = tx;
                                     }
                                     else
                                     {
@@ -1552,18 +1552,18 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                             if ( useSegment3ForDoubleLine == 1 )
                                             {
                                                 line3x1[i] = line1x1[i];
-                                                line3x2[i] = x;
+                                                line3x2[i] = tx;
                                             }
-                                            line1x1[i] = x;
+                                            line1x1[i] = tx;
                                         }
                                         else
                                         {
                                             if ( useSegment3ForDoubleLine == 1 )
                                             {
                                                 line3x1[i] = line2x1[i];
-                                                line3x2[i] = x;
+                                                line3x2[i] = tx;
                                             }
-                                            line2x1[i] = x;
+                                            line2x1[i] = tx;
                                         }
                                     }
                                 }
@@ -1574,10 +1574,10 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                         // we have only one segment, so cut it
                                         if ( useSegment3ForSingleLine )
                                         {
-                                            line3x1[i] = x;
+                                            line3x1[i] = tx;
                                             line3x2[i] = line1x2[i];
                                         }
-                                        line1x2[i] = x;
+                                        line1x2[i] = tx;
                                     }
                                     else
                                     {
@@ -1585,19 +1585,19 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                         {
                                             if ( useSegment3ForDoubleLine == 1 )
                                             {
-                                                line3x1[i] = x;
+                                                line3x1[i] = tx;
                                                 line3x2[i] = line2x2[i];
                                             }
-                                            line2x2[i] = x;
+                                            line2x2[i] = tx;
                                         }
                                         else
                                         {
                                             if ( useSegment3ForDoubleLine == 1 )
                                             {
-                                                line3x1[i] = x;
+                                                line3x1[i] = tx;
                                                 line3x2[i] = line1x2[i];
                                             }
-                                            line1x2[i] = x;
+                                            line1x2[i] = tx;
                                         }
                                     }
                                 }
@@ -1608,7 +1608,7 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
 
                 // perform segments cutting at the end angle
                 {
-                    int32_t  x;
+                    int32_t  tx;
                     int32_t* xCoords = endCutLineX2;
 
                     if ( ( angleEndMod > 0 ) && ( angleEndMod <= 180 ) )
@@ -1621,12 +1621,12 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                         // check the cut line exists at this hight
                         if ( endCutLineX1[i] <= endCutLineX2[i] )
                         {
-                            x = xCoords[i];
+                            tx = xCoords[i];
 
                             // the X coordinate must belong to one of the segments
-                            if ( ( ( x >= line1x1[i] ) && ( x <= line1x2[i] ) ) ||
-                                 ( ( x >= line2x1[i] ) && ( x <= line2x2[i] ) ) ||
-                                 ( ( x >= line3x1[i] ) && ( x <= line3x2[i] ) ) )
+                            if ( ( ( tx >= line1x1[i] ) && ( tx <= line1x2[i] ) ) ||
+                                 ( ( tx >= line2x1[i] ) && ( tx <= line2x2[i] ) ) ||
+                                 ( ( tx >= line3x1[i] ) && ( tx <= line3x2[i] ) ) )
                             {
                                 if ( ( angleEndMod > 0 ) && ( angleEndMod <= 180 ) )
                                 {
@@ -1635,11 +1635,11 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                         // we have only one segment, so cut it
                                         if ( line3x1[i] > line3x2[i] )
                                         {
-                                            line1x1[i] = x;
+                                            line1x1[i] = tx;
                                         }
                                         else
                                         {
-                                            line3x1[i] = x;
+                                            line3x1[i] = tx;
                                         }
                                     }
                                     else
@@ -1648,22 +1648,22 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                         {
                                             if ( line3x1[i] > line3x2[i] )
                                             {
-                                                line2x1[i] = x;
+                                                line2x1[i] = tx;
                                             }
                                             else
                                             {
-                                                line3x1[i] = x;
+                                                line3x1[i] = tx;
                                             }
                                         }
                                         else
                                         {
                                             if ( line3x1[i] > line3x2[i] )
                                             {
-                                                line1x1[i] = x;
+                                                line1x1[i] = tx;
                                             }
                                             else
                                             {
-                                                line3x1[i] = x;
+                                                line3x1[i] = tx;
                                             }
                                         }
                                     }
@@ -1675,11 +1675,11 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                         // we have only one segment, so cut it
                                         if ( line3x1[i] > line3x2[i] )
                                         {
-                                            line1x2[i] = x;
+                                            line1x2[i] = tx;
                                         }
                                         else
                                         {
-                                            line3x2[i] = x;
+                                            line3x2[i] = tx;
                                         }
                                     }
                                     else
@@ -1688,22 +1688,22 @@ XErrorCode XDrawingBlendPie( ximage* image, int32_t xc, int32_t yc, int32_t r1, 
                                         {
                                             if ( line3x1[i] > line3x2[i] )
                                             {
-                                                line2x2[i] = x;
+                                                line2x2[i] = tx;
                                             }
                                             else
                                             {
-                                                line3x2[i] = x;
+                                                line3x2[i] = tx;
                                             }
                                         }
                                         else
                                         {
                                             if ( line3x1[i] > line3x2[i] )
                                             {
-                                                line1x2[i] = x;
+                                                line1x2[i] = tx;
                                             }
                                             else
                                             {
-                                                line3x2[i] = x;
+                                                line3x2[i] = tx;
                                             }
                                         }
                                     }
@@ -2543,7 +2543,7 @@ XErrorCode XDrawingImage( ximage* image, const ximage* imageToDraw, int32_t x, i
             int dstOffset    = 0;
             uint8_t* srcPtr  = imageToDraw->data + srcSubY * srcStride + srcSubX * srcPixelSize;
             uint8_t* dstPtr  = image->data + targetY * dstStride + targetX * dstPixelSize;
-            int x, y;
+            int tx, ty;
 
             // make further clipping if required
             if ( targetX + srcSubW > image->width )
@@ -2562,9 +2562,9 @@ XErrorCode XDrawingImage( ximage* image, const ximage* imageToDraw, int32_t x, i
             if ( ( dstPixelSize == 1 ) && ( srcPixelSize == 3 ) )
             {
                 // draw RGB image on Grayscale
-                for ( y = 0; y < srcSubH; y++ )
+                for ( ty = 0; ty < srcSubH; ty++ )
                 {
-                    for ( x = 0; x < srcSubW; x++, dstPtr++, srcPtr += 3 )
+                    for ( tx = 0; tx < srcSubW; tx++, dstPtr++, srcPtr += 3 )
                     {
                         *dstPtr = (uint8_t) RGB_TO_GRAY( srcPtr[RedIndex], srcPtr[GreenIndex], srcPtr[BlueIndex] );
                     }
@@ -2575,9 +2575,9 @@ XErrorCode XDrawingImage( ximage* image, const ximage* imageToDraw, int32_t x, i
             else if ( ( ( dstPixelSize == 3 ) || ( dstPixelSize == 4 ) ) && ( srcPixelSize == 1 ) )
             {
                 // draw Grayscale image on RGB
-                for ( y = 0; y < srcSubH; y++ )
+                for ( ty = 0; ty < srcSubH; ty++ )
                 {
-                    for ( x = 0; x < srcSubW; x++, srcPtr++, dstPtr += dstPixelSize )
+                    for ( tx = 0; tx < srcSubW; tx++, srcPtr++, dstPtr += dstPixelSize )
                     {
                         dstPtr[RedIndex]   = *srcPtr;
                         dstPtr[GreenIndex] = *srcPtr;
@@ -2590,9 +2590,9 @@ XErrorCode XDrawingImage( ximage* image, const ximage* imageToDraw, int32_t x, i
             else if ( ( dstPixelSize == 4 ) && ( srcPixelSize == 3 ) )
             {
                 // draw Grayscale image on RGB
-                for ( y = 0; y < srcSubH; y++ )
+                for ( ty = 0; ty < srcSubH; ty++ )
                 {
-                    for ( x = 0; x < srcSubW; x++, srcPtr += 3, dstPtr += 4 )
+                    for ( tx = 0; tx < srcSubW; tx++, srcPtr += 3, dstPtr += 4 )
                     {
                         dstPtr[RedIndex]   = srcPtr[RedIndex];
                         dstPtr[GreenIndex] = srcPtr[GreenIndex];
@@ -2605,9 +2605,9 @@ XErrorCode XDrawingImage( ximage* image, const ximage* imageToDraw, int32_t x, i
             else if ( ( dstPixelSize == 3 ) && ( srcPixelSize == 4 ) )
             {
                 // draw Grayscale image on RGB
-                for ( y = 0; y < srcSubH; y++ )
+                for ( ty = 0; ty < srcSubH; ty++ )
                 {
-                    for ( x = 0; x < srcSubW; x++, srcPtr += 4, dstPtr += 3 )
+                    for ( tx = 0; tx < srcSubW; tx++, srcPtr += 4, dstPtr += 3 )
                     {
                         dstPtr[RedIndex]   = (uint8_t)( ( srcPtr[RedIndex]   * srcPtr[AlphaIndex] + dstPtr[RedIndex]   * ( 255 - srcPtr[AlphaIndex] ) ) / 255 );
                         dstPtr[GreenIndex] = (uint8_t)( ( srcPtr[GreenIndex] * srcPtr[AlphaIndex] + dstPtr[GreenIndex] * ( 255 - srcPtr[AlphaIndex] ) ) / 255 );
@@ -2620,9 +2620,9 @@ XErrorCode XDrawingImage( ximage* image, const ximage* imageToDraw, int32_t x, i
             else if ( ( dstPixelSize == 1 ) && ( srcPixelSize == 4 ) )
             {
                 // draw Grayscale image on RGB
-                for ( y = 0; y < srcSubH; y++ )
+                for ( ty = 0; ty < srcSubH; ty++ )
                 {
-                    for ( x = 0; x < srcSubW; x++, srcPtr += 4, dstPtr++ )
+                    for ( tx = 0; tx < srcSubW; tx++, srcPtr += 4, dstPtr++ )
                     {
                         *dstPtr = (uint8_t)( ( RGB_TO_GRAY( srcPtr[RedIndex], srcPtr[GreenIndex], srcPtr[BlueIndex] ) * srcPtr[AlphaIndex] + *dstPtr * ( 255 - srcPtr[AlphaIndex] ) ) / 255 );
                     }

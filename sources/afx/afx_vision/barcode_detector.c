@@ -964,7 +964,7 @@ XErrorCode FindBarcodes( const ximage* image, uint32_t maxBarcodes, BarcodeDetec
                 }
                 else
                 {
-                    ObjectsCluster* currentCluster = barcodeClusters;
+                    currentCluster = barcodeClusters;
 
                     // append horizontal clusters to the end of vertical clusters
                     while ( currentCluster->Next != 0 )
@@ -999,20 +999,20 @@ XErrorCode FindBarcodes( const ximage* image, uint32_t maxBarcodes, BarcodeDetec
                 if ( clustersCounter > 0 )
                 {
                     xpoint   clusterCenter;
-                    uint32_t i;
+                    uint32_t ic;
 
                     clusterCenter.x = ( rect.x1 + rect.x2 ) / 2;
                     clusterCenter.y = ( rect.y1 + rect.y2 ) / 2;
 
-                    for ( i = 0; i < clustersCounter; i++ )
+                    for ( ic = 0; ic < clustersCounter; ic++ )
                     {
-                        if ( CheckPointIsInQuad( context->DetectedBarcodes[i].Quadrilateral, clusterCenter ) )
+                        if ( CheckPointIsInQuad( context->DetectedBarcodes[ic].Quadrilateral, clusterCenter ) )
                         {
                             break;
                         }
                     }
 
-                    if ( i != clustersCounter )
+                    if ( ic != clustersCounter )
                     {
                         // don't include this cluster
                         currentCluster = currentCluster->Next;
@@ -1022,8 +1022,6 @@ XErrorCode FindBarcodes( const ximage* image, uint32_t maxBarcodes, BarcodeDetec
 
                 if ( data->ImageResizeIsNeeded )
                 {
-                    int i;
-
                     rect.x1 = (int32_t) ( data->ResizeFactor * rect.x1 );
                     rect.y1 = (int32_t) ( data->ResizeFactor * rect.y1 );
                     rect.x2 = (int32_t) ( data->ResizeFactor * rect.x2 );
