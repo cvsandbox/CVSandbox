@@ -1,7 +1,7 @@
 /*
     Core types library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -57,6 +57,7 @@ static const XErrorCode ErrorInvalidFunction                = 20; // The functio
 static const XErrorCode ErrorConfigurationNotSupported      = 21; // Configuration is not supported by device/object/whoever
 static const XErrorCode ErrorDeivceNotReady                 = 22; // Device (whatever it might be) is not ready for the requested action
 static const XErrorCode ErrorEOF                            = 23; // End of file/stream reached
+static const XErrorCode ErrorUnsupportedProperty            = 24; // The specified property is not supported by device/object/whoever
 
 // ===== Error code used in data conversion (by variant related functions or others) =====
 static const XErrorCode ErrorInvalidType                    = 10001; // Specified type is not valid

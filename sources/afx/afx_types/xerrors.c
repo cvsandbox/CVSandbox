@@ -1,7 +1,7 @@
 /*
     Core types library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -48,7 +48,8 @@ static char* commonErrorNames[] =
     "Invalid function specified (specified function does not exist)",
     "Configuration is not supported",
     "Device is not ready",
-    "End of file reached"
+    "End of file reached",
+    "Unsupported property specified"
 };
 
 // Type conversion error codes
@@ -116,7 +117,7 @@ xstring XErrorGetDescription( XErrorCode error )
     xstring ret = 0;
 
     // ===== Standard error codes =====
-    if ( ( error >= SuccessCode ) && ( error <= ErrorEOF ) )
+    if ( ( error >= SuccessCode ) && ( error <= ErrorUnsupportedProperty ) )
     {
         errorDesc = commonErrorNames[error - SuccessCode];
     }

@@ -1,7 +1,7 @@
 /*
     DirectShow video source library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -51,6 +51,17 @@ enum class XVideoProperty
     WhiteBalance,
     BacklightCompensation,
     Gain
+};
+
+enum class XCameraProperty
+{
+    Pan = 0,
+    Tilt,
+    Roll,
+    Zoom,
+    Exposure,
+    Iris,
+    Focus
 };
 
 // Class which provides access to local video devices available through DirectShow interface
@@ -118,6 +129,17 @@ public:
     XErrorCode GetVideoProperty( XVideoProperty property, int32_t* value, bool* automatic = nullptr ) const;
     // Get range of values supported by the specified video property
     XErrorCode GetVideoPropertyRange( XVideoProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* defaultValue, bool* isAutomaticSupported ) const;
+
+    // Check if camera configuration is supported (device must be running)
+    bool IsCameraConfigSupported( ) const;
+
+    // Set the specified camera property. The device does not have to be running. If it is not,
+    // the setting will be cached and applied as soon as the device gets running.
+    XErrorCode SetCameraProperty( XCameraProperty property, int32_t value, bool automatic = false );
+    // Get current value if the specified camera property. The device must be running.
+    XErrorCode GetCameraProperty( XCameraProperty property, int32_t* value, bool* automatic = nullptr ) const;
+    // Get range of values supported by the specified camera property
+    XErrorCode GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* default, bool* isAutomaticSupported ) const;
 
 private:
     Private::XLocalVideoDeviceData* mData;
