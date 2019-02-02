@@ -1,7 +1,7 @@
 /*
     DirectShow video source plug-ins of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -153,6 +153,28 @@ XErrorCode DirectShowVideoSourcePlugin::GetProperty( int32_t id, xvariant* value
         }
         break;
 
+    case 12:
+        {
+            int32_t propertyValue  = 0;
+
+            ret = mDevice->GetCameraProperty( XCameraProperty::Exposure, &propertyValue, &( value->value.boolVal ) );
+
+            if ( ret == SuccessCode )
+            {
+                value->type = XVT_Bool;
+            }
+        }
+        break;
+
+    case 13:
+        ret = mDevice->GetCameraProperty( XCameraProperty::Exposure, &( value->value.iVal ) );
+
+        if ( ret == SuccessCode )
+        {
+            value->type = XVT_I4;
+        }
+        break;
+
     default:
         ret = ErrorInvalidProperty;
     }
@@ -290,6 +312,34 @@ XErrorCode DirectShowVideoSourcePlugin::SetProperty( int32_t id, const xvariant*
         }
         break;
 
+    case 12:    // Automatic Exposure
+    case 13:    // Exposure
+        {
+            int32_t propertyValue      = 0;
+            bool    isAutomaticControl = false;
+
+            // get current settings of Exposure control
+            ret = mDevice->GetCameraProperty( XCameraProperty::Exposure, &propertyValue, &isAutomaticControl );
+
+            if ( ret == SuccessCode )
+            {
+                if ( id == 12 )
+                {
+                    isAutomaticControl = xvar.ToBool( &ret );
+                }
+                else
+                {
+                    propertyValue = xvar.ToInt( &ret );
+                }
+
+                if ( ret == SuccessCode )
+                {
+                    ret = mDevice->SetCameraProperty( XCameraProperty::Exposure, propertyValue, isAutomaticControl );
+                }
+            }
+        }
+        break;
+
     default:
         ret = ErrorInvalidProperty;
         break;
@@ -313,9 +363,10 @@ XErrorCode DirectShowVideoSourcePlugin::UpdateDescription( PluginDescriptor* des
     }
     else
     {
+        // video configuration properties
         if ( !mDevice->IsVideoConfigSupported( ) )
         {
-            // device does not support any configuration, hide all properties
+            // device does not support any video configuration, hide all properties
             for ( int i = 4; i <= 11; i++ )
             {
                 descriptor->Properties[i]->Flags |= PropertyFlag_Hidden;
@@ -360,6 +411,41 @@ XErrorCode DirectShowVideoSourcePlugin::UpdateDescription( PluginDescriptor* des
                     descriptor->Properties[i]->DefaultValue.type = XVT_Bool;
                     descriptor->Properties[i]->DefaultValue.value.boolVal = ( defaultValue == 1 );
                 }
+            }
+        }
+
+        // camera control properties
+        if ( !mDevice->IsCameraConfigSupported( ) )
+        {
+            descriptor->Properties[12]->Flags |= PropertyFlag_Hidden;
+            descriptor->Properties[13]->Flags |= PropertyFlag_Hidden;
+        }
+        else
+        {
+            int32_t minValue, maxValue, defaultValue, stepSize;
+            bool    isAutoSupported;
+
+            if ( mDevice->GetCameraPropertyRange( XCameraProperty::Exposure, &minValue, &maxValue, &stepSize, &defaultValue, &isAutoSupported ) != SuccessCode )
+            {
+                descriptor->Properties[12]->Flags |= PropertyFlag_Hidden;
+                descriptor->Properties[13]->Flags |= PropertyFlag_Hidden;
+            }
+            else
+            {
+                descriptor->Properties[12]->Flags &= ( ~PropertyFlag_Hidden );
+                descriptor->Properties[13]->Flags &= ( ~PropertyFlag_Hidden );
+
+                descriptor->Properties[13]->DefaultValue.type = XVT_Bool;
+                descriptor->Properties[13]->DefaultValue.value.boolVal = isAutoSupported;
+
+                descriptor->Properties[13]->DefaultValue.type = XVT_I4;
+                descriptor->Properties[13]->DefaultValue.value.iVal = defaultValue;
+
+                descriptor->Properties[13]->MinValue.type = XVT_I4;
+                descriptor->Properties[13]->MinValue.value.iVal = minValue;
+
+                descriptor->Properties[13]->MaxValue.type = XVT_I4;
+                descriptor->Properties[13]->MaxValue.value.iVal = maxValue;
             }
         }
     }

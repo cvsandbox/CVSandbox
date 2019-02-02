@@ -1,7 +1,7 @@
 /*
     DirectShow video source plug-ins of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -41,9 +41,10 @@ static XErrorCode UpdateProperties( PluginDescriptor* desc );
 static XErrorCode UpdateResolutionProperty( PropertyDescriptor* desc, const xvariant* parentValue );
 static XErrorCode UpdateFrameRateProperty( PropertyDescriptor* desc, const xvariant* parentValue );
 static XErrorCode UpdateVideoInputProperty( PropertyDescriptor* desc, const xvariant* parentValue );
+static XErrorCode UpdateExposureProperty( PropertyDescriptor* desc, const xvariant* parentValue );
 
 // Version of the plug-in
-static xversion PluginVersion = { 1, 1, 1 };
+static xversion PluginVersion = { 1, 1, 2 };
 
 // ID of the plug-in
 static xguid PluginID = { 0xAF000003, 0x00000000, 0x00000004, 0x00000001 };
@@ -89,6 +90,13 @@ static PropertyDescriptor colorImagesProperty =
 static PropertyDescriptor backlightCompensationProperty =
 { XVT_Bool, "Back-light Compensation", "backlightCompensation", "Specifies if back-light compensation should be on or off.", PropertyFlag_DeviceRuntimeConfiguration };
 
+// Automatic Exposure property
+static PropertyDescriptor automaticExposureProperty =
+{ XVT_Bool, "Automatic Exposure", "automaticExposure", "Specifies if exposure is controlled automatically or not.", PropertyFlag_DeviceRuntimeConfiguration };
+// Exposure property
+static PropertyDescriptor exposureProperty =
+{ XVT_I4, "Exposure", "Exposure", "Sets camera's exposure level (in log base 2 seconds).", PropertyFlag_DeviceRuntimeConfiguration | PropertyFlag_Dependent };
+
 // <<<<<
 
 // Array of available properties
@@ -99,7 +107,9 @@ static PropertyDescriptor* pluginProperties[] =
     &brightnessProperty, &contrastProperty, &saturationProperty,
     &hueProperty, &sharpnessProperty, &gammaProperty,
 
-    &colorImagesProperty, &backlightCompensationProperty
+    &colorImagesProperty, &backlightCompensationProperty,
+
+    &automaticExposureProperty, &exposureProperty
 };
 
 // Register the plug-in
@@ -174,6 +184,10 @@ static void PluginInitializer( )
     videoInputProperty.ParentProperty = 0;
     videoInputProperty.Updater        = UpdateVideoInputProperty;
     XVariantInit( &videoInputProperty.DefaultValue );
+
+    // configure exposure property
+    exposureProperty.ParentProperty = 12;
+    exposureProperty.Updater        = UpdateExposureProperty;
 }
 
 // Clean-up plugin
@@ -524,6 +538,29 @@ XErrorCode UpdateVideoInputProperty( PropertyDescriptor* desc, const xvariant* p
             desc->MaxValue.value.ubVal = static_cast<uint8_t>( desc->ChoicesCount - 1 );
 
             ret = SuccessCode;
+        }
+    }
+
+    return ret;
+}
+
+// Enable/disable Exposure property based on Automatic Exposure setting
+XErrorCode UpdateExposureProperty( PropertyDescriptor* desc, const xvariant* parentValue )
+{
+    XErrorCode ret = ErrorFailed;
+    bool       boolParentValue;
+
+    ret = XVariantToBool( parentValue, &boolParentValue );
+
+    if ( ret == SuccessCode )
+    {
+        if ( boolParentValue )
+        {
+            desc->Flags |= PropertyFlag_Disabled;
+        }
+        else
+        {
+            desc->Flags &= ( ~PropertyFlag_Disabled );
         }
     }
 
