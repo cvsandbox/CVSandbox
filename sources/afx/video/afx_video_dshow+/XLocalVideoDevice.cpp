@@ -149,7 +149,7 @@ namespace Private
 
         XErrorCode SetCameraProperty( XCameraProperty property, int32_t value, bool automatic );
         XErrorCode GetCameraProperty( XCameraProperty property, int32_t* value, bool* automatic ) const;
-        XErrorCode GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* default, bool* isAutomaticSupported ) const;
+        XErrorCode GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* defaultValue, bool* isAutomaticSupported ) const;
 
     private:
         // Run video loop in a background thread
@@ -609,9 +609,9 @@ XErrorCode XLocalVideoDevice::GetCameraProperty( XCameraProperty property, int32
 }
 
 // Get range of values supported by the specified camera property
-XErrorCode XLocalVideoDevice::GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* default, bool* isAutomaticSupported ) const
+XErrorCode XLocalVideoDevice::GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* defaultValue, bool* isAutomaticSupported ) const
 {
-    return mData->GetCameraPropertyRange( property, min, max, step, default, isAutomaticSupported );
+    return mData->GetCameraPropertyRange( property, min, max, step, defaultValue, isAutomaticSupported );
 }
 
 namespace Private
@@ -1288,12 +1288,12 @@ XErrorCode XLocalVideoDeviceData::GetCameraProperty( XCameraProperty property, i
 }
 
 // Get range of values supported by the specified camera property
-XErrorCode XLocalVideoDeviceData::GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* default, bool* isAutomaticSupported ) const
+XErrorCode XLocalVideoDeviceData::GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* defaultValue, bool* isAutomaticSupported ) const
 {
     XScopedLock lock( &RunningSync );
     XErrorCode  ret = SuccessCode;
 
-    if ( ( min == nullptr ) || ( max == nullptr ) || ( step == nullptr ) || ( default == nullptr ) || ( isAutomaticSupported == nullptr ) )
+    if ( ( min == nullptr ) || ( max == nullptr ) || ( step == nullptr ) || ( defaultValue == nullptr ) || ( isAutomaticSupported == nullptr ) )
     {
         ret = ErrorNullParameter;
     }
@@ -1320,10 +1320,10 @@ XErrorCode XLocalVideoDeviceData::GetCameraPropertyRange( XCameraProperty proper
         }
         else
         {
-            *min     = propMin;
-            *max     = propMax;
-            *step    = propStep;
-            *default = propDef;
+            *min          = propMin;
+            *max          = propMax;
+            *step         = propStep;
+            *defaultValue = propDef;
 
             *isAutomaticSupported = ( propFlags & CameraControl_Flags_Auto );
         }

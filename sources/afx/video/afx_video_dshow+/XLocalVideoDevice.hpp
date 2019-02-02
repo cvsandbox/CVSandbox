@@ -139,7 +139,7 @@ public:
     // Get current value if the specified camera property. The device must be running.
     XErrorCode GetCameraProperty( XCameraProperty property, int32_t* value, bool* automatic = nullptr ) const;
     // Get range of values supported by the specified camera property
-    XErrorCode GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* default, bool* isAutomaticSupported ) const;
+    XErrorCode GetCameraPropertyRange( XCameraProperty property, int32_t* min, int32_t* max, int32_t* step, int32_t* defaultValue, bool* isAutomaticSupported ) const;
 
 private:
     Private::XLocalVideoDeviceData* mData;
