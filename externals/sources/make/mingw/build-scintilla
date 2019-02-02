@@ -1,0 +1,24 @@
+PRO_NAME=ScintillaEdit.pro
+PRO_FOLDER=../../scintilla/qt/ScintillaEdit
+BUILD_FOLDER=out_scintilla
+OUT_FOLDER=../../../../build/mingw
+OUT_REL=${OUT_FOLDER}/release
+
+if [ "$1" != "clean" ] ; then
+    pushd .
+
+    mkdir ${BUILD_FOLDER}
+    cd ${BUILD_FOLDER}
+
+    ${QT_MINGW_BIN}/qmake.exe ../${PRO_FOLDER}/${PRO_NAME}
+    
+    make -f Makefile.Release
+
+    popd
+    
+    cp -f ${PRO_FOLDER}/lib/mingw/release/libScintillaEdit3.a ${OUT_REL}/lib
+    cp -f ${PRO_FOLDER}/lib/mingw/release/ScintillaEdit3.dll ${OUT_REL}/bin
+else
+    rm -rf ${BUILD_FOLDER}
+    rm -rf ${PRO_FOLDER}/lib/mingw
+fi

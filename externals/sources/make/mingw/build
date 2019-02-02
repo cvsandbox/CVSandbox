@@ -6,4 +6,5 @@
 ./build-curl $*
 ./build-ffmpeg $*
 ./build-qtpropertybrowser $*
+./build-scintilla $*
 ./build-other $*
