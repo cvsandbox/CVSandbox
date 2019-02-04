@@ -58,7 +58,7 @@ BEGIN
             VALUE "FileDescription", "CVSandbox Virtual Camera"
             VALUE "FileVersion", VER_FILEVERSION_STR
             VALUE "InternalName", "cvs_vcam"
-            VALUE "LegalCopyright", "(C) 2015-2017, Andrew Kirillov"
+            VALUE "LegalCopyright", "(C) 2015-2019, Andrew Kirillov"
             VALUE "OriginalFilename", ORIGINAL_FILE_NAME
             VALUE "ProductName", "cvs_vcam"
             VALUE "ProductVersion", VER_PRODUCTVERSION_STR
