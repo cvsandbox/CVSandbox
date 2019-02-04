@@ -25,11 +25,11 @@ contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NE
     CONFIG (debug, debug|release) {
         message( "MSVC Debug build" )
 
-        MSVC_LIBS_DIR = ../../../build/msvc/debug/lib
+        MSVC_LIBS_DIR = $$PWD/../../../build/msvc/debug/lib
     } else {
         message( "MSVC Release build" )
 
-        MSVC_LIBS_DIR = ../../../build/msvc/release/lib
+        MSVC_LIBS_DIR = $$PWD/../../../build/msvc/release/lib
     }
 
     DESTDIR = $$MSVC_LIBS_DIR
@@ -52,11 +52,11 @@ contains(MAKEFILE_GENERATOR, "MINGW") {
     CONFIG (debug, debug|release) {
         message( "MinGW Debug build" )
 
-        MINGW_LIBS_DIR = ../../../build/mingw/debug/lib
+        MINGW_LIBS_DIR = $$PWD/../../../build/mingw/debug/lib
     } else {
         message( "MinGW Release build" )
 
-        MINGW_LIBS_DIR = ../../../build/mingw/release/lib
+        MINGW_LIBS_DIR = $$PWD/../../../build/mingw/release/lib
     }
 
     DESTDIR = $$MINGW_LIBS_DIR
