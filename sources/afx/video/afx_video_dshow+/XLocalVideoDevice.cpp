@@ -66,7 +66,7 @@ namespace Private
     // Create filter described by the specified moniker string
     static IBaseFilter* CreateFilter( const string& moniker );
 
-    // Convert specfied wide character string to UTF8
+    // Convert specified wide character string to UTF8
     static string Utf16to8( LPCWSTR utf16string );
     // Free media type - release memory taken by some of its members
     static void FreeMediaType( AM_MEDIA_TYPE& mt );
