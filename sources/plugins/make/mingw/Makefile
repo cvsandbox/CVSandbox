@@ -18,6 +18,7 @@ BUILDS = image_processing\ip_stdimaging \
     video_processing\vp_vcam_push \
     scripting_engine\se_lua \
     devices\dev_sysinfo \
+    devices\dev_gamepad \
     devices\dev_raspberry
 
 # current directory (supposed to be directory of the Makefile)
