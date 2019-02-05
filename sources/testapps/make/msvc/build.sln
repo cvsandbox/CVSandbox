@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scripting_test", "..\..\scripting_test\make\msvc\scripting_test.vcxproj", "{B04A8E57-118D-4B9D-A50B-65CC50BB840F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "automation_test", "..\..\automation_test\make\msvc\automation_test.vcxproj", "{1639F670-E3BF-4FDA-AEF6-056030CFD276}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugins_memory_test", "..\..\plugins_memory_test\make\msvc\plugins_memory_test.vcxproj", "{8C6E38AF-E0AB-4A3F-8F72-2B5D2F8816C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "video_read_test", "..\..\video_read_test\make\msvc\video_read_test.vcxproj", "{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "video_source_test", "..\..\video_source_test\make\msvc\video_source_test.vcxproj", "{9424E59F-ABDB-47C9-A01F-E612301768DB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "video_write_test", "..\..\video_write_test\make\msvc\video_write_test.vcxproj", "{0A907BE6-59D7-4E28-B318-DAFB79D08328}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Debug|Win32.Build.0 = Debug|Win32
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Release|Win32.ActiveCfg = Release|Win32
+		{B04A8E57-118D-4B9D-A50B-65CC50BB840F}.Release|Win32.Build.0 = Release|Win32
+		{1639F670-E3BF-4FDA-AEF6-056030CFD276}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1639F670-E3BF-4FDA-AEF6-056030CFD276}.Debug|Win32.Build.0 = Debug|Win32
+		{1639F670-E3BF-4FDA-AEF6-056030CFD276}.Release|Win32.ActiveCfg = Release|Win32
+		{1639F670-E3BF-4FDA-AEF6-056030CFD276}.Release|Win32.Build.0 = Release|Win32
+		{8C6E38AF-E0AB-4A3F-8F72-2B5D2F8816C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8C6E38AF-E0AB-4A3F-8F72-2B5D2F8816C2}.Debug|Win32.Build.0 = Debug|Win32
+		{8C6E38AF-E0AB-4A3F-8F72-2B5D2F8816C2}.Release|Win32.ActiveCfg = Release|Win32
+		{8C6E38AF-E0AB-4A3F-8F72-2B5D2F8816C2}.Release|Win32.Build.0 = Release|Win32
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Debug|Win32.Build.0 = Debug|Win32
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Release|Win32.ActiveCfg = Release|Win32
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Release|Win32.Build.0 = Release|Win32
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Debug|Win32.Build.0 = Debug|Win32
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Release|Win32.ActiveCfg = Release|Win32
+		{9424E59F-ABDB-47C9-A01F-E612301768DB}.Release|Win32.Build.0 = Release|Win32
+		{0A907BE6-59D7-4E28-B318-DAFB79D08328}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0A907BE6-59D7-4E28-B318-DAFB79D08328}.Debug|Win32.Build.0 = Debug|Win32
+		{0A907BE6-59D7-4E28-B318-DAFB79D08328}.Release|Win32.ActiveCfg = Release|Win32
+		{0A907BE6-59D7-4E28-B318-DAFB79D08328}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
