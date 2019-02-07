@@ -29,7 +29,7 @@ static void PluginInitializer( );
 static xversion PluginVersion = { 1, 0, 0 };
 
 // ID of the plug-in
-static xguid PluginID = { 0xAF000003, 0x00000000, 0x80000002, 0x00000001 };
+static xguid PluginID = { 0xAF000003, 0x00000000, 0x00000018, 0x00000001 };
 
 // Device ID property
 static PropertyDescriptor deviceIdProperty =

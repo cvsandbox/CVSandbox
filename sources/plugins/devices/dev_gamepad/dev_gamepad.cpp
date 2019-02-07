@@ -25,7 +25,7 @@
 // Descriptor of the module
 ModuleDescriptor moduleInfo =
 {
-    { 0xAF000001, 0x00000000, 0x00000000, 0x80000002 },
+    { 0xAF000001, 0x00000000, 0x00000000, 0x00000018},
     { 1, 0, 0 },
     "Gamepad Device",
     "dev_gamepad",

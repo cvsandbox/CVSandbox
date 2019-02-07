@@ -1,7 +1,7 @@
 /*
     System Info plug-ins of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,7 @@ ModuleDescriptor moduleInfo =
     "dev_sysinfo",
     "The module contains plug-ins, which allow getting some system related information.",
     "Computer Vision Sandbox",
-    "Copyright Computer Vision Sandbox, 2011-2018",
+    "Copyright Computer Vision Sandbox, 2011-2019",
     "http://www.cvsandbox.com/",
     0, // small icon
     0, // icon
