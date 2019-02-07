@@ -1,0 +1,556 @@
+Computer Vision Sandbox 1.2.7 release notes
+-------------------------------------------
+23.12.2017
+
+Version updates and fixes:
+
+* If user selects only one video source when creating new sandbox, then it will be put automatically into
+  the single cell on the view configuration page.
+
+Updates and fixes for the modules included into the package:
+
+* Standard Image Processing 1.0.8
+    ~ Added "Objects Thinning" plug-in, which makes objects thinner by removing specified amount of their edges.
+      The idea is similar to "Erosion" morphology operator, however objects thinning plug-in operates on
+      distance transformation and so its performance does not depend on the thinning amount.
+    ~ Added "Objects Thickening" plug-in, which grows objects by the specified amount. Idea is similar to
+      "Dilatation" morphology, but implemented using distance transformation.
+    ~ Added "Objects Edges" plug-in, which uses distance transformation in order to keep specified amount of
+      objects' edge pixels.
+    ~ Added "Objects Outline" plug-in, which uses distance transformation in order to create outline of objects.
+      It is similar to "Objects Edges", but outline is around object, not part of it.
+
+* Blobs' Processing 1.0.4
+    ~ Added "Filter Circle Blobs" plug-in, which allows keeping objects having circle shape and remove
+      anything else. It does allow filtering by size - minimum/maximum radius. For each found circle,
+      its center and radius are provided.
+
+    ~ Added "Filter Quadrilateral Blobs" plug-in, which allows keeping objects having quadrilateral shape
+      (having 4 corners) and remove anything else. It does provide setting to look for rectangles or
+      squares. For each found quadrilateral, coordinates of its corners are provided.
+
+    ~ Deprecated the "Find Blobs By Size" plug-in. "Filter Blobs By Size" plug-in must be used instead,
+      specifying it needs only to find blobs, not do the actual filtering.
+
+* FFmpeg Based Video Sources 1.0.2
+    ~ Fixed video decoding in the "Video File" plug-in, which could result in infinite loop on some video files
+      and no video coming from them.
+    ~ Fixed "Video File" plug-in so it reports "End of file reached", when same is reported by FFmpeg library.
+      The issue was happening only on some video files, where "IO failure" was reported instead of "End of file".
+
+* Lua Scripting Engine 1.0.6
+    ~ API revision (SCRIPTING_API_REVISION variable) is raised to 7.
+    ~ Added support for Point plug-in property type with real numbers.
+    ~ Fixed setting of negative integers from script into the running host (Host.SetVariable()).
+
+
+New modules added into the package:
+
+Glyphs Recognition and Tracking 1.0.0
+    ~ The module for now contains only one plug-in, which detects square binary
+      glyphs in images (Glyph Detector). It does provide code string for each
+      detected glyph, so some recognition logic can be done via scripting.
+
+* Bar Codes Detection and Recognition 1.0.0
+    ~  The module for now contains only one plug-in, which detects 1D liner bar codes (Bar Code Detector).
+
+
+
+Computer Vision Sandbox 1.2.6 release notes
+-------------------------------------------
+11.10.2017
+
+Version updates and fixes:
+
+* Minor performance improvements by using SSE instructions for converting cameras' images
+  before the get displayed.
+* Added option to prevent system from going to sleep or switching on screen saver while
+  camera/sandbox is running.
+
+Updates and fixes for the modules included into the package:
+
+* FFmpeg Based Video Writing 1.0.1
+    ~ Fixed Video File Writer plug-in, so it has correct property dependencies, which don't
+      lead to application crash when configuring the plug-in.
+
+* Standard Image Processing 1.0.7
+    ~ Minor performance improvements by using SSE instructions for Grayscale, Threshold and
+      Otsu Threshold plug-ins.
+    ~ Fixed edge hysteresis in Canny Edged Detector plug-in, so it uses temporary edge image
+      while calculating final edges.
+    ~ Added Erode Edges plug-in, which can be used to remove horizontal/vertical lines.
+    ~ Added Run Length Smoothing plug-in to fill horizontal/vertical gaps between objects.
+
+* Blobs' Processing 1.0.3
+    ~ Fixed core blob processing routine, so it does not disjoin parts of a single object due
+      to broken labelling algorithm.
+
+* DirectShow Video Sources 1.1.1
+    ~ Minor performance improvements by using SSE instructions for BGR to RGB conversion.
+
+
+
+Computer Vision Sandbox 1.2.5 release notes
+-------------------------------------------
+03.08.2017
+
+Version updates and fixes:
+
+* Do not warn users about changed plug-in's settings in Video Processing Information dialog,
+  if in the end he goes back to original value.
+* Added label to application's status bar to indicate up-time of a running camera/sandbox.
+* Added an option in Selected Devices page of sandbox editing to disable FPS report for some
+  video sources, which user may not be interested to see in the overall FPS rate. This can
+  be the case with video repeater plug-ins, for example, which represent a virtual video
+  source aimed to split video processing into multiple threads. In such cases, user may only
+  be interested in FPS rate of the main video source, rather then summary rate of all processing
+  threads. Individual frame rate of each device still can be seen in Camera Information dialog;
+  it is just not taken into account for calculating overall FPS of a sandbox.
+* Added user interface to change run time properties of video sources, which support those.
+  For example, some cameras may provide properties like brightness, contrast, saturation, etc.,
+  which can be changed while camera is running. This interface is accessible from camera's
+  context menu, available when camera or sandbox is running (the option is shown only if supported
+  by the video source plug-in). Run time configuration can be saved in project object, so the
+  next time it starts the settings are preserved.
+
+Updates and fixes for the modules included into the package:
+
+* Switched to using libjpeg-turbo instead of libjpeg, since it provides better performance.
+  So now playing cameras which generate JPEGs or MJPEG streams (like IP cameras, for example),
+  result in lower CPU load.
+
+* DirectShow Video Sources 1.1.0
+    ~ Allow overriding frame rate of Local Capture Device video source plug-in, if those support
+      range of frame rates for the selected video resolution. Although it is now supported, don't
+      expect every possible frame rate to work. First, the are funny cameras/drivers. Second, the
+      DirectShow API to get supported frame rates has certain limitations. For example, some drivers
+      may claim they support frame rates in the [1-30] range and they really respect it - they can
+      provide images at the rate set. Other cameras, may claim they support frame rates in the
+      [15-30] range, but they will only work either at 15 or 30 rate, nothing in between. And there
+      are other drivers, which say they can do up to 100 frames a second, but they can never do anything
+      more than 30.
+    ~ Added run time properties for Local Capture Device video source plug-in, which allow changing
+      camera's properties like brightness, contrast, saturation, etc. (if the camera driver supports
+      those properties).
+
+* CVSandbox Virtual Camera 1.1.0
+    ~ Instead of supporting single 640x480 resolution with 15 FPS rate, the virtual
+      camera now supports number of different resolutions: 160x120, 320x240, 480x360,
+      640x480, 800x600, 1200x900, 1280x720, 1800x1350, 1920x1080. All resolutions
+      support frame rate from 1 to 30 frames a seconds, with default set to 30.
+    ~ Arbitrary size images are allowed to be pushed into the virtual camera
+      (2000x1500 is the maximum though) - they will be resized automatically to the
+      size requested by a client when starting the camera.
+    ~ In addition to the 32-bit build of the COM DLL, a 64-bit build is provided, so
+      the virtual camera is available from 64-bit applications as well.
+      Run provided "regsvr.bat" to register 64-bit version in the system.
+
+* CVSandbox Virtual Camera Push Plug-in 1.1.0
+    ~ Updated the push plug-in to support 1.1.0 version of CVSandbox Virtual Camera, which now
+      supports multiple resolutions. The push plug-in only does color conversion if necessary, but
+      leaves any required resizing to the virtual camera. Images larger than 2000x1500 are rejected.
+
+* Lua Scripting Engine 1.0.5
+    ~ API revision (SCRIPTING_API_REVISION variable) is raised to 6.
+    ~ Added Host::GetVideoSource() API, which allows getting object of the video source for
+      which a script is running. This allows changing run time properties of a video source
+      from the script, which is set to perform image processing for the video source.
+
+* JPEG/MJPEG Video Sources 1.0.3
+    ~ JPEG/MJPEG video sources now report server's response message when getting HTTP error.
+      So instead of saying something like "HTTP response code: 500", they also add the text
+      response if it was provided, which may explain more about the failure reason.
+    ~ Updated JPEG/MJPEG video sources to say "Connection failed" instead of "HTTP response code: 0".
+
+* Image Folder Video Sources 1.0.1
+    ~ Fixed year and month parts of file name formatting in Image Folder Writer plug-in.
+
+
+New modules added into the package:
+
+* Raspberry Pi Plug-ins 1.0.0
+    ~ Provides "Raspberry Pi Camera" plug-in, which allows accessing Pi's camera in the
+      case it runs cam2web application. https://github.com/cvsandbox/cam2web
+
+
+
+Computer Vision Sandbox 1.2.4 release notes
+-------------------------------------------
+07.03.2017
+
+Version updates and fixes:
+
+* Updated Video Processing Info dialog, so it allows editing properties of image processing filter plug-ins
+  at run time and then update sandbox object, so changes persist.
+* Reworked start of video sources. Now plug-ins of a video processing graph are created and initialized before
+  video source is started, to make sure the graph is ready by the time video source starts providing video frames.
+* Extended plug-ins' property editor to provide custom editors for morphology structuring elements and
+  convolution kernels.
+* Fixed an issue of taking snapshot for a video source, which has a video processing graph set for it. Now
+  the snapshot will provide the final result of the video processing graph, but not the random intermediate.
+
+
+Updates and fixes for the modules included into the package:
+
+* Standard Image Processing 1.0.6
+    ~ Added "Morphology Operator" plug-in, which allows to perform Erosion, Dilatation, Opening, Closing,
+      Top Hat and Bottom Hat operators, using custom specified structuring element.
+    ~ Added "Hit and Miss" plug-in, which provides the hit-and-miss morphology operator.
+    ~ Added "Convolution" plug-in, which allows to perform image convolution using custom specified kernel.
+    ~ Added "Gaussian Blur" and "Gaussian Sharpen" plug-ins to perform image blurring/sharpening using
+      Gaussian kernel of the specified size and standard deviation.
+    ~ Renamed "Difference Edge Detector" plug-in into "Edge Detector". It now provides few different edge
+      detection modes: Difference, Homogeneity and Sobel.
+    ~ Added "Canny Edge Detector" plug-in, which does edge detection using the Canny algorithm.
+    ~ Added "Gray World Normalization" plug-in, which does image color normalization using the Gray World
+      algorithm.
+    ~ Added "Mean Shift" image processing filter plug-in, which calculates mean value of pixels in a window
+      of the specified size, but taking only pixels which satisfy the specified color distance criteria.
+
+* Blobs' Processing 1.0.2
+    ~ Fixed core blob processing routine, which could stuck in an endless loop on certain images.
+
+* Image Processing Tools 1.0.3
+    ~ Added "Color Dodge" and "Color Burn" blending modes to the "Blend Images" plug-in.
+
+* Lua Scripting Engine 1.0.4
+    ~ Scripting engine fixes:
+      # API revision (SCRIPTING_API_REVISION variable) is raised to 5.
+      # Added support for plug-in's properties of 2D array type. Those are represented as "jagged table"
+        in Lua - table of tables, where all sub-tables must be of the same length.
+
+
+
+Computer Vision Sandbox 1.2.3 release notes
+-------------------------------------------
+13.10.2016
+
+Version updates and fixes:
+
+* Added option allowing to take snapshot of a running video source (available from context menu of video
+  player). When snapshot is taken, a window is provided, which allows to perform some analysis of it:
+  check RGB histograms, check pixels' values in RGB, nRGB, HSL or HSV color spaces. The snapshot can
+  be saved as image file or put into a system's clipboard.
+* Added searching option into scripts' editor.
+* Added identifiers highlighting in scripts' editor.
+* When scripts' editor is opened from application's main menu, it can be minimized and is not a top most
+  window, which helps switching between application's main window and scripts' editor during script's
+  testing/debugging.
+* List of favourite plug-ins is saved into app.ini together with other settings instead of using
+  separate favourites.txt file.
+* Plug-ins' properties editor is extended to provide Hue Picker dialog for properties, which represent
+  hue value or hue ranges.
+* Application should report now its own CPU usage in status bar when camera or sandbox is running
+  instead of reporting total system's CPU load.
+
+
+Updates and fixes for the modules included into the package:
+
+* Standard Image Processing 1.0.5
+    ~ Updated "Mask Image" plug-in, so it provides two modes of masking: fill source image when mask values
+      are zeros or fill it when non-zeros. If a mask image is aimed to separate objects from background,
+      for example, then both parts (objects and background) can be extracted using the same mask (no longer
+      required to invert it).
+    ~ Added "Color Channels Filter" plug-in, which performs filtering of RGB channels.
+    ~ Added "HSL Color Filter" plug-in, which filters pixels in HSL color space.
+    ~ Added "HSV Color Filter" plug-in, which does pixels' filtering in HSV color space.
+    ~ Added "Distance Color Filter" plug-in, which does Euclidean and Manhattan distance color filtering.
+
+* Image Processing Tools 1.0.2
+    ~ Added new functions into "Image Drawing" plug-in: FillFrame, FillRing, FillPie and FillConvexPolygon.
+
+* Blobs' Processing 1.0.1
+    ~ Updated "Find Biggest Blob" plug-in, so it allows also searching for background areas (holes) as well.
+      This allows to find the biggest background area, which is not touching image edges (a hole in an object).
+      Previously it would be required to invert objects' image for that.
+    ~ Added "Find Blobs By Size" plug-in, which is similar to "Filter Blobs By Size", but does only blobs' searching
+      (image is not changed).
+
+* Lua Scripting Engine 1.0.3
+    ~ Scripting engine fixes:
+      # API revision (SCRIPTING_API_REVISION variable) is raised to 4.
+      # The scripting engine is changed to avoid implicit conversion of floating point numbers to
+        integers. If a plug-in's property or function expects an integer value, then such must be provided.
+        It is user's responsibility to use math.floor() when needed.
+
+* JPEG/MJPEG Video Sources 1.0.2
+    ~ The "JPEG Folder Video Source" plug-in is moved from this module into vs_image_folder.
+
+
+New modules added into the package:
+
+* Image Folder Video Sources 1.0.0
+    ~ Provides "Image Folder Video Source" plug-in, which is an improved version of "JPEG Folder Video Source"
+      plug-in. The old plug-in was taken from "vs_mjpeg" module and extended to support both JPEG and PNG images.
+      Also it provides a new "Image Folder Writer" plug-in, which writes images into the specified folder at the
+      specified time intervals (supports JPEG and PNG codec). This may allow creating time lapse images, for example.
+
+
+
+Computer Vision Sandbox 1.2.2 release notes
+-------------------------------------------
+03.07.2016
+
+Version updates and fixes:
+
+* Made scripting editor available from application's main menu. Opens as a mode-less window and so simplifies
+  quick testing of scripts' changes.
+* Added option of renaming video processing steps in sandbox wizard, so they could have more meaningful names.
+  This becomes handy if same plug-in is added several times into a graph for different purposes.
+* Updated plug-ins' help system, so it also allows browsing available modules.
+* Extended plug-ins' help system, so it provides links from plug-in's description to corresponding module's description.
+* Resize video source player if video size has changed (for the case if video source may change size of provided
+  frames). This is only available for single camera view, not sandbox view, where cell size is preconfigured and fixed.
+* Fixed video processing information form, so it correctly reports if frames are being delayed or dropped by the
+  video processing graph.
+* Added list of recently opened script files in scripts' editor.
+
+
+Updates and fixes for the modules included into the package:
+
+* Standard Image Processing 1.0.4
+    ~ Added "Shift Image" plug-in, which allows shifting images by the specified number of pixels.
+    ~ Added "Extract Quadrilateral" plug-in, which allows extraction quadrilateral image specified by
+      coordinates of 4 corners from a source image.
+    ~ Added "Embed Quadrilateral" plug-in, which allows putting specified image into quadrilateral of
+      the target image.
+    ~ Added "Image Statistics" plug-in, which allows calculating RGB histograms for color images and
+      intensity histogram for grayscale images. Also calculates statistical values like Minimum, Maximum,
+      Mean and Standard Deviation.
+    ~ Enabled and described "Level Linear" an "Level Linear Grayscale" plug-ins, which allow performing
+      linear correction of RGB channels for color images and intensities for grayscale image.
+    ~ Enabled and described next two source image processing filter plug-ins: "Add Images", "Subtract Images",
+      "Intersect Images" (minimum of two images), "Merge Images" (maximum of two images).
+    ~ Enabled and described "Diff Images" two source image processing filter plug-in, which calculates
+      absolute difference between two images.
+    ~ Added "Diff Images Thresholded" two source image processing filter plug-in, which calculates thresholded
+      absolute difference between two images.
+    ~ Enabled and described "Extract RGB Channel" and "Extract nRGB Channel" plug-ins, which extract specified
+      RGB/nRGB channel from a color image and provide it as a grayscale image.
+    ~ Added "Replace RGB Channel" plug-in, which allows replacing specified RGB channel with a specified
+      grayscale image.
+    ~ Added "Mask Image" plug-in, which sets pixels of a source image to the specified fill color if corresponding
+      pixels of a mask image are equal to 0.
+
+* Image Processing Tools 1.0.1
+    ~ Added "Put Image" plug-in, which can be used to put up to 5 lines of text on an image at
+      the specified coordinates or in image's corners.
+    ~ Added "Image Drawing" plug-in of Scripting APIs type (can be used only from scripting). It exposes different
+      functions to draw on images (through CallFunction() call):
+          DrawLine, DrawRectangle, DrawCircle, DrawEllipse, DrawText, DrawImage,
+          FillRectangle, FillCircle, FillEllipse.
+    ~ Enabled "Blend Images" plug-in, which blends source image with another image of the same size/format. Supported
+      blend modes are: Multiple, Screen and Overlay.
+    ~ Enabled "Fade Images" plug-in, which fades one image into another creating transition effect.
+    ~ Added "Move Towards Images" plug-in, which changes one image in the direction of anther - decreases difference
+      by the specified amount.
+
+* JPEG Format Handler 1.0.1
+    ~ Updated JPEG loading plug-in so it respects orientation EXIF tag and transforms images appropriately when loading.
+
+* Lua Scripting Engine 1.0.2
+    ~ Scripting engine fixes:
+      # API revision (SCRIPTING_API_REVISION variable) is raised to 3.
+      # Added support for array type properties. Plug-in API allow as getting/setting entire array using
+        GetProperty( propertyName ) and SetProperty( propertyName, value ), as getting/setting individual
+        values using GetProperty( propertyName, index ) and SetProperty( propertyName, index, value ).
+      # Added support for point and size property types, which are represented as Lua arrays with 2 values.
+      # Added APIs to store variables at host side:
+        Host.GetVariable( variableName ) and Host.SetVariable( variableName, value ). The APIs allow
+        storing variables of Lua scalar types, arrays (not tables with arbitrary indexing) and image objects.
+      # Extended plug-in's interface with new CallFunction() API, which allows calling arbitrary functions
+        exposed by a plug-in.
+      # Added support for image processing plug-ins. Unlike image processing filter plug-in, this new type is
+        for image processing routines which don't change image at all. Only for processing images with the aim
+        to calculate some values, which are then accessible as read-only properties.
+      # Added support for 2 source image processing filter plug-ins. These plug-ins operate with two image to
+        perform their task. For example, adding images, subtracting images, intersection (min), merge (max), etc.
+      # Fixed error reporting when using ExportImage() method of image exporting plug-ins.
+      # Fixed Lua scripting engine, which was badly creating instances of some plug-ins, causing crashes on various
+        APIs for different plug-in types: IsPixelFormatSupported(), GetOutputPixelFormat(), GetSecondImageSupportedSize(),
+        GetSecondImageSupportedFormat(), SupportedExtensions(), SupportedPixelFormats().
+
+    ~ Lua Scripting plug-in fixes:
+      # Updated plug-in to support variables storage at host.
+      # Updated plug-in's description, so it tells about latest added APIs and new plug-in types' interfaces.
+
+* DirectShow Video Sources 1.0.1
+    ~ Disabled resolutions with 12 bits per pixel and less - the "Local Capture Device" plug-in fails capturing
+      those anyway for now.
+
+* FFmpeg Based Video Sources 1.0.1
+    ~ Added "Video File" plug-in, which is a video source for playing video files. Only video is provided.
+
+* JPEG/MJPEG Video Sources 1.0.1
+    ~ Added "JPEG Folder Video Source" plug-in, which is a video source for providing JPEG images from
+      a specified folder. It can play found images once or repeat them in an end-less loop.
+
+
+New modules added into the package:
+
+* Blobs' Processing 1.0.0
+    ~ "Keep Biggest Blob" - Keeps only the biggest blob in the image while removing the rest.
+    ~ "Find Biggest Blob" - Finds the biggest blob in the image. Similar to the above, but this plug-in
+      does not do any changes to the provided image - only finds coordinates of the biggest blob.
+    ~ "Filter Blobs By Size" - Keeps only the blobs within the specified size limits.
+    ~ "Fill Holes" - Fills holes in objects found in the specified image.
+
+* Video Repeater Plug-ins 1.0.0
+    ~ Provides two plug-ins, which are aimed for building video repeating chains.
+      The "Video Repeater" plug-in is a video source, which does not provide any video frames until
+      something is pushed into them using "Video Repeater Push" plug-in.
+
+* Screen Capture Plug-ins 1.0.0
+    ~ Provides a video source plug-in, which produces frames generated by capturing system's screen.
+      It can capture either entire screen (allows to specify which one on systems with multiple
+      displays), a certain rectangular area or a specified window.
+
+
+
+Computer Vision Sandbox 1.2.1 release notes
+-------------------------------------------
+19.02.2016
+
+Version updates and fixes:
+
+* When showing context menu in script editor above a string containing known plug-in name,
+  it provides an option to get help for that plug-in directly from the editor.
+* Sandbox settings are extended to provide an option, which allows dropping video frames if video processing
+  graph takes too much time (if video processing thread is still busy when new frames arrive from
+  video source).
+* The Video Processing Information tool is extended to report number of delayed or dropped video frames.
+* Fixed the issue when application fails to load any plug-in modules, when started from a path containing
+  Unicode characters.
+* Fixed plug-ins' property editor so it handles Unicode characters used in string properties.
+* Allowed usage of Unicode characters for naming and describing project objects.
+* Updated script editor so it allows Unicode characters in code comments and in strings.
+* Added support of Image Importing and Image Exporting plug-ins.
+* Fixed the issue with restoring windows' position on a screen configured to be on the left side of the main desktop screen.
+
+
+Updates and fixes for the modules included into the package:
+
+* Lua Scripting Engine 1.0.1
+    ~ Scripting engine fixes:
+      # Added SCRIPTING_API_REVISION global variable, which reports API revision, so scripts could check it
+        and raise an error if API revision does not match expectations. Current API revision is set to 2.
+      # New APIs added:
+        - Image:Clone() - clones an images.
+        - Image:GetSubImage() - gets sub image of the specified size.
+        - Image:PutImage() - puts an image into the specified image at the specified location.
+        - Image:Release() - releases reference to the image, so it can be disposed.
+        - Image:Release() - releases reference to the plug-in, so it can be disposed.
+      # Added check for number of parameters to all exposed APIs - calls will fail if number of passed
+        parameters is not equal to expected value.
+      # Extended the list of registered Lua libraries to: table, math, os, string, io, bit32.
+
+    ~ Lua Scripting plug-in fixes:
+      # Added property which allows controlling frequency of forced Garbage Collection cycles.
+      # Documented API of Image Importing and Image Exporting plug-ins.
+      # Documented Host.Name() and Host.Version() APIs.
+      # Applied fix to Lua library, so it is possible to load scripts from folders containing
+        Unicode characters.
+
+* Standard Image Processing 1.0.3
+    ~ Enabled and documented "Grayscale To RGB" ("GrayscaleToRgb" for scripting) plug-in.
+
+
+New modules added into the package:
+
+* Added "JPEG Format Handler" module, which contains "JPEG Exporter" ("JpegExporter" for scripting) and
+  "JPEG Importer" ("JpegImporter" for scripting) plug-ins.
+* Added "PNG Format Handler" module, which contains "PNG Exporter" ("PngExporter" for scripting) and
+  "PNG Importer" ("PngImporter" for scripting) plug-ins.
+
+
+
+Computer Vision Sandbox 1.2.0 release notes
+-------------------------------------------
+27.11.2015
+
+Version updates and fixes:
+
+* Added support for scripting engine plug-ins, which could run scripts interacting with the application.
+* Added built-in scripts' editor.
+* Extended plug-ins' help system, so it provides scripting information about plug-ins and their properties.
+* Updated Camera Information dialog to show original frame size/format and the one after processing with
+  a graph if those are different.
+* Updated Camera Information dialog to show last error message happened in video source or during video
+  processing.
+* Fixed crash in VideoProcessingInfoDialog, which happens when a plug-in is missing for one of the video
+  processing steps.
+* Added CVSandbox Virtual Camera DirechShow filter, which adds a virtual camera into user's system. The
+  camera can be used by different applications supporting DirectShow interface. Images into the camera can be
+  pushed using a special plug-in provided with the Computer Vision Sandbox.
+
+
+Updates and fixes for the modules included into the package:
+
+* Standard Image Processing module 1.0.2
+    ~ Added Rotate Image plug-in, which rotates an image by the specified angle.
+
+* Image Processing Effects 1.0.1
+    ~ Added Vignetting plug-in, which creates vignetting effect - image gets darker or desaturated
+      on its edges.
+    ~ Added Grain plug-in, which adds vertical or horizontal grain to create effect of scratches on
+      an old film.
+    ~ Added Rotate Image Hue plug-in, which shifts (rotates) hue value by the specified value.
+    ~ Added Emboss plug-in, which creates an emboss effect -  bright areas are raised and
+      dark areas are carved.
+
+
+New modules added into the package:
+
+* Added Lua Scripting Engine module, which provides Lua scripting plug-in. Scripting samples are provided
+  with the installation package (check installation folder).
+* Added CVSandbox Virtual Camera modules, which provides plug-in to push images into virtual camera
+  provided with the Computer Vision Sandbox application.
+
+
+
+Computer Vision Sandbox 1.1.1 release notes
+-------------------------------------------
+28.09.2015
+
+Version updates and fixes:
+
+* Added displaying of CPU load and total frame rate in application's status bar.
+* Showing full path of camera/sandbox in the application window's title.
+* Added favourite plug-ins' list into plug-in selection widget.
+* Added Video Processing Information dialog, showing average time taken by each video processing step
+  as well as total time taken by a graph. Available from cameras' context menu in sandbox view.
+* Showing path of project objects in the lists of selected/available devices of sandbox when
+  configuring sandbox.
+* Enabled moving (by drag-n-drop) project objects in the project tree.
+* Closing view of camera/sandbox if it is deleted while playing.
+* Updating application's window title (name of the open object) on renaming project object while it is playing.
+
+
+Updates and fixes for the modules included into the package:
+
+* Standard Image Processing module 1.0.1
+    ~ Renamed Gamma Correction plug-in to Brightness Correction, so it better reflects what it does.
+    ~ Reworked both Brightness and Contrast correction plug-ins, so they have single "factor" property,
+      which allows both to increase and decrease brightness/contrast depending on its value's sign (the
+      "inverse" property was removed).
+
+
+
+Computer Vision Sandbox 1.1.0 release notes
+-------------------------------------------
+06.07.2015
+
+Version updates and fixes:
+
+* Added Sandbox Wizard which allows to define video processing graph for every camera of a sandbox.
+* Added interface to Image Processing and Video Processing plug-ins available through Sandbox Wizard.
+* Added plug-ins' help system which allows to browse description of every plug-in, their properties
+  add possible configuration values.
+
+
+
+Computer Vision Sandbox 1.0.0 release notes
+-------------------------------------------
+27.04.2015
+
+* The first public release of the application.
