@@ -2,7 +2,7 @@
                     For Computer Vision Sandbox
                     By Andrew Kirillov
 
-                    
+
 NOTICE TO USER:
 Please, read this carefully. By using all or any portion of the Software you accept all the terms and conditions of this Agreement. If you do not agree, do not install and do not use this Software.
 
@@ -21,7 +21,7 @@ When used in this Agreement, the following terms shall have the respective meani
 "System" means Windows OS, GNU/Linux or Mac OS X, or any virtual machine.
 
 
-2. GENERAL USE 
+2. GENERAL USE
 You are granted a non-exclusive License to Use the downloaded Software for any purposes for an unlimited period of time.
 
 The Software product under this License is provided free of charge. Even though a license fee is not paid for the use of such software, it does not mean that there are no conditions for using such software.
@@ -44,11 +44,7 @@ The Software product under this License is provided free of charge. Even though 
 
 3.3 Any copies that the Licensee is permitted to make pursuant to this Agreement must contain the same copyright and other proprietary notices that appear on or in the Software.
 
-3.4 The structure, organization and code of the Software are the valuable trade secrets and confidential information of the Licensor. The Licensee agrees not to decompile, disassemble or otherwise attempt to discover the source code of the Software.
-
-3.5 Any attempts to reverse-engineer, copy, clone, modify or alter in any way the installer program without the Licensor's specific approval are strictly prohibited. The Licensee is not authorized to use any plug-in or enhancement that permits to save modifications to a file with software licensed and distributed by the Licensor.
-
-3.6 Trademarks shall be used in accordance with accepted trademark practice, including identification of trademarks owners' names. Trademarks can only be used to identify printed output produced by the Software and such use of any trademark does not give the Licensee any rights of ownership in that trademark.
+3.4 Trademarks shall be used in accordance with accepted trademark practice, including identification of trademarks owners' names. Trademarks can only be used to identify printed output produced by the Software and such use of any trademark does not give the Licensee any rights of ownership in that trademark.
 
 
 4. WARRANTY
@@ -78,33 +74,44 @@ In no event will the Licensee be liable to the Licensor on condition that the Li
 
 
 6. OPEN SOURCE COMPONENTS IN USE
-6.1 The Software uses Qt Framework version 4.8.6 (MinGW version) licensed under LGPL v.2.1. The license text is available at the below location and also distributed with the Software:
-http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-The Qt Framework can be downloaded from the link below:
-http://download.qt.io/archive/qt/4.8/4.8.6/qt-opensource-windows-x86-mingw482-4.8.6-1.exe
+6.1 The Software and some of its plug-ins provided within the package use number of open source components.
+The list includes:
 
-6.2 Other open source code in use by the Software:
-- scintilla - 3.6.0 (2015-08-03) http://www.scintilla.org/
+* Qt Framework, 5.6.3 (MinGW)
+https://download.qt.io/official_releases/qt/5.6/5.6.3/
 
-6.3 Some of the plug-ins provided with the Software may use FFmpeg library version 2.4.3 licensed under LGPL v.2.1. The license text is available at the below location and also distributed with the Software:
-http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-The FFmpeg library can be downloaded from the link below:
-http://www.ffmpeg.org/releases/ffmpeg-2.4.3.tar.gz
+* Qt Property Browser, 2013-10-04 version
+https://github.com/qtproject/qt-solutions/tree/master/qtpropertybrowser
+
+* Scintilla editing component, 3.7.6 (2017-08-08)
+http://www.scintilla.org/
+
+* libjpeg-turbo, 0.6.21 (2018-03-25)
+https://github.com/libjpeg-turbo/libjpeg-turbo
+
+* libexif, 0.6.21 (2012-07-12)
+https://libexif.github.io/
+
+* zlib, 1.2.11 (2017-01-15)
+http://zlib.net/
+
+* libpng, 1.6.34 (2017-09-29)
+http://www.libpng.org/pub/png/libpng.html
+
+* Lua, 5.3.4 (2017-01-12)
+http://www.lua.org/
+
+* libcurl, 7.60.0 (2018-05-16)
+http://curl.haxx.se/
+
+* FFmpeg, 4.0.1 (2018-06-16)
+https://www.ffmpeg.org/
+
+
+6.2 The Software and its plug-ins are built using MinGW compiler version 4.9.2 revision 4.7:
+https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.9.2/threads-posix/dwarf/
 or
-http://www.cvsandbox.com/otherfiles/ffmpeg-2.4.3.tar.gz
-
-6.4 Other open source code in use by some plug-ins provided with the installation package:
-- libjpeg - v9      (2014-01-19) http://www.ijg.org/
-- libexif - 0.6.21  (2012-07-12) http://libexif.sourceforge.net/
-- zlib - 1.2.8      (2013-04-28) http://zlib.net/
-- curl - 7.41.0     (2015-02-25) http://curl.haxx.se/
-- lua - 5.3.1       (2015-06-10) http://www.lua.org/
-- libpng - 1.6.13   (2014-08-21) http://www.libpng.org/pub/png/libpng.html
-
-6.5 The Software and its plug-ins are built using MinGW compiler version 4.8.2 revision 3.7:
-https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.8.2/threads-posix/dwarf/i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z
-or
-http://www.cvsandbox.com/otherfiles/i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z
+http://www.cvsandbox.com/otherfiles/i686-4.9.2-release-posix-dwarf-rt_v4-rev4.7z
 
 
 7. LICENSE AGREEMENT CHANGES
@@ -115,4 +122,4 @@ The Licensor reserves the right to change/update the license agreement for any n
 If a portion of this agreement is held unenforceable, the remainder shall be valid. It means that if one section of the Agreement is not lawful, the rest of the Agreement is still in force. A party's failure to exercise any right under this Agreement will not constitute a waiver of (a) any other terms or conditions of this Agreement, or (b) a right at any time thereafter to require exact and strict compliance with the terms of this Agreement.
 
 
-Copyright (C) 2017 Andrew Kirillov. All rights reserved.
+Copyright (C) 2019 Andrew Kirillov. All rights reserved.
