@@ -1,0 +1,30 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cvssr", "cvssr.vcxproj", "{C35543FB-997F-4943-931D-4B1D7DD4E552}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06} = {D2C21E82-B63E-49C1-95D6-18F157D4BB06}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pluginscripting", "..\..\..\..\core\pluginscripting\make\msvc\pluginscripting.vcxproj", "{D2C21E82-B63E-49C1-95D6-18F157D4BB06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C35543FB-997F-4943-931D-4B1D7DD4E552}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C35543FB-997F-4943-931D-4B1D7DD4E552}.Debug|Win32.Build.0 = Debug|Win32
+		{C35543FB-997F-4943-931D-4B1D7DD4E552}.Release|Win32.ActiveCfg = Release|Win32
+		{C35543FB-997F-4943-931D-4B1D7DD4E552}.Release|Win32.Build.0 = Release|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Debug|Win32.Build.0 = Debug|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Release|Win32.ActiveCfg = Release|Win32
+		{D2C21E82-B63E-49C1-95D6-18F157D4BB06}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
