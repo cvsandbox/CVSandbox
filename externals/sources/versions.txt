@@ -33,7 +33,7 @@ http://www.scintilla.org/
 
 * qtpropertybrowser
 QtPropertyBrowser comes as part of Qt Solutions Archive
-git://gitorious.org/qt-solutions/qt-solutions
+https://github.com/qtproject/qt-solutions
 
 The version used corresponds to the below revision:
 SHA-1: 4ac977553f2b04a54feb74ebcbc90ef255d38895 (committed on 2013-10-04)
