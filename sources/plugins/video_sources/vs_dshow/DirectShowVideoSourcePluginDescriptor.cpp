@@ -95,7 +95,7 @@ static PropertyDescriptor automaticExposureProperty =
 { XVT_Bool, "Automatic Exposure", "automaticExposure", "Specifies if exposure is controlled automatically or not.", PropertyFlag_DeviceRuntimeConfiguration };
 // Exposure property
 static PropertyDescriptor exposureProperty =
-{ XVT_I4, "Exposure", "Exposure", "Sets camera's exposure level (in log base 2 seconds).", PropertyFlag_DeviceRuntimeConfiguration | PropertyFlag_Dependent };
+{ XVT_I4, "Exposure", "exposure", "Sets camera's exposure level (in log base 2 seconds).", PropertyFlag_DeviceRuntimeConfiguration | PropertyFlag_Dependent };
 
 // <<<<<
 
