@@ -104,7 +104,7 @@ http://www.lua.org/
 * libcurl, 7.60.0 (2018-05-16)
 http://curl.haxx.se/
 
-* FFmpeg, 4.0.1 (2018-06-16)
+* FFmpeg, 3.4.5 (2018-11-01)
 https://www.ffmpeg.org/
 
 

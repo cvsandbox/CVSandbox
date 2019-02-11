@@ -7,8 +7,8 @@ mkdir Files
 @rem  2 - Copy main binaries
 set TO_COPY=cvsandbox.exe cvsandboxtools.dll ^
             libcurl.dll libexif-12.dll libjpeg-8.dll libpng16-16.dll zlib1.dll ^
-            avcodec-58.dll avfilter-7.dll avformat-58.dll avutil-56.dll ^
-            swresample-3.dll swscale-5.dll ^
+            avcodec-57.dll avfilter-6.dll avformat-57.dll avutil-55.dll ^
+            swresample-2.dll swscale-4.dll ^
             qtpropertybrowser.dll ScintillaEdit3.dll
 for %%F in (%TO_COPY%) do (
     xcopy "..\..\build\mingw\release\bin\%%F" .\Files\
