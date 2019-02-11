@@ -54,8 +54,9 @@ enum
     PropertyFlag_Dynamic = 0x08,
 
     // Dependent property, which configuration depends on the value of
-    // another property. Usually this property is a selection by index/value
-    // property, which choices depend on what was configured before.
+    // another property. For example, a property may get enabled/disabled 
+    // depending on the value of parent property. A selection property
+    // may change the list of possible choices depending on parent's value.
     PropertyFlag_Dependent = 0x10,
 
     // Flag to specify the property is currently disabled (cannot be modified).
