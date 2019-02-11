@@ -610,10 +610,10 @@ static int shift_data(AVFormatContext *s)
      * writing, so we re-open the same output, but for reading. It also avoids
      * a read/seek/write/seek back and forth. */
     avio_flush(s->pb);
-    ret = s->io_open(s, &read_pb, s->url, AVIO_FLAG_READ, NULL);
+    ret = s->io_open(s, &read_pb, s->filename, AVIO_FLAG_READ, NULL);
     if (ret < 0) {
         av_log(s, AV_LOG_ERROR, "Unable to re-open %s output file for "
-               "the second pass (add_keyframe_index)\n", s->url);
+               "the second pass (add_keyframe_index)\n", s->filename);
         goto end;
     }
 
@@ -878,6 +878,11 @@ static int flv_write_packet(AVFormatContext *s, AVPacket *pkt)
     uint8_t *data = NULL;
     int flags = -1, flags_size, ret;
     int64_t cur_offset = avio_tell(pb);
+
+    if (par->codec_type == AVMEDIA_TYPE_AUDIO && !pkt->size) {
+        av_log(s, AV_LOG_WARNING, "Empty audio Packet\n");
+        return AVERROR(EINVAL);
+    }
 
     if (par->codec_id == AV_CODEC_ID_VP6F || par->codec_id == AV_CODEC_ID_VP6A ||
         par->codec_id == AV_CODEC_ID_VP6  || par->codec_id == AV_CODEC_ID_AAC)

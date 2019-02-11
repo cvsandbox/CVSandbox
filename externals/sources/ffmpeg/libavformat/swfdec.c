@@ -95,7 +95,7 @@ static int swf_probe(AVProbeData *p)
     if (p->buf[3] >= 20 || xmax < 16 || ymax < 16)
         return AVPROBE_SCORE_MAX / 4;
 
-    return AVPROBE_SCORE_EXTENSION + 1;
+    return AVPROBE_SCORE_MAX;
 }
 
 #if CONFIG_ZLIB

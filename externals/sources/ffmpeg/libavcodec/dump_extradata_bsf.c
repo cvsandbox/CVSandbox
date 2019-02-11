@@ -78,14 +78,13 @@ fail:
 }
 
 #define OFFSET(x) offsetof(DumpExtradataContext, x)
-#define FLAGS (AV_OPT_FLAG_VIDEO_PARAM|AV_OPT_FLAG_BSF_PARAM)
 static const AVOption options[] = {
     { "freq", "When do dump extradata", OFFSET(freq), AV_OPT_TYPE_INT,
-        { .i64 = DUMP_FREQ_KEYFRAME }, DUMP_FREQ_KEYFRAME, DUMP_FREQ_ALL, FLAGS, "freq" },
-        { "k",        NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_KEYFRAME }, .flags = FLAGS, .unit = "freq" },
-        { "keyframe", NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_KEYFRAME }, .flags = FLAGS, .unit = "freq" },
-        { "e",        NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_ALL      }, .flags = FLAGS, .unit = "freq" },
-        { "all",      NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_ALL      }, .flags = FLAGS, .unit = "freq" },
+        { .i64 = DUMP_FREQ_KEYFRAME }, DUMP_FREQ_KEYFRAME, DUMP_FREQ_ALL, 0, "freq" },
+        { "k",        NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_KEYFRAME }, .unit = "freq" },
+        { "keyframe", NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_KEYFRAME }, .unit = "freq" },
+        { "e",        NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_ALL      }, .unit = "freq" },
+        { "all",      NULL, 0, AV_OPT_TYPE_CONST, { .i64 = DUMP_FREQ_ALL      }, .unit = "freq" },
     { NULL },
 };
 
@@ -93,7 +92,7 @@ static const AVClass dump_extradata_class = {
     .class_name = "dump_extradata bsf",
     .item_name  = av_default_item_name,
     .option     = options,
-    .version    = LIBAVUTIL_VERSION_INT,
+    .version    = LIBAVUTIL_VERSION_MAJOR,
 };
 
 const AVBitStreamFilter ff_dump_extradata_bsf = {

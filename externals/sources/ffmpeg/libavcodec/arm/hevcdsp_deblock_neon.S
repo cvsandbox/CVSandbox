@@ -152,7 +152,7 @@
 
         and        r9, r8, r7
         cmp        r9, #0
-        beq        1f
+        beq        weakfilter_\@
 
         vadd.i16  q2, q11, q12
         vadd.i16  q4, q9, q8
@@ -210,11 +210,11 @@
         vbit      q13, q3, q5
         vbit      q14, q2, q5
 
-1:
+weakfilter_\@:
         mvn       r8, r8
         and       r9, r8, r7
         cmp       r9, #0
-        beq       2f
+        beq       ready_\@
 
         vdup.16    q4, r2
 
@@ -275,7 +275,7 @@
         vbit      q11, q0, q5
         vbit      q12, q4, q5
 
-2:
+ready_\@:
         vqmovun.s16 d16, q8
         vqmovun.s16 d18, q9
         vqmovun.s16 d20, q10

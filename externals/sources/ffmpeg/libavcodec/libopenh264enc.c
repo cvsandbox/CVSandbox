@@ -75,10 +75,7 @@ static const AVOption options[] = {
 };
 
 static const AVClass class = {
-    .class_name = "libvo_amrwbenc",
-    .item_name  = av_default_item_name,
-    .option     = options,
-    .version    = LIBAVUTIL_VERSION_INT,
+    "libopenh264enc", av_default_item_name, options, LIBAVUTIL_VERSION_INT
 };
 
 static av_cold int svc_encode_close(AVCodecContext *avctx)
@@ -246,10 +243,6 @@ static int svc_encode_frame(AVCodecContext *avctx, AVPacket *avpkt,
     sp.iPicWidth  = avctx->width;
     sp.iPicHeight = avctx->height;
 
-    if (frame->pict_type == AV_PICTURE_TYPE_I) {
-        (*s->encoder)->ForceIntraFrame(s->encoder, true);
-    }
-
     encoded = (*s->encoder)->EncodeFrame(s->encoder, &sp, &fbi);
     if (encoded != cmResultSuccess) {
         av_log(avctx, AV_LOG_ERROR, "EncodeFrame failed\n");
@@ -305,5 +298,4 @@ AVCodec ff_libopenh264_encoder = {
     .pix_fmts       = (const enum AVPixelFormat[]){ AV_PIX_FMT_YUV420P,
                                                     AV_PIX_FMT_NONE },
     .priv_class     = &class,
-    .wrapper_name   = "libopenh264",
 };

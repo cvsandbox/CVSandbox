@@ -48,7 +48,7 @@ static int mpeg_parse_packet(AVFormatContext *ctx, PayloadContext *data,
     return 0;
 }
 
-const RTPDynamicProtocolHandler ff_mpeg_audio_dynamic_handler = {
+RTPDynamicProtocolHandler ff_mpeg_audio_dynamic_handler = {
     .codec_type        = AVMEDIA_TYPE_AUDIO,
     .codec_id          = AV_CODEC_ID_MP3,
     .need_parsing      = AVSTREAM_PARSE_FULL,
@@ -56,7 +56,7 @@ const RTPDynamicProtocolHandler ff_mpeg_audio_dynamic_handler = {
     .static_payload_id = 14,
 };
 
-const RTPDynamicProtocolHandler ff_mpeg_video_dynamic_handler = {
+RTPDynamicProtocolHandler ff_mpeg_video_dynamic_handler = {
     .codec_type        = AVMEDIA_TYPE_VIDEO,
     .codec_id          = AV_CODEC_ID_MPEG2VIDEO,
     .need_parsing      = AVSTREAM_PARSE_FULL,

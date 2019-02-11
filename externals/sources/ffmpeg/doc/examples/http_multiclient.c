@@ -114,6 +114,7 @@ int main(int argc, char **argv)
     in_uri = argv[1];
     out_uri = argv[2];
 
+    av_register_all();
     avformat_network_init();
 
     if ((ret = av_dict_set(&options, "listen", "2", 0)) < 0) {

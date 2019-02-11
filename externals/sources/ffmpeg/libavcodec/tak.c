@@ -90,7 +90,7 @@ int ff_tak_check_crc(const uint8_t *buf, unsigned int buf_size)
     return 0;
 }
 
-void ff_tak_parse_streaminfo(TAKStreamInfo *s, GetBitContext *gb)
+void avpriv_tak_parse_streaminfo(GetBitContext *gb, TAKStreamInfo *s)
 {
     uint64_t channel_mask = 0;
     int frame_type, i;
@@ -125,19 +125,6 @@ void ff_tak_parse_streaminfo(TAKStreamInfo *s, GetBitContext *gb)
     s->frame_samples = tak_get_nb_samples(s->sample_rate, frame_type);
 }
 
-int avpriv_tak_parse_streaminfo(TAKStreamInfo *s, const uint8_t *buf, int size)
-{
-    GetBitContext gb;
-    int ret = init_get_bits8(&gb, buf, size);
-
-    if (ret < 0)
-        return AVERROR_INVALIDDATA;
-
-    ff_tak_parse_streaminfo(s, &gb);
-
-    return 0;
-}
-
 int ff_tak_decode_frame_header(AVCodecContext *avctx, GetBitContext *gb,
                                TAKStreamInfo *ti, int log_level_offset)
 {
@@ -157,7 +144,7 @@ int ff_tak_decode_frame_header(AVCodecContext *avctx, GetBitContext *gb,
     }
 
     if (ti->flags & TAK_FRAME_FLAG_HAS_INFO) {
-        ff_tak_parse_streaminfo(ti, gb);
+        avpriv_tak_parse_streaminfo(gb, ti);
 
         if (get_bits(gb, 6))
             skip_bits(gb, 25);

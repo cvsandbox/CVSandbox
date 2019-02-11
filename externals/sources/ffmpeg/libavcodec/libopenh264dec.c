@@ -147,5 +147,4 @@ AVCodec ff_libopenh264_decoder = {
     .caps_internal  = FF_CODEC_CAP_SETS_PKT_DTS | FF_CODEC_CAP_INIT_THREADSAFE |
                       FF_CODEC_CAP_INIT_CLEANUP,
     .bsfs           = "h264_mp4toannexb",
-    .wrapper_name   = "libopenh264",
 };

@@ -24,7 +24,6 @@
 
 #include "golomb.h"
 #include "hevc.h"
-#include "hevc_parse.h"
 #include "hevc_ps.h"
 #include "hevc_sei.h"
 #include "h2645_parse.h"
@@ -41,11 +40,9 @@ typedef struct HEVCParserContext {
 
     H2645Packet pkt;
     HEVCParamSets ps;
-    HEVCSEI sei;
+    HEVCSEIContext sei;
     SliceHeader sh;
 
-    int is_avc;
-    int nal_length_size;
     int parsed_extradata;
 
     int poc;
@@ -57,7 +54,7 @@ static int hevc_parse_slice_header(AVCodecParserContext *s, H2645NAL *nal,
 {
     HEVCParserContext *ctx = s->priv_data;
     HEVCParamSets *ps = &ctx->ps;
-    HEVCSEI *sei = &ctx->sei;
+    HEVCSEIContext *sei = &ctx->sei;
     SliceHeader *sh = &ctx->sh;
     GetBitContext *gb = &nal->gb;
     const HEVCWindow *ow;
@@ -183,7 +180,8 @@ static int parse_nal_units(AVCodecParserContext *s, const uint8_t *buf,
 {
     HEVCParserContext *ctx = s->priv_data;
     HEVCParamSets *ps = &ctx->ps;
-    HEVCSEI *sei = &ctx->sei;
+    HEVCSEIContext *sei = &ctx->sei;
+    int is_global = buf == avctx->extradata;
     int ret, i;
 
     /* set some sane default values */
@@ -193,8 +191,8 @@ static int parse_nal_units(AVCodecParserContext *s, const uint8_t *buf,
 
     ff_hevc_reset_sei(sei);
 
-    ret = ff_h2645_packet_split(&ctx->pkt, buf, buf_size, avctx, ctx->is_avc,
-                                ctx->nal_length_size, AV_CODEC_ID_HEVC, 1);
+    ret = ff_h2645_packet_split(&ctx->pkt, buf, buf_size, avctx, 0, 0,
+                                AV_CODEC_ID_HEVC, 1);
     if (ret < 0)
         return ret;
 
@@ -232,6 +230,12 @@ static int parse_nal_units(AVCodecParserContext *s, const uint8_t *buf,
         case HEVC_NAL_RADL_R:
         case HEVC_NAL_RASL_N:
         case HEVC_NAL_RASL_R:
+
+            if (is_global) {
+                av_log(avctx, AV_LOG_ERROR, "Invalid NAL unit: %d\n", nal->type);
+                return AVERROR_INVALIDDATA;
+            }
+
             ret = hevc_parse_slice_header(s, nal, avctx);
             if (ret)
                 return ret;
@@ -239,7 +243,8 @@ static int parse_nal_units(AVCodecParserContext *s, const uint8_t *buf,
         }
     }
     /* didn't find a picture! */
-    av_log(avctx, AV_LOG_ERROR, "missing picture in access unit\n");
+    if (!is_global)
+        av_log(avctx, AV_LOG_ERROR, "missing picture in access unit\n");
     return -1;
 }
 
@@ -296,9 +301,7 @@ static int hevc_parse(AVCodecParserContext *s, AVCodecContext *avctx,
     ParseContext *pc = &ctx->pc;
 
     if (avctx->extradata && !ctx->parsed_extradata) {
-        ff_hevc_decode_extradata(avctx->extradata, avctx->extradata_size, &ctx->ps, &ctx->sei,
-                                 &ctx->is_avc, &ctx->nal_length_size, avctx->err_recognition,
-                                 1, avctx);
+        parse_nal_units(s, avctx->extradata, avctx->extradata_size, avctx);
         ctx->parsed_extradata = 1;
     }
 

@@ -239,6 +239,8 @@ static av_cold int movie_common_init(AVFilterContext *ctx)
         return AVERROR_PATCHWELCOME;
     }
 
+    av_register_all();
+
     // Try to find the movie format (container)
     iformat = movie->format_name ? av_find_input_format(movie->format_name) : NULL;
 

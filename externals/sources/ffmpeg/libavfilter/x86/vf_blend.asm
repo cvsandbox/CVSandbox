@@ -2,8 +2,6 @@
 ;* x86-optimized functions for blend filter
 ;*
 ;* Copyright (C) 2015 Paul B Mahol
-;* Copyright (C) 2018 Henrik Gramner
-;* Copyright (C) 2018 Jokyo Images
 ;*
 ;* This file is part of FFmpeg.
 ;*
@@ -27,8 +25,6 @@
 SECTION_RODATA
 
 ps_255: times 4 dd 255.0
-pd_32768 : times 4 dd 32768
-pd_65535 : times 4 dd 65535
 pw_1:   times 8 dw 1
 pw_128: times 8 dw 128
 pw_255: times 8 dw 255
@@ -38,13 +34,10 @@ pb_255: times 16 db 255
 
 SECTION .text
 
-%macro BLEND_INIT 2-3
+%macro BLEND_INIT 2
 %if ARCH_X86_64
 cglobal blend_%1, 6, 9, %2, top, top_linesize, bottom, bottom_linesize, dst, dst_linesize, width, end, x
     mov    widthd, dword widthm
-    %if %0 == 3; is 16 bit
-        add    widthq, widthq ; doesn't compile on x86_32
-    %endif
 %else
 cglobal blend_%1, 5, 7, %2, top, top_linesize, bottom, bottom_linesize, dst, end, x
 %define dst_linesizeq r5mp
@@ -66,8 +59,8 @@ cglobal blend_%1, 5, 7, %2, top, top_linesize, bottom, bottom_linesize, dst, end
 REP_RET
 %endmacro
 
-%macro BLEND_SIMPLE 2-3
-BLEND_INIT %1, 2, %3
+%macro BLEND_SIMPLE 2
+BLEND_INIT %1, 2
 .nextrow:
     mov        xq, widthq
 
@@ -81,43 +74,39 @@ BLEND_INIT %1, 2, %3
 BLEND_END
 %endmacro
 
-; %1 name , %2 src (b or w), %3 inter (w or d), %4 (1 if 16bit, not set if 8 bit)
-%macro GRAINEXTRACT 3-4
-BLEND_INIT %1, 6, %4
-    pxor           m4, m4
-%if %0 == 4 ; 16 bit
-    VBROADCASTI128 m5, [pd_32768]
-%else
-    VBROADCASTI128 m5, [pw_128]
-%endif
+INIT_XMM sse2
+BLEND_SIMPLE xor,      xor
+BLEND_SIMPLE or,       or
+BLEND_SIMPLE and,      and
+BLEND_SIMPLE addition, addusb
+BLEND_SIMPLE subtract, subusb
+BLEND_SIMPLE darken,   minub
+BLEND_SIMPLE lighten,  maxub
+
+BLEND_INIT grainextract, 4
+    pxor       m2, m2
+    mova       m3, [pw_128]
 .nextrow:
     mov        xq, widthq
+
     .loop:
-        movu           m1, [topq + xq]
-        movu           m3, [bottomq + xq]
-
-        punpckl%2%3      m0, m1, m4
-        punpckh%2%3      m1, m4
-        punpckl%2%3      m2, m3, m4
-        punpckh%2%3      m3, m4
-
-        padd%3          m0, m5
-        padd%3          m1, m5
-        psub%3          m0, m2
-        psub%3          m1, m3
-
-        packus%3%2       m0, m1
-
-        mova  [dstq + xq], m0
-        add            xq, mmsize
+        movh            m0, [topq + xq]
+        movh            m1, [bottomq + xq]
+        punpcklbw       m0, m2
+        punpcklbw       m1, m2
+        paddw           m0, m3
+        psubw           m0, m1
+        packuswb        m0, m0
+        movh   [dstq + xq], m0
+        add             xq, mmsize / 2
     jl .loop
 BLEND_END
-%endmacro
 
 %macro MULTIPLY 3 ; a, b, pw_1
     pmullw          %1, %2               ; xxxxxxxx  a * b
     paddw           %1, %3
-    psrlw           %2, %1, 8
+    mova            %2, %1
+    psrlw           %2, 8
     paddw           %1, %2
     psrlw           %1, 8                ; 00xx00xx  a * b / 255
 %endmacro
@@ -129,118 +118,92 @@ BLEND_END
     pxor            %1, %4               ; 00xx00xx  255 - x / 255
 %endmacro
 
-%macro BLEND_MULTIPLY 0
-BLEND_INIT multiply, 6
-    pxor       m4, m4
-    VBROADCASTI128       m5, [pw_1]
+BLEND_INIT multiply, 4
+    pxor       m2, m2
+    mova       m3, [pw_1]
 .nextrow:
     mov        xq, widthq
 
     .loop:
-        movu           m1, [topq + xq]
-        movu           m3, [bottomq + xq]
-        punpcklbw      m0, m1, m4
-        punpckhbw      m1, m4
-        punpcklbw      m2, m3, m4
-        punpckhbw      m3, m4
+                                             ;     word
+                                             ;     |--|
+        movh            m0, [topq + xq]      ; 0000xxxx
+        movh            m1, [bottomq + xq]
+        punpcklbw       m0, m2               ; 00xx00xx
+        punpcklbw       m1, m2
 
-        MULTIPLY        m0, m2, m5
-        MULTIPLY        m1, m3, m5
+        MULTIPLY        m0, m1, m3
 
-        packuswb       m0, m1
-        mova  [dstq + xq], m0
-        add            xq, mmsize
+        packuswb        m0, m0               ; 0000xxxx
+        movh   [dstq + xq], m0
+        add             xq, mmsize / 2
+
     jl .loop
 BLEND_END
-%endmacro
 
-%macro BLEND_SCREEN 0
-BLEND_INIT screen, 7
-    pxor       m4, m4
-
-    VBROADCASTI128       m5, [pw_1]
-    VBROADCASTI128       m6, [pw_255]
+BLEND_INIT screen, 5
+    pxor       m2, m2
+    mova       m3, [pw_1]
+    mova       m4, [pw_255]
 .nextrow:
     mov        xq, widthq
 
     .loop:
-        movu           m1, [topq + xq]
-        movu           m3, [bottomq + xq]
-        punpcklbw      m0, m1, m4
-        punpckhbw      m1, m4
-        punpcklbw      m2, m3, m4
-        punpckhbw      m3, m4
+        movh            m0, [topq + xq]      ; 0000xxxx
+        movh            m1, [bottomq + xq]
+        punpcklbw       m0, m2               ; 00xx00xx
+        punpcklbw       m1, m2
 
-        SCREEN          m0, m2, m5, m6
-        SCREEN          m1, m3, m5, m6
+        SCREEN          m0, m1, m3, m4
 
-        packuswb       m0, m1
-        mova  [dstq + xq], m0
-        add            xq, mmsize
+        packuswb        m0, m0               ; 0000xxxx
+        movh   [dstq + xq], m0
+        add             xq, mmsize / 2
+
     jl .loop
 BLEND_END
-%endmacro
 
-;%1 name, %2 (b or w), %3 (set if 16 bit)
-%macro AVERAGE 2-3
-BLEND_INIT %1, 3, %3
-    pcmpeqb        m2, m2
-
-.nextrow:
-    mov        xq, widthq
-
-.loop:
-    movu           m0, [topq + xq]
-    movu           m1, [bottomq + xq]
-    pxor           m0, m2
-    pxor           m1, m2
-    pavg%2         m0, m1
-    pxor           m0, m2
-    mova  [dstq + xq], m0
-    add            xq, mmsize
-    jl .loop
-BLEND_END
-%endmacro
-
-; %1 name , %2 src (b or w), %3 inter (w or d), %4 (1 if 16bit, not set if 8 bit)
-%macro GRAINMERGE 3-4
-BLEND_INIT %1, 6, %4
-    pxor       m4, m4
-%if %0 == 4 ; 16 bit
-    VBROADCASTI128       m5, [pd_32768]
-%else
-    VBROADCASTI128       m5, [pw_128]
-%endif
+BLEND_INIT average, 3
+    pxor       m2, m2
 .nextrow:
     mov        xq, widthq
 
     .loop:
-        movu           m1, [topq + xq]
-        movu           m3, [bottomq + xq]
-
-        punpckl%2%3    m0, m1, m4
-        punpckh%2%3    m1, m4
-        punpckl%2%3    m2, m3, m4
-        punpckh%2%3    m3, m4
-
-        padd%3         m0, m2
-        padd%3         m1, m3
-        psub%3         m0, m5
-        psub%3         m1, m5
-
-        packus%3%2     m0, m1
-
-        mova  [dstq + xq], m0
-        add            xq, mmsize
+        movh            m0, [topq + xq]
+        movh            m1, [bottomq + xq]
+        punpcklbw       m0, m2
+        punpcklbw       m1, m2
+        paddw           m0, m1
+        psrlw           m0, 1
+        packuswb        m0, m0
+        movh   [dstq + xq], m0
+        add             xq, mmsize / 2
     jl .loop
 BLEND_END
-%endmacro
 
-%macro HARDMIX 0
+BLEND_INIT grainmerge, 4
+    pxor       m2, m2
+    mova       m3, [pw_128]
+.nextrow:
+    mov        xq, widthq
+
+    .loop:
+        movh            m0, [topq + xq]
+        movh            m1, [bottomq + xq]
+        punpcklbw       m0, m2
+        punpcklbw       m1, m2
+        paddw           m0, m1
+        psubw           m0, m3
+        packuswb        m0, m0
+        movh   [dstq + xq], m0
+        add             xq, mmsize / 2
+    jl .loop
+BLEND_END
+
 BLEND_INIT hardmix, 5
-    VBROADCASTI128       m2, [pb_255]
-    VBROADCASTI128       m3, [pb_128]
-    VBROADCASTI128       m4, [pb_127]
+    mova       m2, [pb_255]
+    mova       m3, [pb_128]
+    mova       m4, [pb_127]
 .nextrow:
     mov        xq, widthq
 
@@ -255,9 +218,7 @@ BLEND_INIT hardmix, 5
         add             xq, mmsize
     jl .loop
 BLEND_END
-%endmacro
 
-%macro DIVIDE 0
 BLEND_INIT divide, 4
     pxor       m2, m2
     mova       m3, [ps_255]
@@ -286,12 +247,9 @@ BLEND_INIT divide, 4
 
     jl .loop
 BLEND_END
-%endmacro
 
-%macro PHOENIX 2-3
-; %1 name, %2 b or w, %3 (opt) 1 if 16 bit
-BLEND_INIT %1, 4, %3
-    VBROADCASTI128       m3, [pb_255]
+BLEND_INIT phoenix, 4
+    mova       m3, [pb_255]
 .nextrow:
     mov        xq, widthq
 
@@ -299,20 +257,18 @@ BLEND_INIT %1, 4, %3
         movu            m0, [topq + xq]
         movu            m1, [bottomq + xq]
         mova            m2, m0
-        pminu%2         m0, m1
-        pmaxu%2         m1, m2
+        pminub          m0, m1
+        pmaxub          m1, m2
         mova            m2, m3
-        psubus%2        m2, m1
-        paddus%2        m2, m0
+        psubusb         m2, m1
+        paddusb         m2, m0
         mova   [dstq + xq], m2
         add             xq, mmsize
     jl .loop
 BLEND_END
-%endmacro
 
-; %1 name , %2 src (b or w), %3 inter (w or d), %4 (1 if 16bit, not set if 8 bit)
-%macro DIFFERENCE 3-4
-BLEND_INIT %1, 5, %4
+%macro BLEND_ABS 0
+BLEND_INIT difference, 5
     pxor       m2, m2
 .nextrow:
     mov        xq, widthq
@@ -320,92 +276,64 @@ BLEND_INIT %1, 5, %4
     .loop:
         movu            m0, [topq + xq]
         movu            m1, [bottomq + xq]
-        punpckh%2%3     m3, m0, m2
-        punpckl%2%3     m0, m2
-        punpckh%2%3     m4, m1, m2
-        punpckl%2%3     m1, m2
-        psub%3          m0, m1
-        psub%3          m3, m4
-%if %0 == 4; 16 bit
-        pabsd           m0, m0
-        pabsd           m3, m3
-%else
+        punpckhbw       m3, m0, m2
+        punpcklbw       m0, m2
+        punpckhbw       m4, m1, m2
+        punpcklbw       m1, m2
+        psubw           m0, m1
+        psubw           m3, m4
         ABS2            m0, m3, m1, m4
-%endif
-        packus%3%2      m0, m3
+        packuswb        m0, m3
         mova   [dstq + xq], m0
         add             xq, mmsize
     jl .loop
 BLEND_END
-%endmacro
 
-; %1 name , %2 src (b or w), %3 inter (w or d), %4 (1 if 16bit, not set if 8 bit)
-%macro EXTREMITY 3-4
-BLEND_INIT %1, 8, %4
+BLEND_INIT extremity, 8
     pxor       m2, m2
-%if %0 == 4; 16 bit
-    VBROADCASTI128       m4, [pd_65535]
-%else
-    VBROADCASTI128       m4, [pw_255]
-%endif
+    mova       m4, [pw_255]
 .nextrow:
     mov        xq, widthq
 
     .loop:
         movu            m0, [topq + xq]
         movu            m1, [bottomq + xq]
-        punpckh%2%3     m5, m0, m2
-        punpckl%2%3     m0, m2
-        punpckh%2%3     m6, m1, m2
-        punpckl%2%3     m1, m2
-        psub%3          m3, m4, m0
-        psub%3          m7, m4, m5
-        psub%3          m3, m1
-        psub%3          m7, m6
-%if %0 == 4; 16 bit
-        pabsd           m3, m3
-        pabsd           m7, m7
-%else
+        punpckhbw       m5, m0, m2
+        punpcklbw       m0, m2
+        punpckhbw       m6, m1, m2
+        punpcklbw       m1, m2
+        psubw           m3, m4, m0
+        psubw           m7, m4, m5
+        psubw           m3, m1
+        psubw           m7, m6
         ABS2            m3, m7, m1, m6
-%endif
-        packus%3%2      m3, m7
+        packuswb        m3, m7
         mova   [dstq + xq], m3
         add             xq, mmsize
     jl .loop
 BLEND_END
-%endmacro
 
-%macro NEGATION 3-4
-BLEND_INIT %1, 8, %4
+BLEND_INIT negation, 8
     pxor       m2, m2
-%if %0 == 4; 16 bit
-    VBROADCASTI128       m4, [pd_65535]
-%else
-    VBROADCASTI128       m4, [pw_255]
-%endif
+    mova       m4, [pw_255]
 .nextrow:
     mov        xq, widthq
 
     .loop:
         movu            m0, [topq + xq]
         movu            m1, [bottomq + xq]
-        punpckh%2%3     m5, m0, m2
-        punpckl%2%3     m0, m2
-        punpckh%2%3     m6, m1, m2
-        punpckl%2%3     m1, m2
-        psub%3          m3, m4, m0
-        psub%3          m7, m4, m5
-        psub%3          m3, m1
-        psub%3          m7, m6
-%if %0 == 4; 16 bit
-        pabsd           m3, m3
-        pabsd           m7, m7
-%else
+        punpckhbw       m5, m0, m2
+        punpcklbw       m0, m2
+        punpckhbw       m6, m1, m2
+        punpcklbw       m1, m2
+        psubw           m3, m4, m0
+        psubw           m7, m4, m5
+        psubw           m3, m1
+        psubw           m7, m6
         ABS2            m3, m7, m1, m6
-%endif
-        psub%3          m0, m4, m3
-        psub%3          m1, m4, m7
-        packus%3%2      m0, m1
+        psubw           m0, m4, m3
+        psubw           m1, m4, m7
+        packuswb        m0, m1
         mova   [dstq + xq], m0
         add             xq, mmsize
     jl .loop
@@ -413,86 +341,6 @@ BLEND_END
 %endmacro
 
 INIT_XMM sse2
-BLEND_SIMPLE xor,      xor
-BLEND_SIMPLE or,       or
-BLEND_SIMPLE and,      and
-BLEND_SIMPLE addition, addusb
-BLEND_SIMPLE subtract, subusb
-BLEND_SIMPLE darken,   minub
-BLEND_SIMPLE lighten,  maxub
-GRAINEXTRACT grainextract, b, w
-BLEND_MULTIPLY
-BLEND_SCREEN
-AVERAGE       average,    b
-GRAINMERGE    grainmerge, b, w
-HARDMIX
-PHOENIX phoenix, b
-DIFFERENCE difference, b, w
-DIVIDE
-EXTREMITY extremity, b, w
-NEGATION negation, b, w
-
-%if ARCH_X86_64
-BLEND_SIMPLE addition_16, addusw, 1
-BLEND_SIMPLE and_16,      and,    1
-BLEND_SIMPLE or_16,       or,     1
-BLEND_SIMPLE subtract_16, subusw, 1
-BLEND_SIMPLE xor_16,      xor,    1
-AVERAGE      average_16,  w,      1
-%endif
-
+BLEND_ABS
 INIT_XMM ssse3
-DIFFERENCE difference, b, w
-EXTREMITY extremity, b, w
-NEGATION negation, b, w
-
-INIT_XMM sse4
-%if ARCH_X86_64
-BLEND_SIMPLE darken_16,   minuw, 1
-BLEND_SIMPLE lighten_16,  maxuw, 1
-GRAINEXTRACT grainextract_16, w, d, 1
-GRAINMERGE   grainmerge_16, w, d, 1
-PHOENIX      phoenix_16,      w, 1
-DIFFERENCE   difference_16, w, d, 1
-EXTREMITY    extremity_16, w, d, 1
-NEGATION     negation_16, w, d, 1
-%endif
-
-%if HAVE_AVX2_EXTERNAL
-INIT_YMM avx2
-BLEND_SIMPLE xor,      xor
-BLEND_SIMPLE or,       or
-BLEND_SIMPLE and,      and
-BLEND_SIMPLE addition, addusb
-BLEND_SIMPLE subtract, subusb
-BLEND_SIMPLE darken,   minub
-BLEND_SIMPLE lighten,  maxub
-GRAINEXTRACT grainextract, b, w
-BLEND_MULTIPLY
-BLEND_SCREEN
-AVERAGE    average,    b
-GRAINMERGE grainmerge, b, w
-HARDMIX
-PHOENIX phoenix, b
-
-DIFFERENCE difference, b, w
-EXTREMITY extremity, b, w
-NEGATION negation, b, w
-
-%if ARCH_X86_64
-BLEND_SIMPLE addition_16, addusw, 1
-BLEND_SIMPLE and_16,      and,    1
-BLEND_SIMPLE darken_16,   minuw,  1
-BLEND_SIMPLE lighten_16,  maxuw,  1
-BLEND_SIMPLE or_16,       or,     1
-BLEND_SIMPLE subtract_16, subusw, 1
-BLEND_SIMPLE xor_16,      xor,    1
-GRAINEXTRACT grainextract_16, w, d, 1
-AVERAGE      average_16,  w,      1
-GRAINMERGE   grainmerge_16, w, d, 1
-PHOENIX      phoenix_16,       w, 1
-DIFFERENCE   difference_16, w, d, 1
-EXTREMITY    extremity_16, w, d, 1
-NEGATION     negation_16, w, d, 1
-%endif
-%endif
+BLEND_ABS

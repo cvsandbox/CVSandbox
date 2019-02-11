@@ -137,7 +137,6 @@ static const MXFSamplesPerFrame mxf_spf[] = {
     { { 1001, 60000 }, { 801,  801,  801,  801,  800,  0 } }, // NTSC 59.94
     { { 1, 25 },       { 1920, 0,    0,    0,    0,    0 } }, // PAL 25
     { { 1, 50 },       { 960,  0,    0,    0,    0,    0 } }, // PAL 50
-    { { 1, 60 },       { 800,  0,    0,    0,    0,    0 } },
 };
 
 static const AVRational mxf_time_base[] = {
@@ -147,7 +146,6 @@ static const AVRational mxf_time_base[] = {
     { 1001, 60000 },
     { 1, 25 },
     { 1, 50 },
-    { 1, 60 },
     { 0, 0}
 };
 
@@ -157,7 +155,7 @@ const MXFSamplesPerFrame *ff_mxf_get_samples_per_frame(AVFormatContext *s,
     int idx = av_find_nearest_q_idx(time_base, mxf_time_base);
     AVRational diff = av_sub_q(time_base, mxf_time_base[idx]);
 
-    diff.num = FFABS(diff.num);
+    diff.num = abs(diff.num);
 
     if (av_cmp_q(diff, (AVRational){1, 1000}) >= 0)
         return NULL;

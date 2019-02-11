@@ -23,16 +23,20 @@
 #include "bsf.h"
 #include "internal.h"
 
-static int chomp_filter(AVBSFContext *ctx, AVPacket *pkt)
+static int chomp_filter(AVBSFContext *ctx, AVPacket *out)
 {
+    AVPacket *in;
     int ret;
 
-    ret = ff_bsf_get_packet_ref(ctx, pkt);
+    ret = ff_bsf_get_packet(ctx, &in);
     if (ret < 0)
         return ret;
 
-    while (pkt->size > 0 && !pkt->data[pkt->size - 1])
-        pkt->size--;
+    while (in->size > 0 && !in->data[in->size - 1])
+        in->size--;
+
+    av_packet_move_ref(out, in);
+    av_packet_free(&in);
 
     return 0;
 }

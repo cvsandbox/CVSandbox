@@ -199,15 +199,27 @@ static int config_output(AVFilterLink *outlink)
         av_log(ctx, AV_LOG_ERROR, "inputs must be of same pixel format\n");
         return AVERROR(EINVAL);
     }
-    if (base->w != overlay->w || base->h != overlay->h ||
-        base->w != mask->w    || base->h != mask->h) {
+    if (base->w                       != overlay->w ||
+        base->h                       != overlay->h ||
+        base->sample_aspect_ratio.num != overlay->sample_aspect_ratio.num ||
+        base->sample_aspect_ratio.den != overlay->sample_aspect_ratio.den ||
+        base->w                       != mask->w ||
+        base->h                       != mask->h ||
+        base->sample_aspect_ratio.num != mask->sample_aspect_ratio.num ||
+        base->sample_aspect_ratio.den != mask->sample_aspect_ratio.den) {
         av_log(ctx, AV_LOG_ERROR, "First input link %s parameters "
-               "(size %dx%d) do not match the corresponding "
-               "second input link %s parameters (size %dx%d) "
-               "and/or third input link %s parameters (size %dx%d)\n",
+               "(size %dx%d, SAR %d:%d) do not match the corresponding "
+               "second input link %s parameters (%dx%d, SAR %d:%d) "
+               "and/or third input link %s parameters (%dx%d, SAR %d:%d)\n",
                ctx->input_pads[0].name, base->w, base->h,
+               base->sample_aspect_ratio.num,
+               base->sample_aspect_ratio.den,
                ctx->input_pads[1].name, overlay->w, overlay->h,
-               ctx->input_pads[2].name, mask->w, mask->h);
+               overlay->sample_aspect_ratio.num,
+               overlay->sample_aspect_ratio.den,
+               ctx->input_pads[2].name, mask->w, mask->h,
+               mask->sample_aspect_ratio.num,
+               mask->sample_aspect_ratio.den);
         return AVERROR(EINVAL);
     }
 

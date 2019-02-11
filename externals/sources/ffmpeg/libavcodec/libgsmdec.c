@@ -135,7 +135,6 @@ AVCodec ff_libgsm_decoder = {
     .decode         = libgsm_decode_frame,
     .flush          = libgsm_flush,
     .capabilities   = AV_CODEC_CAP_DR1,
-    .wrapper_name   = "libgsm",
 };
 #endif
 #if CONFIG_LIBGSM_MS_DECODER
@@ -150,6 +149,5 @@ AVCodec ff_libgsm_ms_decoder = {
     .decode         = libgsm_decode_frame,
     .flush          = libgsm_flush,
     .capabilities   = AV_CODEC_CAP_DR1,
-    .wrapper_name   = "libgsm",
 };
 #endif

@@ -297,7 +297,7 @@ static int mpc8_read_packet(AVFormatContext *s, AVPacket *pkt)
             return 0;
         }
         if(tag == TAG_STREAMEND)
-            return AVERROR_EOF;
+            return AVERROR(EIO);
         mpc8_handle_chunk(s, tag, pos, size);
     }
     return AVERROR_EOF;

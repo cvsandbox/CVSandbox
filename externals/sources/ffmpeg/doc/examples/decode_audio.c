@@ -94,6 +94,9 @@ int main(int argc, char **argv)
     filename    = argv[1];
     outfilename = argv[2];
 
+    /* register all the codecs */
+    avcodec_register_all();
+
     pkt = av_packet_alloc();
 
     /* find the MPEG audio decoder */

@@ -64,13 +64,13 @@ static int init_filter_graph(AVFilterGraph **graph, AVFilterContext **src,
 {
     AVFilterGraph *filter_graph;
     AVFilterContext *abuffer_ctx;
-    const AVFilter  *abuffer;
+    AVFilter        *abuffer;
     AVFilterContext *volume_ctx;
-    const AVFilter  *volume;
+    AVFilter        *volume;
     AVFilterContext *aformat_ctx;
-    const AVFilter  *aformat;
+    AVFilter        *aformat;
     AVFilterContext *abuffersink_ctx;
-    const AVFilter  *abuffersink;
+    AVFilter        *abuffersink;
 
     AVDictionary *options_dict = NULL;
     uint8_t options_str[1024];
@@ -288,6 +288,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Invalid duration: %s\n", argv[1]);
         return 1;
     }
+
+    avfilter_register_all();
 
     /* Allocate the frame we will be using to store the data. */
     frame  = av_frame_alloc();

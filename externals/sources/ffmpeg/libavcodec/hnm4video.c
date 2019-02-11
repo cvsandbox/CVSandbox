@@ -375,7 +375,6 @@ static void hnm_update_palette(AVCodecContext *avctx, uint8_t *src,
             hnm->palette[writeoffset] = bytestream2_get_be24(&gb);
             if (!eight_bit_colors)
                 hnm->palette[writeoffset] <<= 2;
-            hnm->palette[writeoffset] |= (0xFFU << 24);
             count--;
             writeoffset++;
         }

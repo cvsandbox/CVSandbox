@@ -321,7 +321,7 @@ static int vorbis_header(AVFormatContext *s, int idx)
     if (priv->packet[pkt_type >> 1])
         return AVERROR_INVALIDDATA;
     if (pkt_type > 1 && !priv->packet[0] || pkt_type > 3 && !priv->packet[1])
-        return priv->vp ? 0 : AVERROR_INVALIDDATA;
+        return AVERROR_INVALIDDATA;
 
     priv->len[pkt_type >> 1]    = os->psize;
     priv->packet[pkt_type >> 1] = av_mallocz(os->psize);

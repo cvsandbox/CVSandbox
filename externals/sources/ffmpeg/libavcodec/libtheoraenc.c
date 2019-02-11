@@ -208,9 +208,7 @@ static av_cold int encode_init(AVCodecContext* avc_context)
         av_log(avc_context, AV_LOG_ERROR, "Unsupported pix_fmt\n");
         return AVERROR(EINVAL);
     }
-    ret = av_pix_fmt_get_chroma_sub_sample(avc_context->pix_fmt, &h->uv_hshift, &h->uv_vshift);
-    if (ret)
-        return ret;
+    avcodec_get_chroma_sub_sample(avc_context->pix_fmt, &h->uv_hshift, &h->uv_vshift);
 
     if (avc_context->flags & AV_CODEC_FLAG_QSCALE) {
         /* Clip global_quality in QP units to the [0 - 10] range
@@ -385,5 +383,4 @@ AVCodec ff_libtheora_encoder = {
     .pix_fmts       = (const enum AVPixelFormat[]){
         AV_PIX_FMT_YUV420P, AV_PIX_FMT_YUV422P, AV_PIX_FMT_YUV444P, AV_PIX_FMT_NONE
     },
-    .wrapper_name   = "libtheora",
 };

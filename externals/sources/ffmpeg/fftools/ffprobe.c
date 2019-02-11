@@ -2275,8 +2275,7 @@ static av_always_inline int process_frame(WriterContext *w,
             break;
 
         case AVMEDIA_TYPE_SUBTITLE:
-            if (*packet_new)
-                ret = avcodec_decode_subtitle2(dec_ctx, &sub, &got_frame, pkt);
+            ret = avcodec_decode_subtitle2(dec_ctx, &sub, &got_frame, pkt);
             *packet_new = 0;
             break;
         default:
@@ -2371,11 +2370,11 @@ static int read_interval_packets(WriterContext *w, InputFile *ifile,
         goto end;
     }
     while (!av_read_frame(fmt_ctx, &pkt)) {
-        if (fmt_ctx->nb_streams > nb_streams) {
+        if (ifile->nb_streams > nb_streams) {
             REALLOCZ_ARRAY_STREAM(nb_streams_frames,  nb_streams, fmt_ctx->nb_streams);
             REALLOCZ_ARRAY_STREAM(nb_streams_packets, nb_streams, fmt_ctx->nb_streams);
             REALLOCZ_ARRAY_STREAM(selected_streams,   nb_streams, fmt_ctx->nb_streams);
-            nb_streams = fmt_ctx->nb_streams;
+            nb_streams = ifile->nb_streams;
         }
         if (selected_streams[pkt.stream_index]) {
             AVRational tb = ifile->streams[pkt.stream_index].st->time_base;
@@ -2513,15 +2512,13 @@ static int show_stream(WriterContext *w, AVFormatContext *fmt_ctx, int stream_id
     case AVMEDIA_TYPE_VIDEO:
         print_int("width",        par->width);
         print_int("height",       par->height);
-#if FF_API_LAVF_AVCTX
         if (dec_ctx) {
             print_int("coded_width",  dec_ctx->coded_width);
             print_int("coded_height", dec_ctx->coded_height);
         }
-#endif
         print_int("has_b_frames", par->video_delay);
         sar = av_guess_sample_aspect_ratio(fmt_ctx, stream, NULL);
-        if (sar.num) {
+        if (sar.den) {
             print_q("sample_aspect_ratio", sar, ':');
             av_reduce(&dar.num, &dar.den,
                       par->width  * sar.num,
@@ -2781,7 +2778,7 @@ static int show_format(WriterContext *w, InputFile *ifile)
     int ret = 0;
 
     writer_print_section_header(w, SECTION_ID_FORMAT);
-    print_str_validate("filename", fmt_ctx->url);
+    print_str_validate("filename", fmt_ctx->filename);
     print_int("nb_streams",       fmt_ctx->nb_streams);
     print_int("nb_programs",      fmt_ctx->nb_programs);
     print_str("format_name",      fmt_ctx->iformat->name);
@@ -2795,7 +2792,7 @@ static int show_format(WriterContext *w, InputFile *ifile)
     else           print_str_opt("size", "N/A");
     if (fmt_ctx->bit_rate > 0) print_val    ("bit_rate", fmt_ctx->bit_rate, unit_bit_per_second_str);
     else                       print_str_opt("bit_rate", "N/A");
-    print_int("probe_score", fmt_ctx->probe_score);
+    print_int("probe_score", av_format_get_probe_score(fmt_ctx));
     if (do_show_format_tags)
         ret = show_tags(w, fmt_ctx->metadata, SECTION_ID_FORMAT_TAGS);
 
@@ -2830,6 +2827,8 @@ static int open_input_file(InputFile *ifile, const char *filename)
         print_error(filename, AVERROR(ENOMEM));
         exit_program(1);
     }
+
+    fmt_ctx->flags |= AVFMT_FLAG_KEEP_SIDE_DATA;
 
     if (!av_dict_get(format_opts, "scan_all_pmts", NULL, AV_DICT_MATCH_CASE)) {
         av_dict_set(&format_opts, "scan_all_pmts", "1", AV_DICT_DONT_OVERWRITE);
@@ -2913,12 +2912,8 @@ static int open_input_file(InputFile *ifile, const char *filename)
                 av_dict_set(&codec_opts, "threads", "1", 0);
             }
 
-            ist->dec_ctx->pkt_timebase = stream->time_base;
+            av_codec_set_pkt_timebase(ist->dec_ctx, stream->time_base);
             ist->dec_ctx->framerate = stream->avg_frame_rate;
-#if FF_API_LAVF_AVCTX
-            ist->dec_ctx->coded_width = stream->codec->coded_width;
-            ist->dec_ctx->coded_height = stream->codec->coded_height;
-#endif
 
             if (avcodec_open2(ist->dec_ctx, codec, &opts) < 0) {
                 av_log(NULL, AV_LOG_WARNING, "Could not open codec for input stream %d\n",
@@ -3118,9 +3113,7 @@ static void ffprobe_show_pixel_formats(WriterContext *w)
             PRINT_PIX_FMT_FLAG(HWACCEL,   "hwaccel");
             PRINT_PIX_FMT_FLAG(PLANAR,    "planar");
             PRINT_PIX_FMT_FLAG(RGB,       "rgb");
-#if FF_API_PSEUDOPAL
             PRINT_PIX_FMT_FLAG(PSEUDOPAL, "pseudopal");
-#endif
             PRINT_PIX_FMT_FLAG(ALPHA,     "alpha");
             writer_print_section_footer(w);
         }
@@ -3569,6 +3562,7 @@ int main(int argc, char **argv)
 
     options = real_options;
     parse_loglevel(argc, argv, options);
+    av_register_all();
     avformat_network_init();
     init_opts();
 #if CONFIG_AVDEVICE

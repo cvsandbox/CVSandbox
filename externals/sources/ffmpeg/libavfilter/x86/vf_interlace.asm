@@ -39,23 +39,9 @@ SECTION .text
 
     pcmpeq%1 m6, m6
 
-    test hq, mmsize
-    je .loop
-
-    ;process 1 * mmsize
-    movu m0, [mrefq+hq]
-    pavg%1 m0, [prefq+hq]
-    pxor m0, m6
-    pxor m2, m6, [srcq+hq]
-    pavg%1 m0, m2
-    pxor m0, m6
-    mova [dstq+hq], m0
-    add hq, mmsize
-    jge .end
-
 .loop:
-    movu m0, [mrefq+hq]
-    movu m1, [mrefq+hq+mmsize]
+    mova m0, [mrefq+hq]
+    mova m1, [mrefq+hq+mmsize]
     pavg%1 m0, [prefq+hq]
     pavg%1 m1, [prefq+hq+mmsize]
     pxor m0, m6
@@ -71,9 +57,7 @@ SECTION .text
 
     add hq, 2*mmsize
     jl .loop
-
-.end:
-    REP_RET
+REP_RET
 %endmacro
 
 %macro LOWPASS_LINE 0
@@ -89,8 +73,8 @@ cglobal lowpass_line_16, 5, 5, 7, dst, h, src, mref, pref
 cglobal lowpass_line_complex, 5, 5, 8, dst, h, src, mref, pref
     pxor m7, m7
 .loop:
-    movu m0, [srcq+mrefq]
-    movu m2, [srcq+prefq]
+    mova m0, [srcq+mrefq]
+    mova m2, [srcq+prefq]
     mova m1, m0
     mova m3, m2
     punpcklbw m0, m7
@@ -101,7 +85,7 @@ cglobal lowpass_line_complex, 5, 5, 8, dst, h, src, mref, pref
     paddw m1, m3
     mova m6, m0
     mova m5, m1
-    movu m2, [srcq]
+    mova m2, [srcq]
     mova m3, m2
     punpcklbw m2, m7
     punpckhbw m3, m7
@@ -116,8 +100,8 @@ cglobal lowpass_line_complex, 5, 5, 8, dst, h, src, mref, pref
     pcmpgtw m6, m2
     pcmpgtw m5, m3
     packsswb m6, m5
-    movu m2, [srcq+mrefq*2]
-    movu m4, [srcq+prefq*2]
+    mova m2, [srcq+mrefq*2]
+    mova m4, [srcq+prefq*2]
     mova m3, m2
     mova m5, m4
     punpcklbw m2, m7
@@ -134,9 +118,8 @@ cglobal lowpass_line_complex, 5, 5, 8, dst, h, src, mref, pref
     psrlw m1, 3
     packuswb m0, m1
     mova m1, m0
-    movu m2, [srcq]
-    pmaxub m0, m2
-    pminub m1, m2
+    pmaxub m0, [srcq]
+    pminub m1, [srcq]
     pand m0, m6
     pandn m6, m1
     por m0, m6
@@ -151,18 +134,18 @@ REP_RET
 cglobal lowpass_line_complex_12, 5, 5, 8, 16, dst, h, src, mref, pref, clip_max
     movd m7, DWORD clip_maxm
     SPLATW m7, m7, 0
-    movu [rsp], m7
+    mova [rsp], m7
 .loop:
-    movu m0, [srcq+mrefq]
-    movu m1, [srcq+mrefq+mmsize]
-    movu m2, [srcq+prefq]
-    movu m3, [srcq+prefq+mmsize]
+    mova m0, [srcq+mrefq]
+    mova m1, [srcq+mrefq+mmsize]
+    mova m2, [srcq+prefq]
+    mova m3, [srcq+prefq+mmsize]
     paddw m0, m2
     paddw m1, m3
     mova m6, m0
     mova m7, m1
-    movu m2, [srcq]
-    movu m3, [srcq+mmsize]
+    mova m2, [srcq]
+    mova m3, [srcq+mmsize]
     paddw m0, m2
     paddw m1, m3
     psllw m2, 1
@@ -173,10 +156,10 @@ cglobal lowpass_line_complex_12, 5, 5, 8, 16, dst, h, src, mref, pref, clip_max
     psllw m1, 1
     pcmpgtw m6, m2
     pcmpgtw m7, m3
-    movu m2, [srcq+2*mrefq]
-    movu m3, [srcq+2*mrefq+mmsize]
-    movu m4, [srcq+2*prefq]
-    movu m5, [srcq+2*prefq+mmsize]
+    mova m2, [srcq+2*mrefq]
+    mova m3, [srcq+2*mrefq+mmsize]
+    mova m4, [srcq+2*prefq]
+    mova m5, [srcq+2*prefq+mmsize]
     paddw m2, m4
     paddw m3, m5
     paddw m0, [pw_4]
@@ -189,12 +172,10 @@ cglobal lowpass_line_complex_12, 5, 5, 8, 16, dst, h, src, mref, pref, clip_max
     pminsw m1, [rsp]
     mova m2, m0
     mova m3, m1
-    movu m4, [srcq]
-    pmaxsw m0, m4
-    pminsw m2, m4
-    movu m4, [srcq + mmsize]
-    pmaxsw m1, m4
-    pminsw m3, m4
+    pmaxsw m0, [srcq]
+    pmaxsw m1, [srcq+mmsize]
+    pminsw m2, [srcq]
+    pminsw m3, [srcq+mmsize]
     pand m0, m6
     pand m1, m7
     pandn m6, m2
@@ -216,11 +197,6 @@ LOWPASS_LINE
 
 INIT_XMM avx
 LOWPASS_LINE
-
-%if HAVE_AVX2_EXTERNAL
-INIT_YMM avx2
-LOWPASS_LINE
-%endif
 
 INIT_XMM sse2
 LOWPASS_LINE_COMPLEX

@@ -214,6 +214,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    av_register_all();
+
     if (video_decode(argv[1]) != 0)
         return 1;
 

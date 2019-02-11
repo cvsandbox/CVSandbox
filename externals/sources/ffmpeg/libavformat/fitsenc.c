@@ -106,8 +106,6 @@ static int write_image_header(AVFormatContext *s)
             }
             bzero = 32768;
             break;
-        default:
-            return AVERROR(EINVAL);
     }
 
     if (fitsctx->first_image) {
@@ -168,9 +166,7 @@ static int write_image_header(AVFormatContext *s)
 
 static int fits_write_packet(AVFormatContext *s, AVPacket *pkt)
 {
-    int ret = write_image_header(s);
-    if (ret < 0)
-        return ret;
+    write_image_header(s);
     avio_write(s->pb, pkt->data, pkt->size);
     return 0;
 }

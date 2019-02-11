@@ -408,7 +408,7 @@ static int parse_h264_sdp_line(AVFormatContext *s, int st_index,
     return 0;
 }
 
-const RTPDynamicProtocolHandler ff_h264_dynamic_handler = {
+RTPDynamicProtocolHandler ff_h264_dynamic_handler = {
     .enc_name         = "H264",
     .codec_type       = AVMEDIA_TYPE_VIDEO,
     .codec_id         = AV_CODEC_ID_H264,

@@ -23,7 +23,7 @@ http://www.lua.org/
 http://curl.haxx.se/
 
 
-* ffmpeg - 4.0.1          (2018-06-16)
+* ffmpeg - 3.4.5          (2018-11-01)
 https://www.ffmpeg.org/
 
 

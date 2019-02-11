@@ -30,6 +30,7 @@
 
 typedef struct H2645NAL {
     uint8_t *rbsp_buffer;
+    int rbsp_buffer_size;
 
     int size;
     const uint8_t *data;
@@ -64,16 +65,9 @@ typedef struct H2645NAL {
     int ref_idc;
 } H2645NAL;
 
-typedef struct H2645RBSP {
-    uint8_t *rbsp_buffer;
-    int rbsp_buffer_alloc_size;
-    int rbsp_buffer_size;
-} H2645RBSP;
-
 /* an input packet split into unescaped NAL units */
 typedef struct H2645Packet {
     H2645NAL *nals;
-    H2645RBSP rbsp;
     int nb_nals;
     int nals_allocated;
 } H2645Packet;
@@ -81,7 +75,7 @@ typedef struct H2645Packet {
 /**
  * Extract the raw (unescaped) bitstream.
  */
-int ff_h2645_extract_rbsp(const uint8_t *src, int length, H2645RBSP *rbsp,
+int ff_h2645_extract_rbsp(const uint8_t *src, int length,
                           H2645NAL *nal, int small_padding);
 
 /**

@@ -24,8 +24,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-struct MpegEncContext;
-
 typedef int DWTELEM;
 typedef short IDWTELEM;
 

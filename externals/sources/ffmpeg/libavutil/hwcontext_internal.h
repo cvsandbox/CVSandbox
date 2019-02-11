@@ -161,11 +161,9 @@ extern const HWContextType ff_hwcontext_type_cuda;
 extern const HWContextType ff_hwcontext_type_d3d11va;
 extern const HWContextType ff_hwcontext_type_drm;
 extern const HWContextType ff_hwcontext_type_dxva2;
-extern const HWContextType ff_hwcontext_type_opencl;
 extern const HWContextType ff_hwcontext_type_qsv;
 extern const HWContextType ff_hwcontext_type_vaapi;
 extern const HWContextType ff_hwcontext_type_vdpau;
 extern const HWContextType ff_hwcontext_type_videotoolbox;
-extern const HWContextType ff_hwcontext_type_mediacodec;
 
 #endif /* AVUTIL_HWCONTEXT_INTERNAL_H */

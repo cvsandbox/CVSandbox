@@ -29,18 +29,7 @@ extern "C" {
 #ifdef _WIN32
 #include <DeckLinkAPI_i.c>
 #else
-/* The file provided by the SDK is known to be missing prototypes, which doesn't
-   cause issues with GCC since the warning doesn't apply to C++ files.  However
-   Clang does complain (and warnings are treated as errors), so suppress the
-   warning just for this one file */
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-prototypes"
-#endif
 #include <DeckLinkAPIDispatch.cpp>
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
 #endif
 
 extern "C" {
@@ -86,6 +75,7 @@ static char *dup_wchar_to_utf8(wchar_t *w)
 #define DECKLINK_STR    OLECHAR *
 #define DECKLINK_STRDUP dup_wchar_to_utf8
 #define DECKLINK_FREE(s) SysFreeString(s)
+#define DECKLINK_BOOL BOOL
 #elif defined(__APPLE__)
 static char *dup_cfstring_to_utf8(CFStringRef w)
 {
@@ -96,11 +86,13 @@ static char *dup_cfstring_to_utf8(CFStringRef w)
 #define DECKLINK_STR    const __CFString *
 #define DECKLINK_STRDUP dup_cfstring_to_utf8
 #define DECKLINK_FREE(s) CFRelease(s)
+#define DECKLINK_BOOL bool
 #else
 #define DECKLINK_STR    const char *
 #define DECKLINK_STRDUP av_strdup
 /* free() is needed for a string returned by the DeckLink SDL. */
 #define DECKLINK_FREE(s) free((void *) s)
+#define DECKLINK_BOOL bool
 #endif
 
 HRESULT ff_decklink_get_display_name(IDeckLink *This, const char **displayName)
@@ -156,40 +148,6 @@ static DECKLINK_BOOL field_order_eq(enum AVFieldOrder field_order, BMDFieldDomin
     return false;
 }
 
-int ff_decklink_set_configs(AVFormatContext *avctx,
-                            decklink_direction_t direction) {
-    struct decklink_cctx *cctx = (struct decklink_cctx *)avctx->priv_data;
-    struct decklink_ctx *ctx = (struct decklink_ctx *)cctx->ctx;
-    HRESULT res;
-
-    if (ctx->duplex_mode) {
-        DECKLINK_BOOL duplex_supported = false;
-
-        if (ctx->attr->GetFlag(BMDDeckLinkSupportsDuplexModeConfiguration, &duplex_supported) != S_OK)
-            duplex_supported = false;
-
-        if (duplex_supported) {
-            res = ctx->cfg->SetInt(bmdDeckLinkConfigDuplexMode, ctx->duplex_mode == 2 ? bmdDuplexModeFull : bmdDuplexModeHalf);
-            if (res != S_OK)
-                av_log(avctx, AV_LOG_WARNING, "Setting duplex mode failed.\n");
-            else
-                av_log(avctx, AV_LOG_VERBOSE, "Successfully set duplex mode to %s duplex.\n", ctx->duplex_mode == 2 ? "full" : "half");
-        } else {
-            av_log(avctx, AV_LOG_WARNING, "Unable to set duplex mode, because it is not supported.\n");
-        }
-    }
-    if (direction == DIRECTION_IN) {
-        int ret;
-        ret = decklink_select_input(avctx, bmdDeckLinkConfigAudioInputConnection);
-        if (ret < 0)
-            return ret;
-        ret = decklink_select_input(avctx, bmdDeckLinkConfigVideoInputConnection);
-        if (ret < 0)
-            return ret;
-    }
-    return 0;
-}
-
 int ff_decklink_set_format(AVFormatContext *avctx,
                                int width, int height,
                                int tb_num, int tb_den,
@@ -207,7 +165,31 @@ int ff_decklink_set_format(AVFormatContext *avctx,
     av_log(avctx, AV_LOG_DEBUG, "Trying to find mode for frame size %dx%d, frame timing %d/%d, field order %d, direction %d, mode number %d, format code %s\n",
         width, height, tb_num, tb_den, field_order, direction, num, (cctx->format_code) ? cctx->format_code : "(unset)");
 
+    if (ctx->duplex_mode) {
+        DECKLINK_BOOL duplex_supported = false;
+
+        if (ctx->attr->GetFlag(BMDDeckLinkSupportsDuplexModeConfiguration, &duplex_supported) != S_OK)
+            duplex_supported = false;
+
+        if (duplex_supported) {
+            res = ctx->cfg->SetInt(bmdDeckLinkConfigDuplexMode, ctx->duplex_mode == 2 ? bmdDuplexModeFull : bmdDuplexModeHalf);
+            if (res != S_OK)
+                av_log(avctx, AV_LOG_WARNING, "Setting duplex mode failed.\n");
+            else
+                av_log(avctx, AV_LOG_VERBOSE, "Successfully set duplex mode to %s duplex.\n", ctx->duplex_mode == 2 ? "full" : "half");
+        } else {
+            av_log(avctx, AV_LOG_WARNING, "Unable to set duplex mode, because it is not supported.\n");
+        }
+    }
+
     if (direction == DIRECTION_IN) {
+        int ret;
+        ret = decklink_select_input(avctx, bmdDeckLinkConfigAudioInputConnection);
+        if (ret < 0)
+            return ret;
+        ret = decklink_select_input(avctx, bmdDeckLinkConfigVideoInputConnection);
+        if (ret < 0)
+            return ret;
         res = ctx->dli->GetDisplayModeIterator (&itermode);
     } else {
         res = ctx->dlo->GetDisplayModeIterator (&itermode);
@@ -322,14 +304,21 @@ int ff_decklink_list_devices(AVFormatContext *avctx,
                 ret = AVERROR(ENOMEM);
                 goto next;
             }
-
             new_device->device_name = av_strdup(displayName);
-            new_device->device_description = av_strdup(displayName);
-
-            if (!new_device->device_name ||
-                !new_device->device_description ||
-                av_dynarray_add_nofree(&device_list->devices, &device_list->nb_devices, new_device) < 0) {
+            if (!new_device->device_name) {
                 ret = AVERROR(ENOMEM);
+                goto next;
+            }
+
+            new_device->device_description = av_strdup(displayName);
+            if (!new_device->device_description) {
+                av_freep(&new_device->device_name);
+                ret = AVERROR(ENOMEM);
+                goto next;
+            }
+
+            if ((ret = av_dynarray_add_nofree(&device_list->devices,
+                                              &device_list->nb_devices, new_device)) < 0) {
                 av_freep(&new_device->device_name);
                 av_freep(&new_device->device_description);
                 av_freep(&new_device);
@@ -397,7 +386,7 @@ int ff_decklink_list_formats(AVFormatContext *avctx, decklink_direction_t direct
     }
 
     av_log(avctx, AV_LOG_INFO, "Supported formats for '%s':\n\tformat_code\tdescription",
-               avctx->url);
+               avctx->filename);
     while (itermode->Next(&mode) == S_OK) {
         BMDTimeValue tb_num, tb_den;
         mode->GetFrameRate(&tb_num, &tb_den);

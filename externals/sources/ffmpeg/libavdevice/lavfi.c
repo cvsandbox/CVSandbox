@@ -38,6 +38,7 @@
 #include "libavutil/parseutils.h"
 #include "libavutil/pixdesc.h"
 #include "libavfilter/avfilter.h"
+#include "libavfilter/avfiltergraph.h"
 #include "libavfilter/buffersink.h"
 #include "libavformat/avio_internal.h"
 #include "libavformat/internal.h"
@@ -120,7 +121,7 @@ av_cold static int lavfi_read_header(AVFormatContext *avctx)
 {
     LavfiContext *lavfi = avctx->priv_data;
     AVFilterInOut *input_links = NULL, *output_links = NULL, *inout;
-    const AVFilter *buffersink, *abuffersink;
+    AVFilter *buffersink, *abuffersink;
     int *pix_fmts = create_all_formats(AV_PIX_FMT_NB);
     enum AVMediaType type;
     int ret = 0, i, n;
@@ -129,6 +130,8 @@ av_cold static int lavfi_read_header(AVFormatContext *avctx)
 
     if (!pix_fmts)
         FAIL(AVERROR(ENOMEM));
+
+    avfilter_register_all();
 
     buffersink = avfilter_get_by_name("buffersink");
     abuffersink = avfilter_get_by_name("abuffersink");
@@ -164,7 +167,7 @@ av_cold static int lavfi_read_header(AVFormatContext *avctx)
     }
 
     if (!lavfi->graph_str)
-        lavfi->graph_str = av_strdup(avctx->url);
+        lavfi->graph_str = av_strdup(avctx->filename);
 
     /* parse the graph, create a stream for each open output */
     if (!(lavfi->graph = avfilter_graph_alloc()))

@@ -22,11 +22,15 @@
 
 #include "libavutil/avassert.h"
 
-#include "dxva2_internal.h"
 #include "h264dec.h"
 #include "h264data.h"
 #include "h264_ps.h"
 #include "mpegutils.h"
+
+// The headers above may include w32threads.h, which uses the original
+// _WIN32_WINNT define, while dxva2_internal.h redefines it to target a
+// potentially newer version.
+#include "dxva2_internal.h"
 
 struct dxva2_picture_context {
     DXVA_PicParams_H264   pp;
@@ -514,7 +518,7 @@ static int dxva2_h264_end_frame(AVCodecContext *avctx)
 }
 
 #if CONFIG_H264_DXVA2_HWACCEL
-const AVHWAccel ff_h264_dxva2_hwaccel = {
+AVHWAccel ff_h264_dxva2_hwaccel = {
     .name           = "h264_dxva2",
     .type           = AVMEDIA_TYPE_VIDEO,
     .id             = AV_CODEC_ID_H264,
@@ -524,14 +528,13 @@ const AVHWAccel ff_h264_dxva2_hwaccel = {
     .start_frame    = dxva2_h264_start_frame,
     .decode_slice   = dxva2_h264_decode_slice,
     .end_frame      = dxva2_h264_end_frame,
-    .frame_params   = ff_dxva2_common_frame_params,
     .frame_priv_data_size = sizeof(struct dxva2_picture_context),
     .priv_data_size = sizeof(FFDXVASharedContext),
 };
 #endif
 
 #if CONFIG_H264_D3D11VA_HWACCEL
-const AVHWAccel ff_h264_d3d11va_hwaccel = {
+AVHWAccel ff_h264_d3d11va_hwaccel = {
     .name           = "h264_d3d11va",
     .type           = AVMEDIA_TYPE_VIDEO,
     .id             = AV_CODEC_ID_H264,
@@ -541,14 +544,13 @@ const AVHWAccel ff_h264_d3d11va_hwaccel = {
     .start_frame    = dxva2_h264_start_frame,
     .decode_slice   = dxva2_h264_decode_slice,
     .end_frame      = dxva2_h264_end_frame,
-    .frame_params   = ff_dxva2_common_frame_params,
     .frame_priv_data_size = sizeof(struct dxva2_picture_context),
     .priv_data_size = sizeof(FFDXVASharedContext),
 };
 #endif
 
 #if CONFIG_H264_D3D11VA2_HWACCEL
-const AVHWAccel ff_h264_d3d11va2_hwaccel = {
+AVHWAccel ff_h264_d3d11va2_hwaccel = {
     .name           = "h264_d3d11va2",
     .type           = AVMEDIA_TYPE_VIDEO,
     .id             = AV_CODEC_ID_H264,
@@ -558,7 +560,6 @@ const AVHWAccel ff_h264_d3d11va2_hwaccel = {
     .start_frame    = dxva2_h264_start_frame,
     .decode_slice   = dxva2_h264_decode_slice,
     .end_frame      = dxva2_h264_end_frame,
-    .frame_params   = ff_dxva2_common_frame_params,
     .frame_priv_data_size = sizeof(struct dxva2_picture_context),
     .priv_data_size = sizeof(FFDXVASharedContext),
 };

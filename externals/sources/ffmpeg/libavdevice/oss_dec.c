@@ -23,12 +23,17 @@
 
 #include <stdint.h>
 
+#if HAVE_SOUNDCARD_H
+#include <soundcard.h>
+#else
+#include <sys/soundcard.h>
+#endif
+
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <sys/soundcard.h>
 
 #include "libavutil/internal.h"
 #include "libavutil/opt.h"
@@ -52,7 +57,7 @@ static int audio_read_header(AVFormatContext *s1)
         return AVERROR(ENOMEM);
     }
 
-    ret = ff_oss_audio_open(s1, 0, s1->url);
+    ret = ff_oss_audio_open(s1, 0, s1->filename);
     if (ret < 0) {
         return AVERROR(EIO);
     }

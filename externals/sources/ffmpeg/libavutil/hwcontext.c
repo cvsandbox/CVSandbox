@@ -41,9 +41,6 @@ static const HWContextType * const hw_table[] = {
 #if CONFIG_DXVA2
     &ff_hwcontext_type_dxva2,
 #endif
-#if CONFIG_OPENCL
-    &ff_hwcontext_type_opencl,
-#endif
 #if CONFIG_QSV
     &ff_hwcontext_type_qsv,
 #endif
@@ -56,9 +53,6 @@ static const HWContextType * const hw_table[] = {
 #if CONFIG_VIDEOTOOLBOX
     &ff_hwcontext_type_videotoolbox,
 #endif
-#if CONFIG_MEDIACODEC
-    &ff_hwcontext_type_mediacodec,
-#endif
     NULL,
 };
 
@@ -67,12 +61,10 @@ static const char *const hw_type_names[] = {
     [AV_HWDEVICE_TYPE_DRM]    = "drm",
     [AV_HWDEVICE_TYPE_DXVA2]  = "dxva2",
     [AV_HWDEVICE_TYPE_D3D11VA] = "d3d11va",
-    [AV_HWDEVICE_TYPE_OPENCL] = "opencl",
     [AV_HWDEVICE_TYPE_QSV]    = "qsv",
     [AV_HWDEVICE_TYPE_VAAPI]  = "vaapi",
     [AV_HWDEVICE_TYPE_VDPAU]  = "vdpau",
     [AV_HWDEVICE_TYPE_VIDEOTOOLBOX] = "videotoolbox",
-    [AV_HWDEVICE_TYPE_MEDIACODEC] = "mediacodec",
 };
 
 enum AVHWDeviceType av_hwdevice_find_type_by_name(const char *name)
@@ -87,8 +79,7 @@ enum AVHWDeviceType av_hwdevice_find_type_by_name(const char *name)
 
 const char *av_hwdevice_get_type_name(enum AVHWDeviceType type)
 {
-    if (type > AV_HWDEVICE_TYPE_NONE &&
-        type < FF_ARRAY_ELEMS(hw_type_names))
+    if (type >= 0 && type < FF_ARRAY_ELEMS(hw_type_names))
         return hw_type_names[type];
     else
         return NULL;
@@ -221,16 +212,19 @@ static void hwframe_ctx_free(void *opaque, uint8_t *data)
 {
     AVHWFramesContext *ctx = (AVHWFramesContext*)data;
 
-    if (ctx->internal->pool_internal)
-        av_buffer_pool_uninit(&ctx->internal->pool_internal);
+    if (ctx->internal->source_frames) {
+        av_buffer_unref(&ctx->internal->source_frames);
 
-    if (ctx->internal->hw_type->frames_uninit)
-        ctx->internal->hw_type->frames_uninit(ctx);
+    } else {
+        if (ctx->internal->pool_internal)
+            av_buffer_pool_uninit(&ctx->internal->pool_internal);
 
-    if (ctx->free)
-        ctx->free(ctx);
+        if (ctx->internal->hw_type->frames_uninit)
+            ctx->internal->hw_type->frames_uninit(ctx);
 
-    av_buffer_unref(&ctx->internal->source_frames);
+        if (ctx->free)
+            ctx->free(ctx);
+    }
 
     av_buffer_unref(&ctx->device_ref);
 
@@ -483,10 +477,8 @@ int av_hwframe_get_buffer(AVBufferRef *hwframe_ref, AVFrame *frame, int flags)
 
         ret = av_hwframe_get_buffer(ctx->internal->source_frames,
                                     src_frame, 0);
-        if (ret < 0) {
-            av_frame_free(&src_frame);
+        if (ret < 0)
             return ret;
-        }
 
         ret = av_hwframe_map(frame, src_frame,
                              ctx->internal->source_allocation_map_flags);

@@ -161,9 +161,8 @@ AVCodec ff_nvenc_hevc_encoder = {
     .priv_class     = &nvenc_hevc_class,
     .defaults       = defaults,
     .pix_fmts       = ff_nvenc_pix_fmts,
-    .capabilities   = AV_CODEC_CAP_DELAY | AV_CODEC_CAP_HARDWARE,
+    .capabilities   = AV_CODEC_CAP_DELAY,
     .caps_internal  = FF_CODEC_CAP_INIT_CLEANUP,
-    .wrapper_name   = "nvenc",
 };
 
 #endif
@@ -189,7 +188,6 @@ AVCodec ff_hevc_nvenc_encoder = {
     .priv_class     = &hevc_nvenc_class,
     .defaults       = defaults,
     .pix_fmts       = ff_nvenc_pix_fmts,
-    .capabilities   = AV_CODEC_CAP_DELAY | AV_CODEC_CAP_HARDWARE,
+    .capabilities   = AV_CODEC_CAP_DELAY,
     .caps_internal  = FF_CODEC_CAP_INIT_CLEANUP,
-    .wrapper_name   = "nvenc",
 };

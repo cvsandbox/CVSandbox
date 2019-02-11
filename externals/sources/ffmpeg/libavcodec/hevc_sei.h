@@ -23,6 +23,8 @@
 
 #include <stdint.h>
 
+#include "libavutil/md5.h"
+
 #include "get_bits.h"
 
 /**
@@ -58,6 +60,7 @@ typedef enum {
 } HEVC_SEI_Type;
 
 typedef struct HEVCSEIPictureHash {
+    struct AVMD5 *md5_ctx;
     uint8_t       md5[3][16];
     uint8_t is_md5;
 } HEVCSEIPictureHash;
@@ -67,7 +70,6 @@ typedef struct HEVCSEIFramePacking {
     int arrangement_type;
     int content_interpretation_type;
     int quincunx_subsampling;
-    int current_frame_is_frame0_flag;
 } HEVCSEIFramePacking;
 
 typedef struct HEVCSEIDisplayOrientation {
@@ -104,7 +106,7 @@ typedef struct HEVCSEIAlternativeTransfer {
     int preferred_transfer_characteristics;
 } HEVCSEIAlternativeTransfer;
 
-typedef struct HEVCSEI {
+typedef struct HEVCSEIContext {
     HEVCSEIPictureHash picture_hash;
     HEVCSEIFramePacking frame_packing;
     HEVCSEIDisplayOrientation display_orientation;
@@ -114,11 +116,11 @@ typedef struct HEVCSEI {
     HEVCSEIContentLight content_light;
     int active_seq_parameter_set_id;
     HEVCSEIAlternativeTransfer alternative_transfer;
-} HEVCSEI;
+} HEVCSEIContext;
 
 struct HEVCParamSets;
 
-int ff_hevc_decode_nal_sei(GetBitContext *gb, void *logctx, HEVCSEI *s,
+int ff_hevc_decode_nal_sei(GetBitContext *gb, void *logctx, HEVCSEIContext *s,
                            const struct HEVCParamSets *ps, int type);
 
 /**
@@ -128,6 +130,6 @@ int ff_hevc_decode_nal_sei(GetBitContext *gb, void *logctx, HEVCSEI *s,
  *
  * @param s HEVCContext.
  */
-void ff_hevc_reset_sei(HEVCSEI *s);
+void ff_hevc_reset_sei(HEVCSEIContext *s);
 
 #endif /* AVCODEC_HEVC_SEI_H */

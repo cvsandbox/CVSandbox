@@ -45,11 +45,12 @@ FF_DEP_LIBS  := $(DEP_LIBS)
 FF_STATIC_DEP_LIBS := $(STATIC_DEP_LIBS)
 
 $(TOOLS): %$(EXESUF): %.o
-	$(LD) $(LDFLAGS) $(LDEXEFLAGS) $(LD_O) $^ $(EXTRALIBS-$(*F)) $(EXTRALIBS) $(ELIBS)
+	$(LD) $(LDFLAGS) $(LDEXEFLAGS) $(LD_O) $^ $(ELIBS)
 
 target_dec_%_fuzzer$(EXESUF): target_dec_%_fuzzer.o $(FF_DEP_LIBS)
 	$(LD) $(LDFLAGS) $(LDEXEFLAGS) $(LD_O) $^ $(ELIBS) $(FF_EXTRALIBS) $(LIBFUZZER_PATH)
 
+tools/cws2fws$(EXESUF): ELIBS = $(ZLIB)
 tools/sofa2wavs$(EXESUF): ELIBS = $(FF_EXTRALIBS)
 tools/uncoded_frame$(EXESUF): $(FF_DEP_LIBS)
 tools/uncoded_frame$(EXESUF): ELIBS = $(FF_EXTRALIBS)
@@ -127,24 +128,25 @@ install-data: $(DATA_FILES)
 	$(Q)mkdir -p "$(DATADIR)"
 	$(INSTALL) -m 644 $(DATA_FILES) "$(DATADIR)"
 
-uninstall: uninstall-data uninstall-headers uninstall-libs uninstall-pkgconfig
+uninstall: uninstall-libs uninstall-headers uninstall-data
 
 uninstall-data:
 	$(RM) -r "$(DATADIR)"
 
 clean::
 	$(RM) $(CLEANSUFFIXES)
-	$(RM) $(addprefix compat/,$(CLEANSUFFIXES)) $(addprefix compat/*/,$(CLEANSUFFIXES))
+	$(RM) $(CLEANSUFFIXES:%=compat/msvcrt/%)
+	$(RM) $(CLEANSUFFIXES:%=compat/atomics/pthread/%)
+	$(RM) $(CLEANSUFFIXES:%=compat/%)
 	$(RM) -r coverage-html
 	$(RM) -rf coverage.info coverage.info.in lcov
 
-distclean:: clean
+distclean::
+	$(RM) $(DISTCLEANSUFFIXES)
 	$(RM) .version avversion.h config.asm config.h mapfile  \
 		ffbuild/.config ffbuild/config.* libavutil/avconfig.h \
 		version.h libavutil/ffversion.h libavcodec/codec_names.h \
-		libavcodec/bsf_list.c libavformat/protocol_list.c \
-		libavcodec/codec_list.c libavcodec/parser_list.c \
-		libavformat/muxer_list.c libavformat/demuxer_list.c
+		libavcodec/bsf_list.c libavformat/protocol_list.c
 ifeq ($(SRC_LINK),src)
 	$(RM) src
 endif
@@ -153,7 +155,6 @@ endif
 config:
 	$(SRC_PATH)/configure $(value FFMPEG_CONFIGURATION)
 
-build: all alltools examples testprogs
 check: all alltools examples testprogs fate
 
 include $(SRC_PATH)/tests/Makefile
@@ -169,5 +170,4 @@ $(sort $(OBJDIRS)):
 # so this saves some time on slow systems.
 .SUFFIXES:
 
-.PHONY: all all-yes alltools build check config testprogs
-.PHONY: *clean install* uninstall*
+.PHONY: all all-yes alltools check *clean config install* testprogs uninstall*

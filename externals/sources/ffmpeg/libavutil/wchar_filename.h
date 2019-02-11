@@ -19,7 +19,7 @@
 #ifndef AVUTIL_WCHAR_FILENAME_H
 #define AVUTIL_WCHAR_FILENAME_H
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32CE__)
 #include <windows.h>
 #include "mem.h"
 

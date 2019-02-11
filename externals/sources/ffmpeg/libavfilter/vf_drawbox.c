@@ -47,7 +47,7 @@ static const char *const var_names[] = {
     "h",              ///< height of the rendered box
     "w",              ///< width  of the rendered box
     "t",
-    "fill",
+    "max",
     NULL
 };
 
@@ -80,7 +80,6 @@ typedef struct DrawBoxContext {
     char *w_expr, *h_expr; ///< expression for width and height
     char *t_expr;          ///< expression for thickness
     int have_alpha;
-    int replace;
 } DrawBoxContext;
 
 static const int NUM_EXPR_EVALS = 5;
@@ -214,7 +213,7 @@ static int filter_frame(AVFilterLink *inlink, AVFrame *frame)
     int plane, x, y, xb = s->x, yb = s->y;
     unsigned char *row[4];
 
-    if (s->have_alpha && s->replace) {
+    if (s->have_alpha) {
         for (y = FFMAX(yb, 0); y < frame->height && y < (yb + s->h); y++) {
             row[0] = frame->data[0] + y * frame->linesize[0];
             row[3] = frame->data[3] + y * frame->linesize[3];
@@ -287,7 +286,6 @@ static const AVOption drawbox_options[] = {
     { "c",         "set color of the box",                         OFFSET(color_str), AV_OPT_TYPE_STRING, { .str = "black" }, CHAR_MIN, CHAR_MAX, FLAGS },
     { "thickness", "set the box thickness",                        OFFSET(t_expr),    AV_OPT_TYPE_STRING, { .str="3" },       CHAR_MIN, CHAR_MAX, FLAGS },
     { "t",         "set the box thickness",                        OFFSET(t_expr),    AV_OPT_TYPE_STRING, { .str="3" },       CHAR_MIN, CHAR_MAX, FLAGS },
-    { "replace",   "replace color & alpha",                        OFFSET(replace),   AV_OPT_TYPE_BOOL,   { .i64=0 },         0,        1,        FLAGS },
     { NULL }
 };
 
@@ -356,7 +354,7 @@ static int drawgrid_filter_frame(AVFilterLink *inlink, AVFrame *frame)
     int plane, x, y;
     uint8_t *row[4];
 
-    if (drawgrid->have_alpha && drawgrid->replace) {
+    if (drawgrid->have_alpha) {
         for (y = 0; y < frame->height; y++) {
             row[0] = frame->data[0] + y * frame->linesize[0];
             row[3] = frame->data[3] + y * frame->linesize[3];
@@ -420,7 +418,6 @@ static const AVOption drawgrid_options[] = {
     { "c",         "set color of the grid",   OFFSET(color_str), AV_OPT_TYPE_STRING, { .str = "black" }, CHAR_MIN, CHAR_MAX, FLAGS },
     { "thickness", "set grid line thickness", OFFSET(t_expr),    AV_OPT_TYPE_STRING, {.str="1"},         CHAR_MIN, CHAR_MAX, FLAGS },
     { "t",         "set grid line thickness", OFFSET(t_expr),    AV_OPT_TYPE_STRING, {.str="1"},         CHAR_MIN, CHAR_MAX, FLAGS },
-    { "replace",   "replace color & alpha",   OFFSET(replace),   AV_OPT_TYPE_BOOL,   { .i64=0 },         0,        1,        FLAGS },
     { NULL }
 };
 

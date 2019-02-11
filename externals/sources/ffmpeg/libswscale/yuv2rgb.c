@@ -267,11 +267,7 @@ ENDYUV2RGBLINE(8, 1)
     PUTRGB(dst_2, py_2, 0);
 ENDYUV2RGBFUNC()
 
-#if HAVE_BIGENDIAN
-YUV2RGBFUNC(yuva2argb_c, uint32_t, 1)
-#else
 YUV2RGBFUNC(yuva2rgba_c, uint32_t, 1)
-#endif
     LOADCHROMA(0);
     PUTRGBA(dst_1, py_1, pa_1, 0, 24);
     PUTRGBA(dst_2, py_2, pa_2, 0, 24);
@@ -305,11 +301,7 @@ ENDYUV2RGBLINE(8, 1)
     PUTRGBA(dst_2, py_2, pa_2, 0, 24);
 ENDYUV2RGBFUNC()
 
-#if HAVE_BIGENDIAN
-YUV2RGBFUNC(yuva2rgba_c, uint32_t, 1)
-#else
 YUV2RGBFUNC(yuva2argb_c, uint32_t, 1)
-#endif
     LOADCHROMA(0);
     PUTRGBA(dst_1, py_1, pa_1, 0, 0);
     PUTRGBA(dst_2, py_2, pa_2, 0, 0);

@@ -1093,13 +1093,9 @@ static int vorbis_encode_frame(AVCodecContext *avctx, AVPacket *avpkt,
     PutBitContext pb;
 
     if (frame) {
-        AVFrame *clone;
         if ((ret = ff_af_queue_add(&venc->afq, frame)) < 0)
             return ret;
-        clone = av_frame_clone(frame);
-        if (!clone)
-            return AVERROR(ENOMEM);
-        ff_bufqueue_add(avctx, &venc->bufqueue, clone);
+        ff_bufqueue_add(avctx, &venc->bufqueue, av_frame_clone(frame));
     } else
         if (!venc->afq.remaining_samples)
             return 0;

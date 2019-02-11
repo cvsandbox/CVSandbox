@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017 KO Myung-Hun <komh@chollian.net>
+ * Copyright (c) 2011 KO Myung-Hun <komh@chollian.net>
  *
  * This file is part of FFmpeg.
  *
@@ -46,10 +46,8 @@ typedef struct {
 
 typedef void pthread_attr_t;
 
-typedef _fmutex pthread_mutex_t;
+typedef HMTX pthread_mutex_t;
 typedef void pthread_mutexattr_t;
-
-#define PTHREAD_MUTEX_INITIALIZER _FMUTEX_INITIALIZER
 
 typedef struct {
     HEV event_sem;
@@ -100,28 +98,28 @@ static av_always_inline int pthread_join(pthread_t thread, void **value_ptr)
 static av_always_inline int pthread_mutex_init(pthread_mutex_t *mutex,
                                                const pthread_mutexattr_t *attr)
 {
-    _fmutex_create(mutex, 0);
+    DosCreateMutexSem(NULL, (PHMTX)mutex, 0, FALSE);
 
     return 0;
 }
 
 static av_always_inline int pthread_mutex_destroy(pthread_mutex_t *mutex)
 {
-    _fmutex_close(mutex);
+    DosCloseMutexSem(*(PHMTX)mutex);
 
     return 0;
 }
 
 static av_always_inline int pthread_mutex_lock(pthread_mutex_t *mutex)
 {
-    _fmutex_request(mutex, 0);
+    DosRequestMutexSem(*(PHMTX)mutex, SEM_INDEFINITE_WAIT);
 
     return 0;
 }
 
 static av_always_inline int pthread_mutex_unlock(pthread_mutex_t *mutex)
 {
-    _fmutex_release(mutex);
+    DosReleaseMutexSem(*(PHMTX)mutex);
 
     return 0;
 }

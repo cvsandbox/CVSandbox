@@ -198,7 +198,7 @@ int ff_img_read_header(AVFormatContext *s1)
         return AVERROR(EINVAL);
     }
 
-    av_strlcpy(s->path, s1->url, sizeof(s->path));
+    av_strlcpy(s->path, s1->filename, sizeof(s->path));
     s->img_number = 0;
     s->img_count  = 0;
 
@@ -323,8 +323,7 @@ int ff_img_read_header(AVFormatContext *s1)
         if (s1->pb) {
             int probe_buffer_size = 2048;
             uint8_t *probe_buffer = av_realloc(NULL, probe_buffer_size + AVPROBE_PADDING_SIZE);
-            const AVInputFormat *fmt = NULL;
-            void *fmt_iter = NULL;
+            AVInputFormat *fmt = NULL;
             AVProbeData pd = { 0 };
 
             if (!probe_buffer)
@@ -339,9 +338,9 @@ int ff_img_read_header(AVFormatContext *s1)
 
             pd.buf = probe_buffer;
             pd.buf_size = probe_buffer_size;
-            pd.filename = s1->url;
+            pd.filename = s1->filename;
 
-            while ((fmt = av_demuxer_iterate(&fmt_iter))) {
+            while ((fmt = av_iformat_next(fmt))) {
                 if (fmt->read_header != ff_img_read_header ||
                     !fmt->read_probe ||
                     (fmt->flags & AVFMT_NOFILE) ||

@@ -19,16 +19,9 @@
 #ifndef AVCODEC_NVENC_H
 #define AVCODEC_NVENC_H
 
+#include "compat/nvenc/nvEncodeAPI.h"
+
 #include "config.h"
-
-#if CONFIG_D3D11VA
-#define COBJMACROS
-#include "libavutil/hwcontext_d3d11va.h"
-#else
-typedef void ID3D11Device;
-#endif
-
-#include <ffnvcodec/nvEncodeAPI.h>
 
 #include "compat/cuda/dynlink_loader.h"
 #include "libavutil/fifo.h"
@@ -39,15 +32,6 @@ typedef void ID3D11Device;
 #define MAX_REGISTERED_FRAMES 64
 #define RC_MODE_DEPRECATED 0x800000
 #define RCD(rc_mode) ((rc_mode) | RC_MODE_DEPRECATED)
-
-#define NVENCAPI_CHECK_VERSION(major, minor) \
-    ((major) < NVENCAPI_MAJOR_VERSION || ((major) == NVENCAPI_MAJOR_VERSION && (minor) <= NVENCAPI_MINOR_VERSION))
-
-// SDK 8.1 compile time feature checks
-#if NVENCAPI_CHECK_VERSION(8, 1)
-#define NVENC_HAVE_BFRAME_REF_MODE
-#define NVENC_HAVE_QP_MAP_MODE
-#endif
 
 typedef struct NvencSurface
 {
@@ -122,7 +106,6 @@ typedef struct NvencContext
     NV_ENC_CONFIG encode_config;
     CUcontext cu_context;
     CUcontext cu_context_internal;
-    ID3D11Device *d3d11_device;
 
     int nb_surfaces;
     NvencSurface *surfaces;
@@ -135,8 +118,7 @@ typedef struct NvencContext
     int encoder_flushing;
 
     struct {
-        void *ptr;
-        int ptr_index;
+        CUdeviceptr ptr;
         NV_ENC_REGISTERED_PTR regptr;
         int mapped;
         NV_ENC_MAP_INPUT_RESOURCE in_map;
@@ -183,7 +165,6 @@ typedef struct NvencContext
     int cqp;
     int weighted_pred;
     int coder;
-    int b_ref_mode;
 } NvencContext;
 
 int ff_nvenc_encode_init(AVCodecContext *avctx);

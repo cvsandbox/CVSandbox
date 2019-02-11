@@ -226,7 +226,7 @@ static int rfc4175_handle_packet(AVFormatContext *ctx, PayloadContext *data,
     return AVERROR(EAGAIN);
 }
 
-const RTPDynamicProtocolHandler ff_rfc4175_rtp_handler = {
+RTPDynamicProtocolHandler ff_rfc4175_rtp_handler = {
     .enc_name           = "raw",
     .codec_type         = AVMEDIA_TYPE_VIDEO,
     .codec_id           = AV_CODEC_ID_BITPACKED,

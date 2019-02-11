@@ -32,8 +32,6 @@
 #include "formats.h"
 #include "internal.h"
 
-typedef void (*filter_func)(t_bs2bdp bs2bdp, uint8_t *sample, int n);
-
 typedef struct Bs2bContext {
     const AVClass *class;
 
@@ -43,7 +41,7 @@ typedef struct Bs2bContext {
 
     t_bs2bdp bs2bp;
 
-    filter_func filter;
+    void (*filter)(t_bs2bdp bs2bdp, uint8_t *sample, int n);
 } Bs2bContext;
 
 #define OFFSET(x) offsetof(Bs2bContext, x)
@@ -135,7 +133,7 @@ static int filter_frame(AVFilterLink *inlink, AVFrame *frame)
     if (av_frame_is_writable(frame)) {
         out_frame = frame;
     } else {
-        out_frame = ff_get_audio_buffer(outlink, frame->nb_samples);
+        out_frame = ff_get_audio_buffer(inlink, frame->nb_samples);
         if (!out_frame) {
             av_frame_free(&frame);
             return AVERROR(ENOMEM);
@@ -167,19 +165,19 @@ static int config_output(AVFilterLink *outlink)
 
     switch (inlink->format) {
     case AV_SAMPLE_FMT_U8:
-        bs2b->filter = (filter_func) bs2b_cross_feed_u8;
+        bs2b->filter = bs2b_cross_feed_u8;
         break;
     case AV_SAMPLE_FMT_S16:
-        bs2b->filter = (filter_func) bs2b_cross_feed_s16;
+        bs2b->filter = (void*)bs2b_cross_feed_s16;
         break;
     case AV_SAMPLE_FMT_S32:
-        bs2b->filter = (filter_func) bs2b_cross_feed_s32;
+        bs2b->filter = (void*)bs2b_cross_feed_s32;
         break;
     case AV_SAMPLE_FMT_FLT:
-        bs2b->filter = (filter_func) bs2b_cross_feed_f;
+        bs2b->filter = (void*)bs2b_cross_feed_f;
         break;
     case AV_SAMPLE_FMT_DBL:
-        bs2b->filter = (filter_func) bs2b_cross_feed_d;
+        bs2b->filter = (void*)bs2b_cross_feed_d;
         break;
     default:
         return AVERROR_BUG;

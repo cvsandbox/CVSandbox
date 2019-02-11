@@ -614,12 +614,6 @@ int ff_h264_execute_ref_pic_marking(H264Context *h)
     int current_ref_assigned = 0, err = 0;
     H264Picture *av_uninit(pic);
 
-    if (!h->ps.sps) {
-        av_log(h->avctx, AV_LOG_ERROR, "SPS is unset\n");
-        err = AVERROR_INVALIDDATA;
-        goto out;
-    }
-
     if (!h->explicit_ref_marking)
         generate_sliding_window_mmcos(h);
     mmco_count = h->nb_mmco;
@@ -812,6 +806,7 @@ int ff_h264_execute_ref_pic_marking(H264Context *h)
         }
     }
 
+    // Detect unmarked random access points
     if (   err >= 0
         && h->long_ref_count==0
         && (   h->short_ref_count<=2
@@ -823,7 +818,6 @@ int ff_h264_execute_ref_pic_marking(H264Context *h)
             h->frame_recovered |= FRAME_RECOVERED_SEI;
     }
 
-out:
     return (h->avctx->err_recognition & AV_EF_EXPLODE) ? err : 0;
 }
 

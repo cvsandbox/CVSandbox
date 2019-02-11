@@ -36,9 +36,6 @@ typedef struct ExtractExtradataContext {
     int (*extract)(AVBSFContext *ctx, AVPacket *pkt,
                    uint8_t **data, int *size);
 
-    /* H264/HEVC specifc fields */
-    H2645Packet h2645_pkt;
-
     /* AVOptions */
     int remove;
 } ExtractExtradataContext;
@@ -64,7 +61,8 @@ static int extract_extradata_h2645(AVBSFContext *ctx, AVPacket *pkt,
 
     ExtractExtradataContext *s = ctx->priv_data;
 
-    int extradata_size = 0, filtered_size = 0;
+    H2645Packet h2645_pkt = { 0 };
+    int extradata_size = 0;
     const int *extradata_nal_types;
     int nb_extradata_nal_types;
     int i, has_sps = 0, has_vps = 0, ret = 0;
@@ -77,13 +75,13 @@ static int extract_extradata_h2645(AVBSFContext *ctx, AVPacket *pkt,
         nb_extradata_nal_types = FF_ARRAY_ELEMS(extradata_nal_types_h264);
     }
 
-    ret = ff_h2645_packet_split(&s->h2645_pkt, pkt->data, pkt->size,
+    ret = ff_h2645_packet_split(&h2645_pkt, pkt->data, pkt->size,
                                 ctx, 0, 0, ctx->par_in->codec_id, 1);
     if (ret < 0)
-        return ret;
+        goto fail;
 
-    for (i = 0; i < s->h2645_pkt.nb_nals; i++) {
-        H2645NAL *nal = &s->h2645_pkt.nals[i];
+    for (i = 0; i < h2645_pkt.nb_nals; i++) {
+        H2645NAL *nal = &h2645_pkt.nals[i];
         if (val_in_array(extradata_nal_types, nb_extradata_nal_types, nal->type)) {
             extradata_size += nal->raw_size + 3;
             if (ctx->par_in->codec_id == AV_CODEC_ID_HEVC) {
@@ -92,8 +90,6 @@ static int extract_extradata_h2645(AVBSFContext *ctx, AVPacket *pkt,
             } else {
                 if (nal->type == H264_NAL_SPS) has_sps = 1;
             }
-        } else if (s->remove) {
-            filtered_size += nal->raw_size + 3;
         }
     }
 
@@ -104,27 +100,27 @@ static int extract_extradata_h2645(AVBSFContext *ctx, AVPacket *pkt,
         uint8_t *extradata, *filtered_data;
 
         if (s->remove) {
-            filtered_buf = av_buffer_alloc(filtered_size + AV_INPUT_BUFFER_PADDING_SIZE);
+            filtered_buf = av_buffer_alloc(pkt->size + AV_INPUT_BUFFER_PADDING_SIZE);
             if (!filtered_buf) {
-                return AVERROR(ENOMEM);
+                ret = AVERROR(ENOMEM);
+                goto fail;
             }
-            memset(filtered_buf->data + filtered_size, 0, AV_INPUT_BUFFER_PADDING_SIZE);
-
             filtered_data = filtered_buf->data;
         }
 
         extradata = av_malloc(extradata_size + AV_INPUT_BUFFER_PADDING_SIZE);
         if (!extradata) {
             av_buffer_unref(&filtered_buf);
-            return AVERROR(ENOMEM);
+            ret = AVERROR(ENOMEM);
+            goto fail;
         }
         memset(extradata + extradata_size, 0, AV_INPUT_BUFFER_PADDING_SIZE);
 
         *data = extradata;
         *size = extradata_size;
 
-        for (i = 0; i < s->h2645_pkt.nb_nals; i++) {
-            H2645NAL *nal = &s->h2645_pkt.nals[i];
+        for (i = 0; i < h2645_pkt.nb_nals; i++) {
+            H2645NAL *nal = &h2645_pkt.nals[i];
             if (val_in_array(extradata_nal_types, nb_extradata_nal_types,
                              nal->type)) {
                 AV_WB24(extradata, 1); // startcode
@@ -141,11 +137,15 @@ static int extract_extradata_h2645(AVBSFContext *ctx, AVPacket *pkt,
             av_buffer_unref(&pkt->buf);
             pkt->buf  = filtered_buf;
             pkt->data = filtered_buf->data;
-            pkt->size = filtered_size;
+            pkt->size = filtered_data - filtered_buf->data;
+
+            memset(pkt->data + pkt->size, 0, AV_INPUT_BUFFER_PADDING_SIZE);
         }
     }
 
-    return 0;
+fail:
+    ff_h2645_packet_uninit(&h2645_pkt);
+    return ret;
 }
 
 static int extract_extradata_vc1(AVBSFContext *ctx, AVPacket *pkt,
@@ -277,23 +277,24 @@ static int extract_extradata_init(AVBSFContext *ctx)
     return 0;
 }
 
-static int extract_extradata_filter(AVBSFContext *ctx, AVPacket *pkt)
+static int extract_extradata_filter(AVBSFContext *ctx, AVPacket *out)
 {
     ExtractExtradataContext *s = ctx->priv_data;
+    AVPacket *in;
     uint8_t *extradata = NULL;
     int extradata_size;
     int ret = 0;
 
-    ret = ff_bsf_get_packet_ref(ctx, pkt);
+    ret = ff_bsf_get_packet(ctx, &in);
     if (ret < 0)
         return ret;
 
-    ret = s->extract(ctx, pkt, &extradata, &extradata_size);
+    ret = s->extract(ctx, in, &extradata, &extradata_size);
     if (ret < 0)
         goto fail;
 
     if (extradata) {
-        ret = av_packet_add_side_data(pkt, AV_PKT_DATA_NEW_EXTRADATA,
+        ret = av_packet_add_side_data(in, AV_PKT_DATA_NEW_EXTRADATA,
                                       extradata, extradata_size);
         if (ret < 0) {
             av_freep(&extradata);
@@ -301,17 +302,11 @@ static int extract_extradata_filter(AVBSFContext *ctx, AVPacket *pkt)
         }
     }
 
-    return 0;
+    av_packet_move_ref(out, in);
 
 fail:
-    av_packet_unref(pkt);
+    av_packet_free(&in);
     return ret;
-}
-
-static void extract_extradata_close(AVBSFContext *ctx)
-{
-    ExtractExtradataContext *s = ctx->priv_data;
-    ff_h2645_packet_uninit(&s->h2645_pkt);
 }
 
 static const enum AVCodecID codec_ids[] = {
@@ -326,10 +321,9 @@ static const enum AVCodecID codec_ids[] = {
 };
 
 #define OFFSET(x) offsetof(ExtractExtradataContext, x)
-#define FLAGS (AV_OPT_FLAG_VIDEO_PARAM|AV_OPT_FLAG_BSF_PARAM)
 static const AVOption options[] = {
     { "remove", "remove the extradata from the bitstream", OFFSET(remove), AV_OPT_TYPE_INT,
-        { .i64 = 0 }, 0, 1, FLAGS },
+        { .i64 = 0 }, 0, 1 },
     { NULL },
 };
 
@@ -347,5 +341,4 @@ const AVBitStreamFilter ff_extract_extradata_bsf = {
     .priv_class     = &extract_extradata_class,
     .init           = extract_extradata_init,
     .filter         = extract_extradata_filter,
-    .close          = extract_extradata_close,
 };

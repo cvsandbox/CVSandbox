@@ -35,46 +35,52 @@ typedef struct NoiseContext {
     unsigned int state;
 } NoiseContext;
 
-static int noise(AVBSFContext *ctx, AVPacket *pkt)
+static int noise(AVBSFContext *ctx, AVPacket *out)
 {
     NoiseContext *s = ctx->priv_data;
+    AVPacket *in;
     int amount = s->amount > 0 ? s->amount : (s->state % 10001 + 1);
     int i, ret = 0;
 
     if (amount <= 0)
         return AVERROR(EINVAL);
 
-    ret = ff_bsf_get_packet_ref(ctx, pkt);
+    ret = ff_bsf_get_packet(ctx, &in);
     if (ret < 0)
         return ret;
 
     if (s->dropamount > 0 && s->state % s->dropamount == 0) {
         s->state++;
-        av_packet_unref(pkt);
+        av_packet_free(&in);
         return AVERROR(EAGAIN);
     }
 
-    ret = av_packet_make_writable(pkt);
+    ret = av_new_packet(out, in->size);
     if (ret < 0)
         goto fail;
 
-    for (i = 0; i < pkt->size; i++) {
-        s->state += pkt->data[i] + 1;
+    ret = av_packet_copy_props(out, in);
+    if (ret < 0)
+        goto fail;
+
+    memcpy(out->data, in->data, in->size);
+
+    for (i = 0; i < out->size; i++) {
+        s->state += out->data[i] + 1;
         if (s->state % amount == 0)
-            pkt->data[i] = s->state;
+            out->data[i] = s->state;
     }
 fail:
     if (ret < 0)
-        av_packet_unref(pkt);
-
+        av_packet_unref(out);
+    av_packet_free(&in);
     return ret;
 }
 
 #define OFFSET(x) offsetof(NoiseContext, x)
-#define FLAGS (AV_OPT_FLAG_VIDEO_PARAM|AV_OPT_FLAG_AUDIO_PARAM|AV_OPT_FLAG_BSF_PARAM)
 static const AVOption options[] = {
-    { "amount", NULL, OFFSET(amount), AV_OPT_TYPE_INT, { .i64 = 0 }, 0, INT_MAX, FLAGS },
-    { "dropamount", NULL, OFFSET(dropamount), AV_OPT_TYPE_INT, { .i64 = 0 }, 0, INT_MAX, FLAGS },
+    { "amount", NULL, OFFSET(amount), AV_OPT_TYPE_INT, { .i64 = 0 }, 0, INT_MAX },
+    { "dropamount", NULL, OFFSET(dropamount), AV_OPT_TYPE_INT, { .i64 = 0 }, 0, INT_MAX },
     { NULL },
 };
 

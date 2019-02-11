@@ -122,8 +122,8 @@ static av_always_inline int RENAME(encode_line)(FFV1Context *s, int w,
     return 0;
 }
 
-static int RENAME(encode_rgb_frame)(FFV1Context *s, const uint8_t *src[4],
-                                    int w, int h, const int stride[4])
+static int RENAME(encode_rgb_frame)(FFV1Context *s, const uint8_t *src[3],
+                                    int w, int h, const int stride[3])
 {
     int x, y, p, i;
     const int ring_size = s->context_model ? 3 : 2;
@@ -132,8 +132,6 @@ static int RENAME(encode_rgb_frame)(FFV1Context *s, const uint8_t *src[4],
     int packed = !src[1];
     int bits   = s->bits_per_raw_sample > 0 ? s->bits_per_raw_sample : 8;
     int offset = 1 << bits;
-    int transparency = s->transparency;
-    int packed_size = (3 + transparency)*2;
 
     s->run_index = 0;
 
@@ -154,18 +152,14 @@ static int RENAME(encode_rgb_frame)(FFV1Context *s, const uint8_t *src[4],
                 r = (v >> 16) & 0xFF;
                 a =  v >> 24;
             } else if (packed) {
-                const uint16_t *p = ((const uint16_t*)(src[0] + x*packed_size + stride[0]*y));
+                const uint16_t *p = ((const uint16_t*)(src[0] + x*6 + stride[0]*y));
                 r = p[0];
                 g = p[1];
                 b = p[2];
-                if (transparency)
-                  a = p[3];
-            } else if (sizeof(TYPE) == 4 || transparency) {
+            } else if (sizeof(TYPE) == 4) {
                 g = *((const uint16_t *)(src[0] + x*2 + stride[0]*y));
                 b = *((const uint16_t *)(src[1] + x*2 + stride[1]*y));
                 r = *((const uint16_t *)(src[2] + x*2 + stride[2]*y));
-                if (transparency)
-                    a = *((const uint16_t *)(src[3] + x*2 + stride[3]*y));
             } else {
                 b = *((const uint16_t *)(src[0] + x*2 + stride[0]*y));
                 g = *((const uint16_t *)(src[1] + x*2 + stride[1]*y));
@@ -185,7 +179,7 @@ static int RENAME(encode_rgb_frame)(FFV1Context *s, const uint8_t *src[4],
             sample[2][0][x] = r;
             sample[3][0][x] = a;
         }
-        for (p = 0; p < 3 + transparency; p++) {
+        for (p = 0; p < 3 + s->transparency; p++) {
             int ret;
             sample[p][0][-1] = sample[p][1][0  ];
             sample[p][1][ w] = sample[p][1][w-1];

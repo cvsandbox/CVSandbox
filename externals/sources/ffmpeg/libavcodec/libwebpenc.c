@@ -109,5 +109,4 @@ AVCodec ff_libwebp_encoder = {
     },
     .priv_class     = &class,
     .defaults       = libwebp_defaults,
-    .wrapper_name   = "libwebp",
 };

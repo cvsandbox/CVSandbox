@@ -25,6 +25,10 @@
 #include <stdio.h>
 #include <signal.h>
 
+#if HAVE_PTHREADS
+#include <pthread.h>
+#endif
+
 #include "cmdutils.h"
 
 #include "libavformat/avformat.h"
@@ -41,7 +45,6 @@
 #include "libavutil/hwcontext.h"
 #include "libavutil/pixfmt.h"
 #include "libavutil/rational.h"
-#include "libavutil/thread.h"
 #include "libavutil/threadmessage.h"
 
 #include "libswresample/swresample.h"
@@ -58,10 +61,14 @@
 enum HWAccelID {
     HWACCEL_NONE = 0,
     HWACCEL_AUTO,
-    HWACCEL_GENERIC,
+    HWACCEL_VDPAU,
+    HWACCEL_DXVA2,
+    HWACCEL_VDA,
     HWACCEL_VIDEOTOOLBOX,
     HWACCEL_QSV,
+    HWACCEL_VAAPI,
     HWACCEL_CUVID,
+    HWACCEL_D3D11VA,
 };
 
 typedef struct HWAccel {
@@ -69,6 +76,7 @@ typedef struct HWAccel {
     int (*init)(AVCodecContext *s);
     enum HWAccelID id;
     enum AVPixelFormat pix_fmt;
+    enum AVHWDeviceType device_type;
 } HWAccel;
 
 typedef struct HWDevice {
@@ -153,7 +161,6 @@ typedef struct OptionsContext {
     float mux_preload;
     float mux_max_delay;
     int shortest;
-    int bitexact;
 
     int video_disable;
     int audio_disable;
@@ -362,11 +369,11 @@ typedef struct InputStream {
 
     /* hwaccel options */
     enum HWAccelID hwaccel_id;
-    enum AVHWDeviceType hwaccel_device_type;
     char  *hwaccel_device;
     enum AVPixelFormat hwaccel_output_format;
 
     /* hwaccel context */
+    enum HWAccelID active_hwaccel_id;
     void  *hwaccel_ctx;
     void (*hwaccel_uninit)(AVCodecContext *s);
     int  (*hwaccel_get_buffer)(AVCodecContext *s, AVFrame *frame, int flags);
@@ -412,7 +419,7 @@ typedef struct InputFile {
     int rate_emu;
     int accurate_seek;
 
-#if HAVE_THREADS
+#if HAVE_PTHREADS
     AVThreadMessageQueue *in_thread_queue;
     pthread_t thread;           /* thread reading from this file */
     int non_blocking;           /* reading packets from the thread should not block */
@@ -526,6 +533,9 @@ typedef struct OutputStream {
 
     int keep_pix_fmt;
 
+    AVCodecParserContext *parser;
+    AVCodecContext       *parser_avctx;
+
     /* stats */
     // combined size of all the packets written
     uint64_t data_size;
@@ -614,6 +624,7 @@ extern const AVIOInterruptCB int_cb;
 
 extern const OptionDef options[];
 extern const HWAccel hwaccels[];
+extern int hwaccel_lax_profile_check;
 extern AVBufferRef *hw_device_ctx;
 #if CONFIG_QSV
 extern char *qsv_device;
@@ -651,6 +662,7 @@ int ifilter_parameters_from_frame(InputFilter *ifilter, const AVFrame *frame);
 
 int ffmpeg_parse_options(int argc, char **argv);
 
+int vda_init(AVCodecContext *s);
 int videotoolbox_init(AVCodecContext *s);
 int qsv_init(AVCodecContext *s);
 int cuvid_init(AVCodecContext *s);

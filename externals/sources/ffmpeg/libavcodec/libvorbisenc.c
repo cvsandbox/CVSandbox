@@ -377,5 +377,4 @@ AVCodec ff_libvorbis_encoder = {
                                                       AV_SAMPLE_FMT_NONE },
     .priv_class     = &vorbis_class,
     .defaults       = defaults,
-    .wrapper_name   = "libvorbis",
 };

@@ -121,20 +121,23 @@ static int h264_find_frame_end(H264ParseContext *p, const uint8_t *buf,
             }
             state = 7;
         } else {
+            unsigned int mb, last_mb = p->parse_last_mb;
+            GetBitContext gb;
             p->parse_history[p->parse_history_count++] = buf[i];
-            if (p->parse_history_count > 5) {
-                unsigned int mb, last_mb = p->parse_last_mb;
-                GetBitContext gb;
 
-                init_get_bits(&gb, p->parse_history, 8*p->parse_history_count);
-                p->parse_history_count = 0;
-                mb= get_ue_golomb_long(&gb);
+            init_get_bits(&gb, p->parse_history, 8*p->parse_history_count);
+            mb= get_ue_golomb_long(&gb);
+            if (get_bits_left(&gb) > 0 || p->parse_history_count > 5) {
                 p->parse_last_mb = mb;
                 if (pc->frame_start_found) {
-                    if (mb <= last_mb)
+                    if (mb <= last_mb) {
+                        i -= p->parse_history_count - 1;
+                        p->parse_history_count = 0;
                         goto found;
+                    }
                 } else
                     pc->frame_start_found = 1;
+                p->parse_history_count = 0;
                 state = 7;
             }
         }
@@ -149,7 +152,7 @@ found:
     pc->frame_start_found = 0;
     if (p->is_avc)
         return next_avc;
-    return i - (state & 5) - 5 * (state > 7);
+    return i - (state & 5);
 }
 
 static int scan_mmco_reset(AVCodecParserContext *s, GetBitContext *gb,
@@ -243,7 +246,6 @@ static inline int parse_nal_units(AVCodecParserContext *s,
                                   const uint8_t * const buf, int buf_size)
 {
     H264ParseContext *p = s->priv_data;
-    H2645RBSP rbsp = { NULL };
     H2645NAL nal = { NULL };
     int buf_index, next_avc;
     unsigned int pps_id;
@@ -259,14 +261,10 @@ static inline int parse_nal_units(AVCodecParserContext *s,
     s->picture_structure = AV_PICTURE_STRUCTURE_UNKNOWN;
 
     ff_h264_sei_uninit(&p->sei);
-    p->sei.frame_packing.arrangement_cancel_flag = -1;
+    p->sei.frame_packing.frame_packing_arrangement_cancel_flag = -1;
 
     if (!buf_size)
         return 0;
-
-    av_fast_padded_malloc(&rbsp.rbsp_buffer, &rbsp.rbsp_buffer_alloc_size, buf_size);
-    if (!rbsp.rbsp_buffer)
-        return AVERROR(ENOMEM);
 
     buf_index     = 0;
     next_avc      = p->is_avc ? 0 : buf_size;
@@ -305,7 +303,7 @@ static inline int parse_nal_units(AVCodecParserContext *s,
             }
             break;
         }
-        consumed = ff_h2645_extract_rbsp(buf + buf_index, src_length, &rbsp, &nal, 1);
+        consumed = ff_h2645_extract_rbsp(buf + buf_index, src_length, &nal, 1);
         if (consumed < 0)
             break;
 
@@ -449,10 +447,8 @@ static inline int parse_nal_units(AVCodecParserContext *s,
             /* Decode POC of this picture.
              * The prev_ values needed for decoding POC of the next picture are not set here. */
             field_poc[0] = field_poc[1] = INT_MAX;
-            ret = ff_h264_init_poc(field_poc, &s->output_picture_number, sps,
+            ff_h264_init_poc(field_poc, &s->output_picture_number, sps,
                              &p->poc, p->picture_structure, nal.ref_idc);
-            if (ret < 0)
-                goto fail;
 
             /* Continue parsing to check if MMCO_RESET is present.
              * FIXME: MMCO_RESET could appear in non-first slice.
@@ -551,18 +547,18 @@ static inline int parse_nal_units(AVCodecParserContext *s,
                 p->last_frame_num = p->poc.frame_num;
             }
 
-            av_freep(&rbsp.rbsp_buffer);
+            av_freep(&nal.rbsp_buffer);
             return 0; /* no need to evaluate the rest */
         }
     }
     if (q264) {
-        av_freep(&rbsp.rbsp_buffer);
+        av_freep(&nal.rbsp_buffer);
         return 0;
     }
     /* didn't find a picture! */
     av_log(avctx, AV_LOG_ERROR, "missing picture in access unit with size %d\n", buf_size);
 fail:
-    av_freep(&rbsp.rbsp_buffer);
+    av_freep(&nal.rbsp_buffer);
     return -1;
 }
 
