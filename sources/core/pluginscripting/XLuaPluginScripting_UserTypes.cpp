@@ -1809,12 +1809,9 @@ static int PluginDevice_Connect( lua_State* luaState )
     PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_DEVICE_PLUGIN );
     XErrorCode   errorCode   = static_pointer_cast<XDevicePlugin>( pluginShell->Plugin )->Connect( );
 
-    if ( errorCode != SuccessCode )
-    {
-        ReportXError( luaState, errorCode );
-    }
+    lua_pushboolean( luaState, ( errorCode == SuccessCode ) );
 
-    return 0;
+    return 1;
 }
 
 // Disconnect from device represented by this plug-in's instance
@@ -1829,10 +1826,23 @@ static int PluginDevice_Disconnect( lua_State* luaState )
     return 0;
 }
 
+// Check if device is connected
+static int PluginDevice_IsConnected( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_DEVICE_PLUGIN );
+
+    lua_pushboolean( luaState, static_pointer_cast<XDevicePlugin>( pluginShell->Plugin )->IsConnected( ) );
+
+    return 1;
+}
+
 static const struct luaL_Reg DevicePluginFunctions[] =
 {
-    { "Connect",    PluginDevice_Connect    },
-    { "Disconnect", PluginDevice_Disconnect },
+    { "Connect",     PluginDevice_Connect     },
+    { "Disconnect",  PluginDevice_Disconnect  },
+    { "IsConnected", PluginDevice_IsConnected },
     { nullptr, nullptr }
 };
 
