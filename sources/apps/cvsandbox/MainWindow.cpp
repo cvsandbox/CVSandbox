@@ -632,7 +632,7 @@ void MainWindow::on_sandboxVariablesDockWidget_visibilityChanged( bool visible )
     else
     {
         automationServer->ClearVariablesListener( );
-        mData->variablesMonitorFrame->ClearAllVariable( );
+        mData->variablesMonitorFrame->ClearAllVariables( );
     }
 }
 
