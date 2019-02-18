@@ -53,7 +53,7 @@ signals:
     void SignalClearAllVariables( );
 
 public slots:
-    void ClearAllVariable( );
+    void ClearAllVariables( );
 
 private slots:
     void VariableSet( const QString& name );

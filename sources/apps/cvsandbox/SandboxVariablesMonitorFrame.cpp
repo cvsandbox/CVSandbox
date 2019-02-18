@@ -79,7 +79,7 @@ SandboxVariablesMonitorFrame::SandboxVariablesMonitorFrame( QWidget* parent ) :
     connect( this, SIGNAL( SignalVariableSet(const QString&) ),
              this, SLOT( VariableSet(const QString&) ), Qt::QueuedConnection );
     connect( this, SIGNAL( SignalClearAllVariables() ),
-             this, SLOT( ClearAllVariable() ), Qt::QueuedConnection );
+             this, SLOT( ClearAllVariables() ), Qt::QueuedConnection );
 }
 
 SandboxVariablesMonitorFrame::~SandboxVariablesMonitorFrame( )
@@ -111,18 +111,18 @@ void SandboxVariablesMonitorFrame::OnVariableSet( const string& name, const XVar
 void SandboxVariablesMonitorFrame::OnClearAllVariables( )
 {
     QMutexLocker locker( &mData->VarsSync );
-    mData->Variables.clear( );
     emit SignalClearAllVariables( );
 }
 
 // Clear all varaibles currently displayed in the tree view
-void SandboxVariablesMonitorFrame::ClearAllVariable( )
+void SandboxVariablesMonitorFrame::ClearAllVariables( )
 {
     ui->variablesTree->clear( );
 
     {
         QMutexLocker locker( &mData->VarsSync );
         mData->Variables.clear( );
+        mData->VarNames.clear( );
     }
 }
 
@@ -199,7 +199,7 @@ static QString VariantToDisplayString( const XVariant& value )
     return strValue;
 }
 
-// New value for the variable was set - update it tree view
+// New value for the variable was set - update it in tree view
 void SandboxVariablesMonitorFrame::VariableSet( const QString& name )
 {
     XVariant          value;
