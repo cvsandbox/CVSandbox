@@ -1,7 +1,7 @@
 /*
     Plug-ins' management library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -28,6 +28,7 @@
 #include "XVideoSourcePlugin.hpp"
 #include "XImageGenerationPlugin.hpp"
 #include "XDevicePlugin.hpp"
+#include "XCommunicationDevicePlugin.hpp"
 #include "XVideoProcessingPlugin.hpp"
 #include "XImageProcessingPlugin.hpp"
 
@@ -67,6 +68,10 @@ shared_ptr<XPlugin> XPluginWrapperFactory::CreateWrapper( void* pluginObject, Pl
 
         case PluginType_Device:
             pluginInstance = XDevicePlugin::Create( pluginObject, ownIt );
+            break;
+
+        case PluginType_CommunicationDevice:
+            pluginInstance = XCommunicationDevicePlugin::Create( pluginObject, ownIt );
             break;
 
         case PluginType_VideoProcessing:

@@ -1,7 +1,7 @@
 /*
     Plug-ins' interface library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -185,6 +185,25 @@ public:
     virtual void Disconnect( ) = 0;
     // Check if connected to a device
     virtual bool IsConnected( ) = 0;
+};
+
+// ===== Interface for device plug-in =====
+class ICommunicationDevicePlugin : public IPluginBase
+{
+public:
+    // Connect to device
+    virtual XErrorCode Connect( ) = 0;
+    // Disconnect from device
+    virtual void Disconnect( ) = 0;
+    // Check if connected to a device
+    virtual bool IsConnected( ) = 0;
+
+    // Write data to connected device
+    virtual XErrorCode Write( const uint8_t* buffer, uint32_t nBytesToWrite, uint32_t* nBytesWritten ) = 0;
+    // Read data from connected device
+    virtual XErrorCode Read( uint8_t* buffer, uint32_t nBytesToRead, uint32_t* nBytesRead ) = 0;
+    // Discard any data in communication buffers (write and read)
+    virtual void PurgeBuffers( ) = 0;
 };
 
 // ===== Interface for video processing plug-in =====

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\XCommunicationDevicePlugin.cpp" />
     <ClCompile Include="..\..\XDevicePlugin.cpp" />
     <ClCompile Include="..\..\XFamiliesCollection.cpp" />
     <ClCompile Include="..\..\XFamily.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="..\..\XVideoSourcePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\XCommunicationDevicePlugin.hpp" />
     <ClInclude Include="..\..\XDevicePlugin.hpp" />
     <ClInclude Include="..\..\XFamiliesCollection.hpp" />
     <ClInclude Include="..\..\XFamily.hpp" />
