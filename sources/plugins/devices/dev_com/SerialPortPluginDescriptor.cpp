@@ -43,10 +43,18 @@ static PropertyDescriptor stopBitsProperty =
 static PropertyDescriptor parityProperty =
 { XVT_U1, "Parity", "parity", "Parity scheme to be used.", PropertyFlag_SelectionByIndex };
 
+static PropertyDescriptor ioTimeoutConstantProperty =
+{ XVT_U2, "IO Timeout Constant", "ioTimeoutConstant", "A constant used to calculate the total time-out period for IO operations (ms).", PropertyFlag_None };
+static PropertyDescriptor ioTimeoutMultiplierProperty =
+{ XVT_U2, "IO Timeout Multiplier", "ioTimeoutMultiplier", "Multiplier used to calculate the total time-out period for IO operations (ms).", PropertyFlag_None };
+static PropertyDescriptor blockingInputProperty =
+{ XVT_Bool, "Blocking Input", "blockingInput", "Use blocking input with timeout or read available without waiting.", PropertyFlag_None };
+
 // Array of available properties
 static PropertyDescriptor* pluginProperties[] =
 {
-    &portNameProperty, &baudRateProperty, &byteSizeProperty, &stopBitsProperty, &parityProperty
+    &portNameProperty, &baudRateProperty, &byteSizeProperty, &stopBitsProperty, &parityProperty,
+    &ioTimeoutConstantProperty, &ioTimeoutMultiplierProperty, &blockingInputProperty
 };
 
 // Let the class itself know description of its properties
@@ -109,6 +117,30 @@ static void PluginInitializer( )
     // Parity
     static const char* parityChoices[] = { "No", "Odd", "Even", "Mark", "Space" };
     InitSelectionProperty( &parityProperty, parityChoices, XARRAY_SIZE( parityChoices ), 0 );
+
+    // Timeout Constant
+    ioTimeoutConstantProperty.DefaultValue.type        = XVT_U2;
+    ioTimeoutConstantProperty.DefaultValue.value.usVal = 50;
+
+    ioTimeoutConstantProperty.MinValue.type        = XVT_U2;
+    ioTimeoutConstantProperty.MinValue.value.usVal = 0;
+
+    ioTimeoutConstantProperty.MaxValue.type        = XVT_U2;
+    ioTimeoutConstantProperty.MaxValue.value.usVal = 10000;
+
+    // Timeout Multiplier
+    ioTimeoutConstantProperty.DefaultValue.type        = XVT_U2;
+    ioTimeoutConstantProperty.DefaultValue.value.usVal = 0;
+
+    ioTimeoutConstantProperty.MinValue.type        = XVT_U2;
+    ioTimeoutConstantProperty.MinValue.value.usVal = 0;
+
+    ioTimeoutConstantProperty.MaxValue.type        = XVT_U2;
+    ioTimeoutConstantProperty.MaxValue.value.usVal = 100;
+
+    // Blocking Input
+    blockingInputProperty.DefaultValue.type          = XVT_Bool;
+    blockingInputProperty.DefaultValue.value.boolVal = true;
 }
 
 // Clean-up plugin - deallocate strings

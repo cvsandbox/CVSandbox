@@ -40,11 +40,16 @@ namespace Private
         BYTE    StopBits;
         BYTE    Parity;
 
+        uint16_t IOTimeoutContant;
+        uint16_t IOTimeoutMultiplier;
+        bool     UseBlockingInput;
+
     public:
         SerialPortPluginData( ) :
             PortHandle( INVALID_HANDLE_VALUE ), IsConnected( false ),
             PortName( ), BaudRate( CBR_9600 ),
-            ByteSize( 8 ), StopBits( ONESTOPBIT ), Parity( NOPARITY )
+            ByteSize( 8 ), StopBits( ONESTOPBIT ), Parity( NOPARITY ),
+            IOTimeoutContant( 50 ), IOTimeoutMultiplier( 0 ), UseBlockingInput( true )
         {
 
         }
@@ -85,6 +90,20 @@ namespace Private
 
                         IsConnected = true;
                     }
+                }
+
+                // set IO timeouts
+                if ( IsConnected )
+                {
+                    COMMTIMEOUTS timeouts = { 0 };
+
+                    timeouts.ReadIntervalTimeout         = 50;
+                    timeouts.ReadTotalTimeoutConstant    = IOTimeoutContant;
+                    timeouts.ReadTotalTimeoutMultiplier  = IOTimeoutMultiplier;
+                    timeouts.WriteTotalTimeoutConstant   = IOTimeoutContant; 
+                    timeouts.WriteTotalTimeoutMultiplier = IOTimeoutMultiplier;
+
+                    SetCommTimeouts( PortHandle, &timeouts );
                 }
             }
 
@@ -154,14 +173,17 @@ namespace Private
             }
             else
             {
-                COMSTAT status;
-                DWORD   errors;
-                DWORD   bytesToRead = 0;
+                DWORD   bytesToRead = nBytesToRead;
                 DWORD   bytesRead   = 0;
 
-                ClearCommError( PortHandle, &errors, &status );
+                if ( !UseBlockingInput )
+                {
+                    COMSTAT status;
+                    DWORD   errors;
 
-                bytesToRead = XMIN( status.cbInQue, nBytesToRead );
+                    ClearCommError( PortHandle, &errors, &status );
+                    bytesToRead = XMIN( status.cbInQue, nBytesToRead );
+                }
 
                 if ( bytesToRead > 0 )
                 {
@@ -258,6 +280,21 @@ XErrorCode SerialPortPlugin::GetProperty( int32_t id, xvariant* value ) const
         value->value.ubVal = mData->Parity;
         break;
 
+    case 5:
+        value->type        = XVT_U2;
+        value->value.usVal = mData->IOTimeoutContant;
+        break;
+
+    case 6:
+        value->type        = XVT_U2;
+        value->value.usVal = mData->IOTimeoutMultiplier;
+        break;
+
+    case 7:
+        value->type          = XVT_Bool;
+        value->value.boolVal = mData->UseBlockingInput;
+        break;
+
     default:
         ret = ErrorInvalidProperty;
     }
@@ -274,7 +311,7 @@ XErrorCode SerialPortPlugin::SetProperty( int32_t id, const xvariant* value )
     XVariantInit( &convertedValue );
 
     // make sure property value has expected type
-    ret = PropertyChangeTypeHelper( id, value, propertiesDescription, 5, &convertedValue );
+    ret = PropertyChangeTypeHelper( id, value, propertiesDescription, 8, &convertedValue );
 
     if ( ret == SuccessCode )
     {
@@ -298,6 +335,18 @@ XErrorCode SerialPortPlugin::SetProperty( int32_t id, const xvariant* value )
 
         case 4:
             mData->Parity = convertedValue.value.ubVal;
+            break;
+
+        case 5:
+            mData->IOTimeoutContant = convertedValue.value.usVal;
+            break;
+
+        case 6:
+            mData->IOTimeoutMultiplier = convertedValue.value.usVal;
+            break;
+
+        case 7:
+            mData->UseBlockingInput = convertedValue.value.boolVal;
             break;
         }
     }
