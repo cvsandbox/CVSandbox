@@ -1,7 +1,7 @@
 /*
     Plug-ins' scripting library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -115,6 +115,15 @@ namespace Private
         assert( host );
 
         return host;
+    }
+
+    static int HostSleep( lua_State* luaState )
+    {
+        CheckArgumentsCount( luaState, 1 );
+
+        Sleep( static_cast<DWORD>( luaL_checkinteger( luaState, 1 ) ) );
+
+        return 0;
     }
 
     static int HostName( lua_State* luaState )
@@ -404,6 +413,7 @@ namespace Private
     static const struct luaL_Reg LuaOverride [] =
     {
         { "print", HostPrint },
+        { "sleep", HostSleep },
         { nullptr, nullptr   }
     };
 
@@ -449,7 +459,7 @@ XErrorCode XLuaPluginScripting::Init( )
         mData->RegisterLibrary( "io", luaopen_io );
         mData->RegisterLibrary( "bit32", luaopen_bit32 );
 
-        // override default "print" function
+        // override default "print" function and add sleep()
         lua_getglobal( mData->LuaState, "_G" );
         luaL_setfuncs( mData->LuaState, Private::LuaOverride, 0 );
         lua_pop( mData->LuaState, 1 );

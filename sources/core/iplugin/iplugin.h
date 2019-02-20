@@ -1,7 +1,7 @@
 /*
     Plug-ins' interface library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -49,6 +49,7 @@ static const PluginType PluginType_VideoProcessing          = 0x0080;
 static const PluginType PluginType_ScriptingEngine          = 0x0100;
 static const PluginType PluginType_ScriptingApi             = 0x0200;
 static const PluginType PluginType_ImageProcessing          = 0x0400;
+static const PluginType PluginType_CommunicationDevice      = 0x0800;
 static const PluginType PluginType_All                      = 0xFFFFFFFF;
 
 

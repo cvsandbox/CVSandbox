@@ -11,60 +11,48 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ifamily.h" />
-    <ClInclude Include="..\..\ifunction.h" />
-    <ClInclude Include="..\..\imodule.h" />
-    <ClInclude Include="..\..\iplugin.h" />
-    <ClInclude Include="..\..\iplugincpp.hpp" />
-    <ClInclude Include="..\..\iplugintypes.h" />
-    <ClInclude Include="..\..\iplugintypescpp.hpp" />
-    <ClInclude Include="..\..\iproperty.h" />
-    <ClInclude Include="..\..\WrapperBaseForCppPlugin.hpp" />
-    <ClInclude Include="..\..\Wrapper_CommunicationDevice.hpp" />
-    <ClInclude Include="..\..\Wrapper_Device.hpp" />
-    <ClInclude Include="..\..\Wrapper_ImageExporter.hpp" />
-    <ClInclude Include="..\..\Wrapper_ImageGenerator.hpp" />
-    <ClInclude Include="..\..\Wrapper_ImageImporter.hpp" />
-    <ClInclude Include="..\..\Wrapper_ImageProcessing.hpp" />
-    <ClInclude Include="..\..\Wrapper_ImageProcessingFilter.hpp" />
-    <ClInclude Include="..\..\Wrapper_ImageProcessingFilter2.hpp" />
-    <ClInclude Include="..\..\Wrapper_ScriptingApi.hpp" />
-    <ClInclude Include="..\..\Wrapper_ScriptingEngine.hpp" />
-    <ClInclude Include="..\..\Wrapper_VideoProcessing.hpp" />
-    <ClInclude Include="..\..\Wrapper_VideoSource.hpp" />
-    <ClInclude Include="..\..\xmodule.h" />
+    <ClCompile Include="..\..\dev_com.cpp" />
+    <ClCompile Include="..\..\dllmain.cpp" />
+    <ClCompile Include="..\..\SerialPortPlugin.cpp" />
+    <ClCompile Include="..\..\SerialPortPluginDescriptor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ifamily.c" />
-    <ClCompile Include="..\..\ifunction.c" />
-    <ClCompile Include="..\..\imodule.c" />
-    <ClCompile Include="..\..\iproperty.c" />
-    <ClCompile Include="..\..\iplugintypes.c" />
-    <ClCompile Include="..\..\registry.c" />
-    <ClCompile Include="..\..\tools.c" />
-    <ClCompile Include="..\..\xmodule.c" />
+    <Text Include="..\..\plugins_list.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Text>
+    <Text Include="..\..\Release Notes.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\SerialPortPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{41DD4DDA-DF95-4408-BC24-7F1E3D94EC1A}</ProjectGuid>
+    <ProjectGuid>{5F2AB356-2038-4F7F-8EA6-D4CF3192B6F2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>iplugin</RootNamespace>
+    <RootNamespace>dev_com</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -74,42 +62,42 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\afx\afx_types;..\..\..\..\afx\afx_imaging;..\..\..\..\images</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;DEV_COM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\build\msvc\debug\lib\"
-</Command>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\afx\afx_types;..\..\..\..\afx\afx_imaging;..\..\..\..\images</AdditionalIncludeDirectories>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;DEV_COM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -117,9 +105,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\release\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>afx_types.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\build\msvc\release\lib\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

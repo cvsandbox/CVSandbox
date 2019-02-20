@@ -1,7 +1,7 @@
 /*
     Plug-ins' scripting library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -29,6 +29,7 @@
 #include <XImageProcessingFilterPlugin.hpp>
 #include <XImageProcessingFilterPlugin2.hpp>
 #include <XDevicePlugin.hpp>
+#include <XCommunicationDevicePlugin.hpp>
 #include <XVideoProcessingPlugin.hpp>
 #include <XVariantArray.hpp>
 
@@ -59,6 +60,7 @@ static const char* METATABLE_IMAGE_PROCESSING_PLUGIN         = "CVSandbox.Plugin
 static const char* METATABLE_IMAGE_PROCESSING_FILTER_PLUGIN  = "CVSandbox.Plugin.ImageProcessingFilter";
 static const char* METATABLE_IMAGE_PROCESSING_FILTER_PLUGIN2 = "CVSandbox.Plugin.ImageProcessingFilter2";
 static const char* METATABLE_DEVICE_PLUGIN                   = "CVSandbox.Plugin.Device";
+static const char* METATABLE_COMMUNICATION_DEVICE_PLUGIN     = "CVSandbox.Plugin.CommunicationDevice";
 static const char* METATABLE_VIDEO_PROCESSING_PLUGIN         = "CVSandbox.Plugin.VideoProcessing";
 static const char* METATABLE_IMAGE                           = "CVSandbox.Image";
 
@@ -1846,6 +1848,177 @@ static const struct luaL_Reg DevicePluginFunctions[] =
     { nullptr, nullptr }
 };
 
+// ===== Communication Device plug-in's functions =====
+
+// Connect to device represented by this plug-in's instance
+static int PluginCommunicationDevice_Connect( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+    XErrorCode   errorCode   = static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->Connect( );
+
+    lua_pushboolean( luaState, ( errorCode == SuccessCode ) );
+
+    return 1;
+}
+
+// Disconnect from device represented by this plug-in's instance
+static int PluginCommunicationDevice_Disconnect( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+
+    static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->Disconnect( );
+
+    return 0;
+}
+
+// Check if device is connected
+static int PluginCommunicationDevice_IsConnected( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+
+    lua_pushboolean( luaState, static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->IsConnected( ) );
+
+    return 1;
+}
+
+// Write data to connected device
+static int PluginCommunicationDevice_Write( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 2 );
+
+    PluginShell*  pluginShell   = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+    XVariant      variantToSend = GetXVariantFromLuaStack( luaState, 2, XVT_Array | XVT_U1 );
+    uint32_t      bytesWritten  = 0;
+    const xarray* arrayToSend   = ( (const xvariant*) variantToSend )->value.arrayVal;
+    uint8_t*      buffer        = static_cast<uint8_t*>( malloc( arrayToSend->length ) );
+
+    for ( uint32_t i = 0; i < arrayToSend->length; i++ )
+    {
+        buffer[i] = arrayToSend->elements[i].value.ubVal;
+    }
+
+    XErrorCode   errorCode = static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->Write(
+                                        buffer, arrayToSend->length, &bytesWritten );
+
+    lua_pushinteger( luaState, bytesWritten );
+    lua_pushboolean( luaState, ( errorCode == SuccessCode ) );
+
+    free( buffer );
+
+    return 2;
+}
+
+// Read data from connected device
+static int PluginCommunicationDevice_Read( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 2 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+    int          bytesToRead = static_cast<int>( luaL_checkinteger( luaState, 2 ) );
+    uint8_t*     buffer      = static_cast<uint8_t*>( malloc( bytesToRead ) );
+
+    if ( buffer == nullptr )
+    {
+        ReportXError( luaState, ErrorOutOfMemory );
+    }
+
+    uint32_t     bytesRead = 0;
+    XErrorCode   errorCode = static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->Read(
+                                        buffer, bytesToRead, &bytesRead );
+
+    // create table for whatever was just read from device
+    lua_newtable( luaState );
+
+    for ( uint32_t i = 0; i < bytesRead; i++ )
+    {
+        lua_pushinteger( luaState, buffer[i] );
+        lua_rawseti( luaState, -2, i + 1 );
+    }
+    
+    lua_pushboolean( luaState, ( errorCode == SuccessCode ) );
+
+    free( buffer );
+
+    return 2;
+}
+
+// Send string to connected device
+static int PluginCommunicationDevice_WriteString( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 2 );
+
+    PluginShell* pluginShell  = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+    const char*  strToSend    = luaL_checkstring( luaState, 2 );
+    uint32_t     bytesWritten = 0;
+
+    XErrorCode   errorCode = static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->Write(
+                                        (const uint8_t*) strToSend, strlen( strToSend ), &bytesWritten );
+
+    lua_pushinteger( luaState, bytesWritten );
+    lua_pushboolean( luaState, ( errorCode == SuccessCode ) );
+
+    return 2;
+}
+
+// Read up to the specified number of bytes from device and provide it as string
+static int PluginCommunicationDevice_ReadString( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 2 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+    int          bytesToRead = static_cast<int>( luaL_checkinteger( luaState, 2 ) );
+    char*        buffer      = static_cast<char*>( malloc( bytesToRead + 1 ) );
+
+    if ( buffer == nullptr )
+    {
+        ReportXError( luaState, ErrorOutOfMemory );
+    }
+
+    uint32_t     bytesRead = 0;
+    XErrorCode   errorCode = static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->Read(
+                                        (uint8_t*) buffer, bytesToRead, &bytesRead );
+
+    buffer[bytesRead] = '\0';
+
+    lua_pushstring( luaState, buffer );
+    lua_pushboolean( luaState, ( errorCode == SuccessCode ) );
+
+    free( buffer );
+
+    return 2;
+}
+
+// Discard any data in communication buffers (write and read)
+static int PluginCommunicationDevice_PurgeBuffers( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_COMMUNICATION_DEVICE_PLUGIN );
+
+    static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->PurgeBuffers( );
+
+    return 0;
+}
+
+static const struct luaL_Reg CommunicationDevicePluginFunctions[] =
+{
+    { "Connect",        PluginCommunicationDevice_Connect      },
+    { "Disconnect",     PluginCommunicationDevice_Disconnect   },
+    { "IsConnected",    PluginCommunicationDevice_IsConnected  },
+    { "Write",          PluginCommunicationDevice_Write        },
+    { "Read",           PluginCommunicationDevice_Read         },
+    { "WriteString",    PluginCommunicationDevice_WriteString  },
+    { "ReadString",     PluginCommunicationDevice_ReadString   },
+    { "PurgeBuffers",   PluginCommunicationDevice_PurgeBuffers },
+    { nullptr, nullptr }
+};
+
 // ===== Video Processing plug-in's functions =====
 
 // Check if the plug-in does changes to input video frames or not
@@ -2262,6 +2435,9 @@ void CreateLuaUserDataForPlugin( lua_State* luaState,
     case PluginType_Device:
         metatableName = METATABLE_DEVICE_PLUGIN;
         break;
+    case PluginType_CommunicationDevice:
+        metatableName = METATABLE_COMMUNICATION_DEVICE_PLUGIN;
+        break;
     case PluginType_VideoProcessing:
         metatableName = METATABLE_VIDEO_PROCESSING_PLUGIN;
         break;
@@ -2329,6 +2505,9 @@ void RegisterLuaUserDataTypes( lua_State* luaState )
 
     // register methods of device plug-in
     RegisterInheritedUserType( luaState, METATABLE_DEVICE_PLUGIN, PluginFunctions, DevicePluginFunctions );
+
+    // register methods of communication device plug-in
+    RegisterInheritedUserType( luaState, METATABLE_COMMUNICATION_DEVICE_PLUGIN, PluginFunctions, CommunicationDevicePluginFunctions );
 
     // register methods of video processing plug-in
     RegisterInheritedUserType( luaState, METATABLE_VIDEO_PROCESSING_PLUGIN, PluginFunctions, VideoProcessingPluginFunctions );

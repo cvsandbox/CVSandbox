@@ -83,6 +83,9 @@
     <ClCompile Include="..\..\XPluginWrapperFactory.cpp">
       <Filter>Source Files\Plugins Wrappers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\XCommunicationDevicePlugin.cpp">
+      <Filter>Source Files\Plugins Wrappers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XFamiliesCollection.hpp">
@@ -149,6 +152,9 @@
       <Filter>Header Files\Plugins Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\XPluginWrapperFactory.hpp">
+      <Filter>Header Files\Plugins Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XCommunicationDevicePlugin.hpp">
       <Filter>Header Files\Plugins Wrappers</Filter>
     </ClInclude>
   </ItemGroup>

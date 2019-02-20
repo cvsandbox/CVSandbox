@@ -1,7 +1,7 @@
 /*
     Plug-ins' interface library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -278,6 +278,31 @@ typedef struct SDevicePlugin_
     DPlugin_IsConnected IsConnected;
 }
 SDevicePlugin;
+
+
+// ===== Interface for communication device plug-in =====
+struct SCommunicationDevicePlugin_;
+
+// Write data to connected device
+typedef XErrorCode( *CDPlugin_Write )( struct SCommunicationDevicePlugin_* me, const uint8_t* buffer, uint32_t nBytesToWrite, uint32_t* nBytesWritten );
+// Read data from connected device
+typedef XErrorCode( *CDPlugin_Read )( struct SCommunicationDevicePlugin_* me, uint8_t* buffer, uint32_t nBytesToRead, uint32_t* nBytesRead );
+// Discard any data in communication buffers (write and read)
+typedef void( *CDPlugin_PurgeBuffers)( struct SCommunicationDevicePlugin_* me );
+
+typedef struct SCommunicationDevicePlugin_
+{
+    SPluginBase Base;
+
+    DPlugin_Connect         Connect;
+    DPlugin_Disconnect      Disconnect;
+    DPlugin_IsConnected     IsConnected;
+
+    CDPlugin_Write          Write;
+    CDPlugin_Read           Read;
+    CDPlugin_PurgeBuffers   PurgeBuffers;
+}
+SCommunicationDevicePlugin;
 
 
 // ===== Interface for video processing plug-in =====

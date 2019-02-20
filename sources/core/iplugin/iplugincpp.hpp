@@ -1,7 +1,7 @@
 /*
     Plug-ins' interface library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -33,6 +33,7 @@
 #include "Wrapper_ImageGenerator.hpp"
 #include "Wrapper_VideoSource.hpp"
 #include "Wrapper_Device.hpp"
+#include "Wrapper_CommunicationDevice.hpp"
 #include "Wrapper_VideoProcessing.hpp"
 #include "Wrapper_ScriptingEngine.hpp"
 #include "Wrapper_ScriptingApi.hpp"
