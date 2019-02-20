@@ -33,6 +33,8 @@
     <ClCompile Include="..\..\ContrastStretchingPluginDescriptor.cpp" />
     <ClCompile Include="..\..\ConvolutionPlugin.cpp" />
     <ClCompile Include="..\..\ConvolutionPluginDescriptor.cpp" />
+    <ClCompile Include="..\..\CutImagePlugin.cpp" />
+    <ClCompile Include="..\..\CutImagePluginDescriptor.cpp" />
     <ClCompile Include="..\..\DiffImagesPlugin.cpp" />
     <ClCompile Include="..\..\DiffImagesPluginDescriptor.cpp" />
     <ClCompile Include="..\..\DiffImagesThresholdedPlugin.cpp" />
@@ -76,6 +78,7 @@
     <ClInclude Include="..\..\ContrastCorrectionPlugin.hpp" />
     <ClInclude Include="..\..\ContrastStretchingPlugin.hpp" />
     <ClInclude Include="..\..\ConvolutionPlugin.hpp" />
+    <ClInclude Include="..\..\CutImagePlugin.hpp" />
     <ClInclude Include="..\..\DiffImagesPlugin.hpp" />
     <ClInclude Include="..\..\DiffImagesThresholdedPlugin.hpp" />
     <ClInclude Include="..\..\Dilatation3x3Plugin.hpp" />

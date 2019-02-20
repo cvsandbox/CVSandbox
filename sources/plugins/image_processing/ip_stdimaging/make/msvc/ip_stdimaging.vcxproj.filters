@@ -371,6 +371,12 @@
     <ClCompile Include="..\..\ObjectsOutlinePluginDescriptor.cpp">
       <Filter>Source Files\Plugin Descriptors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\CutImagePluginDescriptor.cpp">
+      <Filter>Source Files\Plugin Descriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CutImagePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\GrayscalePlugin.hpp">
@@ -548,6 +554,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ObjectsOutlinePlugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CutImagePlugin.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
