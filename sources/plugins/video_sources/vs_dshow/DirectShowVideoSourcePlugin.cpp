@@ -322,56 +322,71 @@ XErrorCode DirectShowVideoSourcePlugin::SetProperty( int32_t id, const xvariant*
     case 12:    // Automatic Exposure
     case 13:    // Exposure
         {
-            int32_t propertyValue      = 0;
-            bool    isAutomaticControl = false;
+            int32_t    propertyValue      = 0;
+            int32_t    intValue           = 0;
+            bool       isAutomaticControl = false;
+            bool       boolValue          = false;
 
-            // get current settings of Exposure control
-            ret = mDevice->GetCameraProperty( XCameraProperty::Exposure, &propertyValue, &isAutomaticControl );
-
-            // set the property user requested
+            // convert to required type
             if ( id == 12 )
             {
-                isAutomaticControl = xvar.ToBool( &ret );
+                boolValue = xvar.ToBool( &ret );
             }
             else
             {
-                propertyValue = xvar.ToInt( &ret );
-            }
-
-            // check if the other half of the property was retieved successfully
-            if ( ret == ErrorDeivceNotReady )
-            {
-                // device is not yet running, so can not get current settings for exposure control.
-                // need to do some magic here then. if user already set it before, then get the cached version.
-                // if not, try to come up with something sensible values.
-                if ( id == 12 )
-                {
-                    // user is setting automatic exposure, so need resolve exposure value
-                    propertyValue = ( mData->HaveCachedExposure ) ? mData->CachedExposure : -5;
-
-                    mData->HaveCachedExposureAuto = true;
-                    mData->CachedExposureAuto     = isAutomaticControl;
-                }
-                else
-                {
-                    // user is setting exposure value, so need to resolve automatic control
-                    isAutomaticControl = ( mData->HaveCachedExposureAuto ) ? mData->CachedExposureAuto : false;
-
-                    mData->HaveCachedExposure = true;
-                    mData->CachedExposure     = propertyValue;
-                }
-
-                ret = SuccessCode;
-            }
-            else
-            {
-                mData->HaveCachedExposure     = false;
-                mData->HaveCachedExposureAuto = false;
+                intValue = xvar.ToInt( &ret );
             }
 
             if ( ret == SuccessCode )
             {
-                ret = mDevice->SetCameraProperty( XCameraProperty::Exposure, propertyValue, isAutomaticControl );
+                // get current settings of Exposure control
+                ret = mDevice->GetCameraProperty( XCameraProperty::Exposure, &propertyValue, &isAutomaticControl );
+
+                // set the property user requested
+                if ( id == 12 )
+                {
+                    isAutomaticControl = boolValue;
+                }
+                else
+                {
+                    propertyValue = intValue;
+                }
+
+                // check if the other half of the property was retieved successfully
+                if ( ret == ErrorDeivceNotReady )
+                {
+                    // device is not yet running, so can not get current settings for exposure control.
+                    // need to do some magic here then. if user already set it before, then get the cached version.
+                    // if not, try to come up with something sensible values.
+                    if ( id == 12 )
+                    {
+                        // user is setting automatic exposure, so need resolve exposure value
+                        propertyValue = ( mData->HaveCachedExposure ) ? mData->CachedExposure : -5;
+
+                        mData->HaveCachedExposureAuto = true;
+                        mData->CachedExposureAuto     = isAutomaticControl;
+                    }
+                    else
+                    {
+                        // user is setting exposure value, so need to resolve automatic control
+                        isAutomaticControl = ( mData->HaveCachedExposureAuto ) ? mData->CachedExposureAuto : false;
+
+                        mData->HaveCachedExposure = true;
+                        mData->CachedExposure     = propertyValue;
+                    }
+
+                    ret = SuccessCode;
+                }
+                else
+                {
+                    mData->HaveCachedExposure     = false;
+                    mData->HaveCachedExposureAuto = false;
+                }
+
+                if ( ret == SuccessCode )
+                {
+                    ret = mDevice->SetCameraProperty( XCameraProperty::Exposure, propertyValue, isAutomaticControl );
+                }
             }
         }
         break;
@@ -471,8 +486,8 @@ XErrorCode DirectShowVideoSourcePlugin::UpdateDescription( PluginDescriptor* des
                 descriptor->Properties[12]->Flags &= ( ~PropertyFlag_Hidden );
                 descriptor->Properties[13]->Flags &= ( ~PropertyFlag_Hidden );
 
-                descriptor->Properties[13]->DefaultValue.type = XVT_Bool;
-                descriptor->Properties[13]->DefaultValue.value.boolVal = isAutoSupported;
+                descriptor->Properties[12]->DefaultValue.type = XVT_Bool;
+                descriptor->Properties[12]->DefaultValue.value.boolVal = isAutoSupported;
 
                 descriptor->Properties[13]->DefaultValue.type = XVT_I4;
                 descriptor->Properties[13]->DefaultValue.value.iVal = defaultValue;
