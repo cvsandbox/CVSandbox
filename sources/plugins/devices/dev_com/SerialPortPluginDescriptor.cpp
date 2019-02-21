@@ -72,7 +72,14 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "SerialPort",
     "Plug-in to communicate with devices connected to serial port.",
 
-    "The plug-in allows ..."
+    "When communicating to devices connected to serial port, the plug-in allows to do either "
+    "blocking or non-blocking input. When non-blocking input is used, every read operation will "
+    "read only currently available data in communication buffer (up to the number of bytes requested) "
+    "and return immediately. When blocking input is used, read operation will wait up to specified timeout "
+    "value. If no data become available while waiting, it will return and indicate 0 bytes read. The "
+    "total read timeout (in millisecond) is calculated as: "
+    "<b>ioTimeoutConstant</b> + <b>ioTimeoutMultiplier</b> * bytesRequestes. If both values are set to 0, "
+    "read operation will not return until data arrive."
     ,
 
     nullptr,
