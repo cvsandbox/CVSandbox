@@ -18,7 +18,7 @@ SRC = ip_stdimaging.cpp \
 	ContrastCorrectionPlugin.cpp ContrastCorrectionPluginDescriptor.cpp \
 	ContrastStretchingPlugin.cpp ContrastStretchingPluginDescriptor.cpp \
 	ConvolutionPlugin.cpp ConvolutionPluginDescriptor.cpp \
-    CutImagePlugin.cpp CutImagePluginDescriptor.cpp \
+	CutImagePlugin.cpp CutImagePluginDescriptor.cpp \
 	DiffImagesPlugin.cpp DiffImagesPluginDescriptor.cpp \
 	DiffImagesThresholdedPlugin.cpp DiffImagesThresholdedPluginDescriptor.cpp \
 	Dilatation3x3Plugin.cpp Dilatation3x3PluginDescriptor.cpp \

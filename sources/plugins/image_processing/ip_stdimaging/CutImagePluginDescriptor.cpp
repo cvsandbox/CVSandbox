@@ -94,7 +94,15 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     /* Long description */
     "The plug-in cuts rectangular sub-image out of the provided source image. "
     "It allows specifying either absolute coordinates/size of the sub-image or "
-    "gaps relative to the edges of the source image."
+    "gaps relative to the edges of the source image.<br><br>"
+
+    "Suppose the source image size is 640x480. If setting relative left/top/right/bottom "
+    "edge gaps to 0.1 (equivalent of 10%) the result image will be 80% in width/height of "
+    "the source image, i.e. 512x384 - 64 pixels wide cut from left/right and 48 pixels wide "
+    "cut from top/bottom. If setting absolute edge gap, the gap is specified in pixels. "
+    "Setting absolute left/top/right/bottom gap to 100 results to 440x280 image. Finally, "
+    "absolute coordinates can be set alternatively - X/Y point to start cutting from and "
+    "width/height of the rectangle to cut."
     ,
     nullptr,
     nullptr,
