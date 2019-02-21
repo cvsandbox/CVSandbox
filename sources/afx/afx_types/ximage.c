@@ -456,7 +456,7 @@ XErrorCode XImageClone( const ximage* src, ximage** dst )
     }
     else
     {
-        ret = XImageAllocate( src->width, src->height, src->format, dst );
+        ret = XImageAllocateRaw( src->width, src->height, src->format, dst );
 
         if ( ret == SuccessCode )
         {
