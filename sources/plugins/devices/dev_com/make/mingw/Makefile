@@ -14,3 +14,5 @@ include ../../../../../make/settings/mingw/build_app.mk
 
 post_build: $(OUT)
 	xcopy /Y "..\..\*.txt" $(OUT_FOLDER)
+	mkdir $(OUT_FOLDER)examples
+	xcopy /Y "..\..\examples\*.*" $(OUT_FOLDER)examples
