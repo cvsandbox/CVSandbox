@@ -193,6 +193,7 @@ MainWindow::MainWindow( QWidget* parent ) :
                                    PluginType_VideoProcessing |
                                    PluginType_ScriptingEngine |
                                    PluginType_Device |
+                                   PluginType_CommunicationDevice |
                                    PluginType_ImageImporter |
                                    PluginType_ImageExporter |
                                    PluginType_ScriptingApi );
