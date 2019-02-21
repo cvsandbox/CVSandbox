@@ -19,7 +19,8 @@ BUILDS = image_processing\ip_stdimaging \
     scripting_engine\se_lua \
     devices\dev_sysinfo \
     devices\dev_gamepad \
-    devices\dev_raspberry
+    devices\dev_raspberry \
+    devices\dev_com
 
 # current directory (supposed to be directory of the Makefile)
 CD=$(CURDIR)
