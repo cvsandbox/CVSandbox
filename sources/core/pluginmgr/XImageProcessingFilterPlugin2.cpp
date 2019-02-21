@@ -1,7 +1,7 @@
 /*
     Plug-ins' management library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 
 #include "XImageProcessingFilterPlugin2.hpp"
 #include <algorithm>
+#include <assert.h>
 
 using namespace std;
 using namespace CVSandbox;
@@ -147,19 +148,34 @@ XErrorCode XImageProcessingFilterPlugin2::ProcessImage( const shared_ptr<const X
                                                         shared_ptr<XImage>& dst ) const
 {
     XErrorCode  ret = ErrorUnsupportedInterface;
-    ximage*     dstCImage = ( !dst ) ? nullptr : dst->GetImageDataOwnership( );
+    ximage*     dstCImage = ( !dst ) ? nullptr : dst->ImageData( );
 
     SImageProcessingFilterPlugin2* ipf = static_cast<SImageProcessingFilterPlugin2*>( mPlugin );
     ret = ipf->ProcessImage( ipf, src->ImageData( ), src2->ImageData( ), &dstCImage );
 
-    if ( ( ret == SuccessCode ) && ( dstCImage != 0 ) )
+    if ( !dst )
     {
-        dst = XImage::Create( &dstCImage, true );
+        // if destination was not allocated before, we do it only on success
+        if ( ret == SuccessCode )
+        {
+            dst = XImage::Create( &dstCImage, true );
+        }
+        else
+        {
+            // plug-ins should not really allocate anything new when fail, but lets be safe
+            assert( !dstCImage );
+            XImageFree( &dstCImage );
+        }
     }
     else
     {
-        XImageFree( &dstCImage );
-        dst.reset( );
+        // if destination was already set before, we may need to reset it again
+        if ( dst->ImageData( ) != dstCImage )
+        {
+            // the image we had before was reallocated and so now
+            // dst objects wraps a dangling pointer - need to reset it
+            dst->Reset( dstCImage );
+        }
     }
 
     return ret;

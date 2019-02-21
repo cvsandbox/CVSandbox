@@ -1,7 +1,7 @@
 /*
     Automation server library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -1704,7 +1704,9 @@ XErrorCode XAutomationServerData::ScriptingEnginePluginCallback_GetImageVariable
 
         if ( ( ret == SuccessCode ) && ( image ) )
         {
-            *value = image->GetImageDataOwnership( );
+            *value = image->ImageData( );
+            // reset C++ image to null, so it no longer responsible for C structure life time
+            image->Reset( nullptr );
         }
         else
         {

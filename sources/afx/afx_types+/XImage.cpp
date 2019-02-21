@@ -1,7 +1,7 @@
 /*
     Core C++ types library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -43,12 +43,12 @@ const shared_ptr<XImage> XImage::Allocate( int32_t width, int32_t height, XPixel
 {
     XImage* image = new (nothrow) XImage( );
 
-    if ( image != 0 )
+    if ( image != nullptr )
     {
         if ( XImageAllocate( width, height, format, &image->mImage ) != SuccessCode )
         {
             delete image;
-            image = 0;
+            image = nullptr;
         }
     }
 
@@ -60,12 +60,12 @@ const shared_ptr<XImage> XImage::AllocateRaw( int32_t width, int32_t height, XPi
 {
     XImage* image = new (nothrow) XImage( );
 
-    if ( image != 0 )
+    if ( image != nullptr )
     {
         if ( XImageAllocateRaw( width, height, format, &image->mImage ) != SuccessCode )
         {
             delete image;
-            image = 0;
+            image = nullptr;
         }
     }
 
@@ -77,12 +77,12 @@ const shared_ptr<XImage> XImage::Create( uint8_t* data, int32_t width, int32_t h
 {
     XImage* image = new (nothrow) XImage( );
 
-    if ( image != 0 )
+    if ( image != nullptr )
     {
         if ( XImageCreate( data, width, height, stride, format, &image->mImage ) != SuccessCode )
         {
             delete image;
-            image = 0;
+            image = nullptr;
         }
     }
 
@@ -94,7 +94,7 @@ const shared_ptr<XImage> XImage::Create( ximage** image, bool ownIt )
 {
     shared_ptr<XImage> guardedImage;
 
-    if ( ( image != 0 ) && ( *image != 0 ) )
+    if ( ( image != nullptr ) && ( *image != nullptr ) )
     {
         if ( !ownIt )
         {
@@ -104,7 +104,7 @@ const shared_ptr<XImage> XImage::Create( ximage** image, bool ownIt )
         {
             XImage* wrapperImage = new (nothrow) XImage( );
 
-            if ( wrapperImage != 0 )
+            if ( wrapperImage != nullptr )
             {
                 wrapperImage->mImage = *image;
                 guardedImage.reset( wrapperImage );
@@ -116,7 +116,7 @@ const shared_ptr<XImage> XImage::Create( ximage** image, bool ownIt )
             }
 
             // now this object owns it, not the caller
-            *image = 0;
+            *image = nullptr;
         }
     }
 
@@ -129,34 +129,17 @@ const shared_ptr<const XImage> XImage::Create( const ximage* image )
     return Create( const_cast<ximage**>( &image ), false );
 }
 
-// Return owned image to caller, so the object is no longer responsible for its life time tracking
-ximage* XImage::GetImageDataOwnership( )
-{
-    ximage* ret = 0;
-    ximage* copy = 0;
-
-    if ( XImageCreate( mImage->data, mImage->width, mImage->height, mImage->stride, mImage->format, &copy ) == SuccessCode )
-    {
-        // return the image we currently own to caller
-        ret = mImage;
-        // and keep just shallow copy for us
-        mImage = copy;
-    }
-
-    return ret;
-}
-
 // Clone image - make a deep copy of it
 const shared_ptr<XImage> XImage::Clone( ) const
 {
     XImage* image = new (nothrow) XImage( );
 
-    if ( image != 0 )
+    if ( image != nullptr )
     {
         if ( XImageClone( mImage, &image->mImage ) != SuccessCode )
         {
             delete image;
-            image = 0;
+            image = nullptr;
         }
     }
 
@@ -194,7 +177,7 @@ bool XImage::CopyDataOrClone( std::shared_ptr<XImage>& copyTo ) const
 const shared_ptr<XImage> XImage::GetSubImage( int32_t x, int32_t y, int32_t width, int32_t height ) const
 {
     shared_ptr<XImage> guardedImage;
-    ximage* ximage = 0;
+    ximage*            ximage = nullptr;
 
     if ( XImageGetSubImage( mImage, &ximage, x, y, width, height ) == SuccessCode )
     {
@@ -239,10 +222,10 @@ int32_t XImage::GetPixelColorIndex( int32_t x, int32_t y ) const
 // Get name of the specified pixel format
 const string XImage::PixelFormatName( XPixelFormat format )
 {
-    string name;
+    string  name;
     xstring xname = XImageGetPixelFormatName( format );
 
-    if ( xname != 0 )
+    if ( xname != nullptr )
     {
         name = string( xname );
         XStringFree( &xname );
@@ -254,10 +237,10 @@ const string XImage::PixelFormatName( XPixelFormat format )
 // Get name of the supported image size
 const string XImage::SupportedImageSizeName( XSupportedImageSize supportedSize )
 {
-    string name;
+    string  name;
     xstring xname = XImageGetSupportedImageSizeName( supportedSize );
 
-    if ( xname != 0 )
+    if ( xname != nullptr )
     {
         name = string( xname );
         XStringFree( &xname );

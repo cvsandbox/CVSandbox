@@ -1,7 +1,7 @@
 /*
     Core C++ types library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -71,9 +71,8 @@ public:
 
     // Get pointer to the underlying C image structure
     ximage* ImageData( ) const { return mImage; }
-
-    // Return owned image to caller, so the object is no longer responsible for its life time tracking
-    ximage* GetImageDataOwnership( );
+    // Replace C image pointer with a new one
+    void Reset( ximage* newImage ) { mImage = newImage; }
 
     // Get sub image of the specified source image (source image must stay alive - it does not make a deep copy)
     const std::shared_ptr<XImage> GetSubImage( int32_t x, int32_t y, int32_t width, int32_t height ) const;
