@@ -20,6 +20,7 @@
 */
 
 #include <iplugincpp.hpp>
+#include <image_cut_image_16x16.h>
 #include "CutImagePlugin.hpp"
 
 static void PluginInitializer( );
@@ -104,7 +105,7 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "absolute coordinates can be set alternatively - X/Y point to start cutting from and "
     "width/height of the rectangle to cut."
     ,
-    nullptr,
+    &image_cut_image_16x16,
     nullptr,
     CutImagePlugin,
 
