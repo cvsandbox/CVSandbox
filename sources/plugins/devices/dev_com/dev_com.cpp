@@ -20,6 +20,7 @@
 */
 
 #include <imodule.h>
+#include <image_com_device_16x16.h>
 
 // Descriptor of the module
 ModuleDescriptor moduleInfo =
@@ -32,7 +33,7 @@ ModuleDescriptor moduleInfo =
     "Computer Vision Sandbox",
     "Copyright Computer Vision Sandbox, 2011-2019",
     "http://www.cvsandbox.com/",
-    nullptr, // small icon
+    (ximage*) &image_com_device_16x16, // small icon
     nullptr, // icon
     0
 };

@@ -20,6 +20,7 @@
 */
 
 #include <iplugincpp.hpp>
+#include <image_serial_port_16x16.h>
 #include "SerialPortPlugin.hpp"
 
 static void PluginInitializer( );
@@ -82,7 +83,7 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "read operation will not return until data arrive."
     ,
 
-    nullptr,
+    &image_serial_port_16x16,
     nullptr,
     SerialPortPlugin,
 
