@@ -602,6 +602,10 @@ const QString GetPluginType( const shared_ptr<const XPluginDescriptor>& pluginDe
         typeName = "Device plug-in";
         break;
 
+    case PluginType_CommunicationDevice:
+        typeName = "Communication Device";
+        break;
+
     case PluginType_ScriptingApi:
         typeName = "Scripting APIs";
         break;
