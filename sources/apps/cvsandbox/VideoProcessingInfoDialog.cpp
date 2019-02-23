@@ -20,6 +20,7 @@
 */
 
 #include <QTimer>
+#include <QMenu>
 #include "VideoProcessingInfoDialog.hpp"
 #include "ui_VideoProcessingInfoDialog.h"
 #include "ServiceManager.hpp"
@@ -52,13 +53,43 @@ namespace Private
             LastValueOfFramesBlocked( 0 ), SubCounter( 0 ), EditBoxDefaultColor( ),
             LabelUpdated( false ), VideoProcessingGraph( ),
             ConfiguredStepIndex( -1 ), ConfiguredStepDescriptor( ),
-            ConfiguredStepPlugin( ), CurrentStepConfiguration( )
+            ConfiguredStepPlugin( ), CurrentStepConfiguration( ),
+            ProcessingStepsContextMenu( nullptr ),
+            ConfigurePluginAction( nullptr ), GetPluginHelpAction( nullptr )
         {
             InfoUpdateTimer.setInterval( 1000 );
 
             PersistedUiSettings[STR_COL1_WIDTH] = 200;
             PersistedUiSettings[STR_COL2_WIDTH] = 80;
             PersistedUiSettings[STR_COL3_WIDTH] = 80;
+
+            // create context menu for video processing steps
+            ProcessingStepsContextMenu = new QMenu( );
+
+            ConfigurePluginAction = new QAction( nullptr );
+            ConfigurePluginAction->setText( "&Configure" );
+            ConfigurePluginAction->setStatusTip( "Configure selected step of the processing graph" );
+            ConfigurePluginAction->setIcon( QIcon( QPixmap( ":/images/icons/properties.png" ) ) );
+
+            GetPluginHelpAction = new QAction( nullptr );
+            GetPluginHelpAction->setText( "&Description" );
+            GetPluginHelpAction->setStatusTip( "Show description/help for the selected plug-in" );
+            GetPluginHelpAction->setIcon( QIcon( QPixmap( ":/images/icons/idea.png" ) ) );
+
+            QAction* separator = new QAction( nullptr );
+            separator->setSeparator( true );
+
+            ProcessingStepsContextMenu->addAction( ConfigurePluginAction );
+            ProcessingStepsContextMenu->addAction( separator );
+            ProcessingStepsContextMenu->addAction( GetPluginHelpAction );
+            ProcessingStepsContextMenu->setDefaultAction( ConfigurePluginAction );
+        }
+
+        ~VideoProcessingInfoDialogData( )
+        {
+            delete ConfigurePluginAction;
+            delete GetPluginHelpAction;
+            delete ProcessingStepsContextMenu;
         }
 
         void FindVideoProcessingGraph( const XGuid& sandboxId, const XGuid& cameraId );
@@ -96,6 +127,10 @@ namespace Private
         shared_ptr<const XPluginDescriptor> ConfiguredStepDescriptor;
         shared_ptr<XPlugin>                 ConfiguredStepPlugin;
         map<string, XVariant>               CurrentStepConfiguration;
+
+        QMenu*      ProcessingStepsContextMenu;
+        QAction*    ConfigurePluginAction;
+        QAction*    GetPluginHelpAction;
     };
 }
 
@@ -132,6 +167,11 @@ VideoProcessingInfoDialog::VideoProcessingInfoDialog( QWidget* parent ) :
 
     // connect timer
     connect( &mData->InfoUpdateTimer, SIGNAL(timeout()), this, SLOT(on_InfoUpdateTimer_timeout()) );
+
+    // connect action handlers
+    connect( mData->ConfigurePluginAction, SIGNAL(triggered()), this, SLOT(on_pluginPropertiesButton_clicked()) );
+    connect( mData->GetPluginHelpAction, SIGNAL(triggered()), this, SLOT(on_GetPluginHelpAction_triggered()) );
+    connect( mData->ProcessingStepsContextMenu, SIGNAL(aboutToShow()), this, SLOT(on_ProcessingStepsContextMenu_aboutToShow()) );
 
     // hide performance issues by default
     ui->performanceGroupBox->setVisible( false );
@@ -272,10 +312,53 @@ void VideoProcessingInfoDialog::on_processinGraphTreeView_itemDoubleClicked( QTr
     mData->EditPluginProperties( );
 }
 
+// Show context menu for processing graph item
+void VideoProcessingInfoDialog::on_processinGraphTreeView_customContextMenuRequested( const QPoint& pos )
+{
+    QTreeWidgetItem* itemForMenu = ui->processinGraphTreeView->itemAt( pos );
+
+    if ( itemForMenu != nullptr )
+    {
+        mData->ProcessingStepsContextMenu->popup( ui->processinGraphTreeView->viewport( )->mapToGlobal( pos ) );
+    }
+}
+
 // Some property of a plug-in was changed - update automation server
 void VideoProcessingInfoDialog::on_configurationEditor_ConfigurationUpdated( )
 {    
     mData->UpdatePluginProperties( );
+}
+
+// Help requested for a plug-in configuration dialog
+void VideoProcessingInfoDialog::on_configurationEditor_HelpRequested( QWidget* sender )
+{
+    shared_ptr<const XPluginDescriptor> pluginDesc = mData->GetSelectedPluginDescriptor( nullptr );
+
+    if ( pluginDesc )
+    {
+        ServiceManager::Instance( ).GetHelpService( )->ShowPluginDescription( sender, pluginDesc->ID( ) );
+    }
+}
+
+// Help requested for the currently selected video processing step
+void VideoProcessingInfoDialog::on_GetPluginHelpAction_triggered( )
+{
+    shared_ptr<const XPluginDescriptor> pluginDesc = mData->GetSelectedPluginDescriptor( nullptr );
+
+    if ( pluginDesc )
+    {
+        ServiceManager::Instance( ).GetHelpService( )->ShowPluginDescription( this, pluginDesc->ID( ) );
+    }
+}
+
+// Enable/disable actions in the plug-ins context menu
+void VideoProcessingInfoDialog::on_ProcessingStepsContextMenu_aboutToShow( )
+{
+    shared_ptr<const XPluginDescriptor> descriptor = mData->GetSelectedPluginDescriptor( nullptr );
+
+    mData->ConfigurePluginAction->setEnabled( ( descriptor ) &&
+                                              ( descriptor->Type( ) == PluginType_ImageProcessingFilter ) &&
+                                              ( descriptor->ConfigurablePropertiesCount( ) != 0 ) );
 }
 
 namespace Private
@@ -463,7 +546,10 @@ void VideoProcessingInfoDialogData::EditPluginProperties( )
 
             ConfigurePluginPropertiesDialog configureForm( ConfiguredStepDescriptor, ConfiguredStepPlugin, false, Parent );
 
+            configureForm.EnableHelpButton( true );
+
             Parent->connect( &configureForm, SIGNAL( ConfigurationUpdated() ), Parent, SLOT( on_configurationEditor_ConfigurationUpdated() ) );
+            Parent->connect( &configureForm, SIGNAL( HelpRequested(QWidget*) ), Parent, SLOT( on_configurationEditor_HelpRequested(QWidget*) ) );
 
             CurrentStepConfiguration = pluginConfig;
 

@@ -62,7 +62,11 @@ private slots:
     void on_processinGraphTreeView_itemSelectionChanged( );
     void on_pluginPropertiesButton_clicked( );
     void on_processinGraphTreeView_itemDoubleClicked( QTreeWidgetItem* item, int column );
+    void on_processinGraphTreeView_customContextMenuRequested( const QPoint& pos );
     void on_configurationEditor_ConfigurationUpdated( );
+    void on_configurationEditor_HelpRequested( QWidget* sender );
+    void on_GetPluginHelpAction_triggered( );
+    void on_ProcessingStepsContextMenu_aboutToShow( );
 
 private:
     void SaveUi( );
