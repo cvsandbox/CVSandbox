@@ -498,6 +498,10 @@
    </property>
   </action>
   <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/icons/idea.png</normaloff>:/images/icons/idea.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;About ...</string>
    </property>

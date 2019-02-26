@@ -1121,6 +1121,7 @@ QMenuBar* ScriptEditorDialogData::CreateMenuBar( )
 
     AboutScriptingPluginAction = new QAction( "&About scripting plug-in", MenuEdit );
     AboutScriptingPluginAction->setStatusTip( "Shows information about the scripting plug-in in use" );
+    AboutScriptingPluginAction->setIcon( QIcon( QPixmap( ":/images/icons/idea.png" ) ) );
 
     ModuleListAction = new QAction( "&Modules list", MenuEdit );
     ModuleListAction->setStatusTip( "Shows information about availabe modules and plug-ins" );
