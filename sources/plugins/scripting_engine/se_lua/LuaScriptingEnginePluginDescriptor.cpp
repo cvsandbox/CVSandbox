@@ -1,7 +1,7 @@
 /*
     Lua Scripting Engine plug-in of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -212,13 +212,17 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "<td>2D Array</td>"
     "<td>table of tables, where all sub-tables must be of the same length.</td>"
     "</tr>"
+    "<tr class='tro'>"
+    "<td>Jagged Array</td>"
+    "<td>table of tables, where all sub-tables can be of arbitrary length.</td>"
+    "</tr>"
     "</table><br>"
 
     "<h3>Image processing filter plug-in interface</h3>"
     "Below are the methods exposed by image processing filter plug-ins:"
     "<ul>"
     "<li>boolean <b>pluginObject:CanProcessInPlace</b>( ) - Returns true if the plug-in can do in-place image processing or false otherwise.</li>"
-    "<li>boolean <b>pluginObject:IsPixelFormatSupported</b>( inputFormatName : string ) - Returns true if the plug-in accepts images of the "
+    "<li>boolean <b>pluginObject:IsPixelFormatSupported</b>( inputFormatName:string ) - Returns true if the plug-in accepts images of the "
     "specified pixel format or false otherwise.</li>"
     "<li>string <b>pluginObject:GetOutputPixelFormat</b>( inputFormatName:string ) - Returns pixel format name of an output image when plug-in "
     "is given an input image of the specified format.</li>"
@@ -232,7 +236,7 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "Below are the methods exposed by image processing 2 source filter plug-ins:"
     "<ul>"
     "<li>boolean <b>pluginObject:CanProcessInPlace</b>( ) - Returns true if the plug-in can do in-place image processing or false otherwise.</li>"
-    "<li>boolean <b>pluginObject:IsPixelFormatSupported</b>( inputFormatName : string ) - Returns true if the plug-in accepts images of the "
+    "<li>boolean <b>pluginObject:IsPixelFormatSupported</b>( inputFormatName:string ) - Returns true if the plug-in accepts images of the "
     "specified pixel format or false otherwise.</li>"
     "<li>string <b>pluginObject:GetOutputPixelFormat</b>( inputFormatName:string ) - Returns pixel format name of an output image when plug-in "
     "is given an input image of the specified format.</li>"
@@ -249,7 +253,7 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "<h3>Image processing plug-in interface</h3>"
     "Below are the methods exposed by image processing plug-ins:"
     "<ul>"
-    "<li>boolean <b>pluginObject:IsPixelFormatSupported</b>( inputFormatName : string ) - Returns true if the plug-in accepts images of the "
+    "<li>boolean <b>pluginObject:IsPixelFormatSupported</b>( inputFormatName:string ) - Returns true if the plug-in accepts images of the "
     "specified pixel format or false otherwise.</li>"
     "<li><b>pluginObject:ProcessImage</b>( inputImage:imageObject ) - Performs processing of the input image and updates its read-only "
     "properties with new values based on the performed processing.</li>"
@@ -280,6 +284,35 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "<li>array <b>pluginObject:SupportedExtensions</b>( ) - Returns an array of supported files' extensions.</li>"
     "<li>array <b>pluginObject:SupportedPixelFormats</b>( ) - Returns an array of pixel formats supported by the image encoder.</li>"
     "<li><b>pluginObject:ExportImage</b>( fileName:string, imageToSave:imageObject ) - Saves image into the specified file.</li>"
+    "</ul><br>"
+
+    "<h3>Device plug-in interface</h3>"
+    "Device plug-ins allow interfacing to some devices by the means of reading/setting their different run time properties. "
+    "Usually these plug-ins provide few properties which are required for establishing connection to a device. Once connection is "
+    "established, communication with the device is done by using exposed properties."
+    "<ul>"
+    "<li>bool <b>pluginObject:Connect</b>( ) - Connects to device returning <b>true</b> on success or <b>false</b> otherwise.</li>"
+    "<li><b>pluginObject:Disconnect</b>( ) - Disconnects from device.</li>"
+    "<li>bool <b>pluginObject:IsConnected</b>( ) - Checks if device was previously connected by using <b>Connect</b>() method.</li>"
+    "</ul><br>"
+
+    "<h3>Communication device plug-in interface</h3>"
+    "Device plug-ins allow interfacing to some devices by writing/reading data from them. Usually these plug-ins provide few "
+    "properties which are required for establishing connection to a device. Once connection is established, communication with "
+    "the device is done by writing/reading byte arrays or strings."
+    "<ul>"
+    "<li>bool <b>pluginObject:Connect</b>( ) - Connects to device returning <b>true</b> on success or <b>false</b> otherwise.</li>"
+    "<li><b>pluginObject:Disconnect</b>( ) - Disconnects from device.</li>"
+    "<li>bool <b>pluginObject:IsConnected</b>( ) - Checks if device was previously connected by using <b>Connect</b>() method.</li>"
+    "<li>number, bool <b>pluginObject:Write</b>( buffer:array ) - Writes an array of bytes to the device. Returns number of bytes "
+    "written and success status.</li>"
+    "<li>array, bool <b>pluginObject:Read</b>( maxToRead:number ) - Reads up to the specified number of bytes from the device. "
+    "Returns array of bytes read and success status.</li>"
+    "<li>number, bool <b>pluginObject:WriteString</b>( buffer:string ) - Writes a string to the device. Same as <b>Write</b>(), but every "
+    "byte to send is represented with a character. Returns number of characters written and success status.</li>"
+    "<li>string, bool <b>pluginObject:ReadString</b>( maxToRead:number ) - Reads up to the specified number of characters from the "
+    "device. Same as <b>Read</b>(), but bytes received from the device are provided as string. Returns string read and success status.</li>"
+    "<li><b>pluginObject:PurgeBuffers</b>( ) - Clears write/read communication buffers.</li>"
     "</ul><br>"
 
     "<h3>Scripting API plug-in interface</h3>"
