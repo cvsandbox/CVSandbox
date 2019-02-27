@@ -1,4 +1,13 @@
-Bar Codes Detection and Recognition 1.0.0 
+Bar Codes Detection and Recognition 1.0.1
+-------------------------------------------
+xx.03.2019
+
+* Updated "Bar Code Detector" plug-in, so its "Barcode Quadrilaterals" property
+  has "jagged array of points" type.
+
+
+
+Bar Codes Detection and Recognition 1.0.0
 -------------------------------------------
 23.12.2017
 

@@ -1,7 +1,7 @@
 /*
     Blobs' processing plug-ins of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -26,12 +26,12 @@
 ModuleDescriptor moduleInfo =
 {
     { 0xAF000001, 0x00000000, 0x00000000, 0x00000011 },
-    { 1, 0, 4 },
+    { 1, 0, 5 },
     "Blobs' Processing",
     "ip_blobs_processing",
     "The module contains plug-ins, which perform different blobs' processing routines.",
     "Computer Vision Sandbox",
-    "Copyright Computer Vision Sandbox, 2011-2018",
+    "Copyright Computer Vision Sandbox, 2011-2019",
     "http://www.cvsandbox.com/",
     (ximage*) &image_blobs_processing_16x16, // small icon
     nullptr, // icon

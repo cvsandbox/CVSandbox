@@ -1,9 +1,9 @@
 System Information Tools plug-ins 1.0.0
 -------------------------------------------
-xx.02.2019
+xx.03.2019
 
 * The first release of the plug-ins' module for Computer Vision Sandbox.
-  The included plug-ins are:
+  The plug-ins included are:
     LED Keys - Allows to get status of LED keys (Num/Caps/Scroll lock).
     Performance Info - Provides information about system performance.
     Power Info - Provides information about power status of the system.

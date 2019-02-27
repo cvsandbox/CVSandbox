@@ -1,3 +1,24 @@
+Lua Scripting Engine 1.0.7
+-------------------------------------------
+xx.03.2019
+
+Version updates and fixes:
+
+* Scripting engine fixes:
+  # API revision (SCRIPTING_API_REVISION variable) is raised to 8.
+  # Scripting engine reports an error now if user passes image or plug-in objects
+    to APIs, which don't specify expected type. Images can be passed to different
+    plug-ins and their functions, to host as variable. But can not be passed to host
+    in a table/array.
+  # Added support for plug-ins' properties of jagged array type, which is represented
+    as table of tables in Lua.
+  # Added SetPixel() and GetPixel() methods for image objects.
+  # Added support for Device and Communication Device plug-in types.
+  # Added sleep(ms) function into Lua API, as it is not provided by any of the default
+    Lua's packages.
+
+
+
 Lua Scripting Engine 1.0.6
 -------------------------------------------
 23.12.2017
@@ -114,7 +135,7 @@ Version updates and fixes:
 
 
 
-Lua Scripting Engine 1.0.0 
+Lua Scripting Engine 1.0.0
 -------------------------------------------
 27.11.2015
 

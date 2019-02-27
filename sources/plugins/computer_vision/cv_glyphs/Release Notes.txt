@@ -1,4 +1,13 @@
-Glyphs Recognition and Tracking 1.0.0 
+Glyphs Recognition and Tracking 1.0.1
+-------------------------------------------
+xx.03.2019
+
+* Updated "Glyph Detector" plug-in, so its "Glyph Quadrilaterals" property
+  has "jagged array of points" type.
+
+
+
+Glyphs Recognition and Tracking 1.0.0
 -------------------------------------------
 23.12.2017
 

@@ -41,7 +41,7 @@ function Main()
         print( 'status  : ' .. tostring( status ) )
         print( 'str read: ' .. strRead )
 
-        -- Switch LED off - sned command table of bytes 
+        -- Switch LED off - sned command as table of bytes 
         sent, status = serialPort:Write( { 0x6C, 0x65, 0x64, 0x5F, 0x6F, 0x66, 0x66, 0x0A } )
         
         print( 'status: ' .. tostring( status ) )

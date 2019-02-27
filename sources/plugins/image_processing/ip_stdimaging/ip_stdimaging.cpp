@@ -1,7 +1,7 @@
 /*
     Standard image processing plug-ins of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -26,12 +26,12 @@
 ModuleDescriptor moduleInfo =
 {
     { 0xAF000001, 0x00000000, 0x00000000, 0x00000001 },
-    { 1, 0, 8 },
+    { 1, 0, 9 },
     "Standard Image Processing",
     "ip_stdimaging",
     "The module contains set of common image processing routines.",
     "Computer Vision Sandbox",
-    "Copyright Computer Vision Sandbox, 2011-2017",
+    "Copyright Computer Vision Sandbox, 2011-2019",
     "http://www.cvsandbox.com/",
     (ximage*) &image_standard_imaging_module_16x16, // small icon
     0, // icon

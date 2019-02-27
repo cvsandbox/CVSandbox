@@ -26,7 +26,7 @@
 ModuleDescriptor moduleInfo =
 {
     { 0xAF000001, 0x00000000, 0x00000000, 0x00000015 },
-    { 1, 0, 0 },
+    { 1, 0, 1 },
     "Glyphs Recognition and Tracking",
     "cv_glyphs",
     "The module contains set of plug-ins to recognize and track glyphs.",

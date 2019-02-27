@@ -1,6 +1,6 @@
 Communication Device plug-ins 1.0.0
 -------------------------------------------
-xx.02.2019
+xx.03.2019
 
 * The first release of the plug-ins' module for Computer Vision Sandbox.
   It provides "Serial Port" plug-in, which allows communicating with devices

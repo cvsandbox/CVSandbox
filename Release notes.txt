@@ -1,3 +1,90 @@
+Computer Vision Sandbox 2.0.0 release notes
+-------------------------------------------
+xx.03.2019
+
+*** The first release from the open code of the project. ***
+
+Version updates and fixes:
+
+* CVSandbox application supports number of command line options:
+    -o:<Object Name> - Starts specified camera/view when application has started.
+        Examples:
+            cvsandbox.exe -o:"My Camera"
+            cvsandbox.exe -o:"Public Cameras/Some airport"
+    -fs  - Starts application in full screen mode.
+    -fit - Starts with Fit To Screen option On.
+    -hpo - Hides project objects' tree.
+    -ns  - Starts with No Screen Saver option On.
+
+    All below files by default are stored in <user home folder>/CVSandbox/CVS
+    -pf:<file name>     - Name of project file to store cameras, views, sandboxes, etc.
+                          Default: project.xml
+    -appf:<file name>   - Name of file to store different application settings.
+                          Default: app.ini
+    -uif:<file name>    - Name of file to store UI settings.
+                          Default: ui.ini
+
+* Added two new plug-in types - Device and Communication Device. Those are aimed for
+  communicating to different external devices like I/O boards, Arduinos, gamepads,
+  robotic components, etc.
+* Added sandbox variables monitor, which allows inspecting values of variables stored
+  in scripting host.
+* Added support for scripting threads within sandboxes - scripts which run at
+  configured time intervals (in milliseconds). Primarily aimed for communication
+  with external devices.
+
+Updates and fixes for the modules included into the package:
+
+* DirectShow Video Sources 1.1.2
+    ~ Added Exposure control for cameras/drivers, which provide it through DirectShow API.
+
+* Standard Image Processing 1.0.9
+    ~ Added "Cut Image" plug-in, which allows cutting sub-image out of the source image.
+
+* Blobs' Processing 1.0.5
+    ~ Updated "Filter Quadrilateral Blobs" plug-in, so its "Quadrilaterals" property
+      has "jagged array of points" type.
+
+* Bar Codes Detection and Recognition 1.0.1
+    ~ Updated "Bar Code Detector" plug-in, so its "Barcode Quadrilaterals" property
+      has "jagged array of points" type.
+
+* Glyphs Recognition and Tracking 1.0.1
+    ~ Updated "Glyph Detector" plug-in, so its "Glyph Quadrilaterals" property
+      has "jagged array of points" type.
+
+* Lua Scripting Engine 1.0.7
+    ~ API revision (SCRIPTING_API_REVISION variable) is raised to 8.
+    ~ Scripting engine reports an error now if user passes image or plug-in objects
+      to APIs, which don't specify expected type. Images can be passed to different
+      plug-ins and their functions, to host as variable. But can not be passed to host
+      in a table/array.
+    ~ Added support for plug-ins' properties of jagged array type, which is represented
+      as table of tables in Lua.
+    ~ Added SetPixel() and GetPixel() methods for image objects.
+    ~ Added support for Device and Communication Device plug-in types.
+    ~ Added sleep(ms) function into Lua API, as it is not provided by any of the default
+      Lua's packages.
+
+
+New modules added into the package:
+
+* System Information Tools plug-ins 1.0.0
+    ~ The module provides next plug-ins:
+        # LED Keys - Allows to get status of LED keys (Num/Caps/Scroll lock).
+        # Performance Info - Provides information about system performance.
+        # Power Info - Provides information about power status of the system.
+
+* Gamepad Device plug-ins 1.0.0
+    ~ Provides "Gamepad" plug-in, which allows accessing gamepads and joysticks
+      connected to the systems.
+
+* Communication Device plug-ins 1.0.0
+    ~ Provides "Serial Port" plug-in, which allows communicating with devices
+      connected to serial port.
+
+
+
 Computer Vision Sandbox 1.2.7 release notes
 -------------------------------------------
 23.12.2017

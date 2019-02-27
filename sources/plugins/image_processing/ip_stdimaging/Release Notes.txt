@@ -1,3 +1,13 @@
+Standard Image Processing 1.0.9
+-------------------------------------------
+xx.03.2019
+
+Version updates and fixes:
+
+* Added "Cut Image" plug-in, which allows cutting sub-image out of the source image.
+
+
+
 Standard Image Processing 1.0.8
 -------------------------------------------
 23.12.2017
@@ -39,7 +49,7 @@ Version updates and fixes:
 
 * Added "Morphology Operator" plug-in, which allows to perform Erosion, Dilatation, Opening, Closing,
   Top Hat and Bottom Hat operators, using custom specified structuring element.
-* Added "Hit and Miss" plug-in, which provides the hit-and-miss morphology operator.  
+* Added "Hit and Miss" plug-in, which provides the hit-and-miss morphology operator.
 * Added "Convolution" plug-in, which allows to perform image convolution using custom specified kernel.
 * Added "Gaussian Blur" and "Gaussian Sharpen" plug-ins to perform image blurring/sharpening using
   Gaussian kernel of the specified size and standard deviation.
@@ -53,7 +63,7 @@ Version updates and fixes:
 
 
 
-Standard Image Processing 1.0.5 
+Standard Image Processing 1.0.5
 -------------------------------------------
 13.10.2016.
 
@@ -70,7 +80,7 @@ Version updates and fixes:
 
 
 
-Standard Image Processing 1.0.4 
+Standard Image Processing 1.0.4
 -------------------------------------------
 03.07.2016.
 
@@ -101,7 +111,7 @@ Version updates and fixes:
 
 
 
-Standard Image Processing 1.0.3 
+Standard Image Processing 1.0.3
 -------------------------------------------
 19.02.2016.
 
@@ -111,7 +121,7 @@ Version updates and fixes:
 
 
 
-Standard Image Processing 1.0.2 
+Standard Image Processing 1.0.2
 -------------------------------------------
 27.11.2015.
 
@@ -121,7 +131,7 @@ Version updates and fixes:
 
 
 
-Standard Image Processing 1.0.1 
+Standard Image Processing 1.0.1
 -------------------------------------------
 28.09.2015.
 
@@ -133,7 +143,7 @@ Version updates and fixes:
 
 
 
-Standard Image Processing 1.0.0 
+Standard Image Processing 1.0.0
 -------------------------------------------
 06.07.2015.
 

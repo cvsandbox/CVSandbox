@@ -26,7 +26,7 @@
 ModuleDescriptor moduleInfo =
 {
     { 0xAF000001, 0x00000000, 0x00000000, 0x00000016 },
-    { 1, 0, 0 },
+    { 1, 0, 1 },
     "Bar Codes Detection and Recognition",
     "cv_bar_codes",
     "The module contains set of plug-ins to detect and recognize bar codes.",

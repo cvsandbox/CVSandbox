@@ -83,7 +83,7 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
     "Plug-in to access gamepads and joysticks.",
 
     "The plug-in allows accessing game pads and joysticks connected to the systems. To establish connection with a "
-    "game pads, it is required specify its ID, which normally starts from 0 for the first available device and increases "
+    "game pads, it is required to specify its ID, which normally starts from 0 for the first available device and increases "
     "for others. Once connection is done, the plug-in allows to query game pad's buttons' state, axes' positions and "
     "point of view control."
     ,

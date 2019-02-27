@@ -1,7 +1,7 @@
 /*
     Lua Scripting Engine plug-in of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@ ModuleDescriptor moduleInfo =
     "se_lua",
     "The module contains Lua scripting engine plug-ins.",
     "Computer Vision Sandbox",
-    "Copyright Computer Vision Sandbox, 2011-2018",
+    "Copyright Computer Vision Sandbox, 2011-2019",
     "http://www.cvsandbox.com/",
     (ximage*) &image_lua_script_16x16, // small icon
     nullptr, // icon

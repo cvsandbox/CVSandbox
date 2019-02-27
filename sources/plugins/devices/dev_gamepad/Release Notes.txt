@@ -1,6 +1,6 @@
 Gamepad Device plug-ins 1.0.0
 -------------------------------------------
-xx.02.2019
+xx.03.2019
 
 * The first release of the plug-ins' module for Computer Vision Sandbox.
   It provides "Gamepad" plug-in, which allows accessing gamepads and joysticks

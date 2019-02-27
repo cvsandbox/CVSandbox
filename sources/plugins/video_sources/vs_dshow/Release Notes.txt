@@ -1,3 +1,13 @@
+DirectShow Video Sources 1.1.2
+-------------------------------------------
+xx.03.2019
+
+Version updates and fixes:
+
+* Added Exposure control for cameras/drivers, which provide it through DirectShow API.
+
+
+
 DirectShow Video Sources 1.1.1
 -------------------------------------------
 11.10.2017
@@ -37,7 +47,7 @@ Version updates and fixes:
   those anyway for now.
 
 
-  
+
 DirectShow Video Sources 1.0.0
 -------------------------------------------
 27.04.2015
