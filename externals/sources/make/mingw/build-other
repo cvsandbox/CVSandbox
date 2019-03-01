@@ -7,7 +7,7 @@ if [ "$1" != "clean" ] ; then
     
     mkdir -p ${OUT_REL}/include
 
-    cp -f ${SRC_FOLDER}/* ${OUT_REL}/include
+    cp -f ${SRC_FOLDER}/*.h ${OUT_REL}/include
 else
     echo Nothing to clean for others
 fi
