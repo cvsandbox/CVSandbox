@@ -89,6 +89,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\afx_types;..\..\..\..\afx_types+;..\..\..\..\afx_video+;..\..\..\..\afx_platform+;..\..\..\..\..\..\build\msvc\release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>false</OpenMPSupport>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

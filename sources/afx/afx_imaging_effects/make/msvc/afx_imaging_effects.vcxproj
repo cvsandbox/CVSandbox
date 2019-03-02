@@ -94,6 +94,7 @@
       <AdditionalIncludeDirectories>..\..\..\afx_types;..\..\..\afx_imaging</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
