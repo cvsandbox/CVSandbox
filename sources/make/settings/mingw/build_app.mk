@@ -3,7 +3,6 @@
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
 ifeq ($(OUT_SUB_FOLDER),)
-TEST := $(something else)
     OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\bin\"
 else
     OUT_FOLDER = "$(SELF_DIR)..\..\..\..\build\$(TARGET)\$(BUILD_TYPE)\bin\$(OUT_SUB_FOLDER)\"
