@@ -62,6 +62,20 @@ using namespace CVSandbox::Automation;
 static const QString APPLICATION_TITLE( "Computer Vision Sandbox" );
 static const QString SETTINGS_FOLDER( "CVSandbox/CVS" );
 
+// Types of plug-ins to be loaded by the application
+static const PluginType PLUGIN_TYPES_TO_LOAD =
+        PluginType_VideoSource              |
+        PluginType_ImageProcessingFilter    |
+        PluginType_ImageProcessingFilter2   |
+        PluginType_ImageProcessing          |
+        PluginType_VideoProcessing          |
+        PluginType_ScriptingEngine          |
+        PluginType_Device                   |
+        PluginType_CommunicationDevice      |
+        PluginType_ImageImporter            |
+        PluginType_ImageExporter            |
+        PluginType_ScriptingApi;
+
 namespace Private
 {
     // Group some command handlers together
@@ -183,20 +197,12 @@ MainWindow::MainWindow( QWidget* parent ) :
     ui->mainFrame->setAutoFillBackground( true );
 
     // collect plug-ins from their folder
-    QString pluginsPath = QFileInfo( QCoreApplication::applicationDirPath( ), "cvsplugins/" ).filePath( );
+    QString pluginsPath      = QFileInfo( QCoreApplication::applicationDirPath( ), "cvsplugins/" ).filePath( );
+    QString pluginsExtraPath = QFileInfo( QCoreApplication::applicationDirPath( ), "cvsplugins-extra/" ).filePath( );
 
-    pluginsEngine->CollectModules( pluginsPath.toUtf8( ).data( ),
-                                   PluginType_VideoSource |
-                                   PluginType_ImageProcessingFilter |
-                                   PluginType_ImageProcessingFilter2 |
-                                   PluginType_ImageProcessing |
-                                   PluginType_VideoProcessing |
-                                   PluginType_ScriptingEngine |
-                                   PluginType_Device |
-                                   PluginType_CommunicationDevice |
-                                   PluginType_ImageImporter |
-                                   PluginType_ImageExporter |
-                                   PluginType_ScriptingApi );
+    pluginsEngine->CollectModules( pluginsPath.toUtf8( ).data( ), PLUGIN_TYPES_TO_LOAD );
+    pluginsEngine->CollectModules( pluginsExtraPath.toUtf8( ).data( ), PLUGIN_TYPES_TO_LOAD );
+
     smi.GetFavouritePluginsManager( )->Load( pluginsEngine->GetModules( ) );
 
     // if user does not have scripting engine plug-ins, hide built in scripting editor
