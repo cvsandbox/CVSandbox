@@ -1,7 +1,7 @@
 /*
     Plug-ins' management library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -52,8 +52,6 @@ const shared_ptr<XPluginsEngine> XPluginsEngine::Create( )
 int32_t XPluginsEngine::CollectModules( const string& startPath, PluginType typesToCollect )
 {
     bool rootIsDone = false;
-
-    mModules->Clear( );
 
 #ifdef WIN32
     const wchar_t* moduleExtension = XModuleDefaultExtensionW( );
