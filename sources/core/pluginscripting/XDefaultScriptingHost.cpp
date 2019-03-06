@@ -1,7 +1,7 @@
 /*
     Plug-ins' scripting library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,15 @@ XDefaultScriptingHost::XDefaultScriptingHost( const map<string, string>& scriptA
     mData( new Private::XDefaultScriptingHostData( scriptArguments ) )
 {
     mData->PluginsEngine->CollectModules( pluginsLocation, typesToLoad | PluginType_ImageImporter | PluginType_ImageExporter );
+}
+
+XDefaultScriptingHost::XDefaultScriptingHost( const map<string, string>& scriptArguments, const vector<string>& pluginsLocations, PluginType typesToLoad ) :
+    mData( new Private::XDefaultScriptingHostData( scriptArguments ) )
+{
+    for ( auto folder : pluginsLocations )
+    {
+        mData->PluginsEngine->CollectModules( folder, typesToLoad | PluginType_ImageImporter | PluginType_ImageExporter );
+    }
 }
 
 XDefaultScriptingHost::~XDefaultScriptingHost( )

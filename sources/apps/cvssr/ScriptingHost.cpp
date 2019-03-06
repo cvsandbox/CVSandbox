@@ -29,7 +29,7 @@ extern const char*  APP_NAME;
 extern xversion     APP_VERSION;
 
 ScriptingHost::ScriptingHost( const map<string, string>& scriptArguments ) :
-    XDefaultScriptingHost( scriptArguments )
+    XDefaultScriptingHost( scriptArguments, vector<string>( { "./cvsplugins/", "./cvsplugins-extra/" } ) )
 {
 }
 
