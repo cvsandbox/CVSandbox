@@ -4,18 +4,21 @@
     Copyright Andrew Kirillov, 2019
 
     Sample script which demonstrates how to talk
-    to gamapad device conneted to the system.
+    to game pad device connected to the system.
 ]]--
 
 local math = require 'math'
 
 gamepad = Host.CreatePluginInstance( 'Gamepad' )
 
--- Connected to the first gamapad device
+-- Connected to the first game pad device
 gamepad:SetProperty( 'deviceId', 0 )
 if not gamepad:Connect( ) then
-    error( "Failed connecting to gamepad" )
+    error( "Failed connecting to game pad" )
 end
+
+-- Let it initialize, etc
+sleep( 1000 )
 
 -- Query name of the device, number of axes and buttons
 deviceName   = gamepad:GetProperty( 'deviceName' )

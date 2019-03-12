@@ -4,7 +4,7 @@
     Copyright Andrew Kirillov, 2019
 
     Sample script which demonstrates how to check
-    if system is connected to power suply, if battery
+    if system is connected to power supply, if battery
     is charging and its current charge level.
 ]]--
 
