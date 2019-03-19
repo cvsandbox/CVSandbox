@@ -38,7 +38,7 @@ public:
                            const std::string& pluginsLocation = "./cvsplugins/",
                            PluginType typesToLoad = PluginType_All );
     XDefaultScriptingHost( const std::map<std::string, std::string>& scriptArguments,
-                           const std::vector<std::string>& pluginsLocation = { "./cvsplugins/" },
+                           const std::vector<std::string>& pluginsLocation,
                            PluginType typesToLoad = PluginType_All );
     ~XDefaultScriptingHost( );
 
