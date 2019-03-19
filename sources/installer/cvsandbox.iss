@@ -39,7 +39,7 @@ Source: "Files\cvsplugins\*"; DestDir: "{app}\cvsplugins"; Components: "plugins\
 Source: "Files\Lua\cvsplugins\*"; DestDir: "{app}\cvsplugins"; Components: "plugins\lua"; Flags: recursesubdirs
 Source: "Files\scripting_samples\*.lua"; DestDir: "{app}\scripting_samples"; Components: "plugins\lua"
 Source: "Files\CVSCamera\cvsplugins\*"; DestDir: "{app}\cvsplugins"; Components: "plugins\vcam"; Flags: recursesubdirs
-Source: "Files\CVSCamera\vcam\cvs_vcam.dll"; DestDir: "{app}\vcam"; Components: "plugins\vcam"; Flags: regserver 32bit
+Source: "Files\CVSCamera\vcam\cvs_vcam.dll"; DestDir: "{app}\vcam"; Components: "plugins\vcam"
 Source: "Files\CVSCamera\vcam\cvs_vcam64.dll"; DestDir: "{app}\vcam"; Components: "plugins\vcam"
 Source: "Files\CVSCamera\vcam\regsvr.bat"; DestDir: "{app}\vcam"; Components: "plugins\vcam"
 Source: "Files\CVSCamera\vcam\Release Notes.txt"; DestDir: "{app}\vcam"; Components: "plugins\vcam"
