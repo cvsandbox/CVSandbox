@@ -1,8 +1,16 @@
 Computer Vision Sandbox 2.0.0 release notes
 -------------------------------------------
-xx.03.2019
+19.03.2019
 
 *** The first release from the open code of the project. ***
+
+Installer updates:
+
+* Removed automatic registration of CVSandbox Virtual Camera's 32-bit version DLL.
+  If user needs it, the vcam\regsvr.bat script must be run (as administrator). If
+  fails, check that "Visual C++ Redistributable for Visual Studio 2015" is
+  installed (Google helps).
+
 
 Version updates and fixes:
 
@@ -25,7 +33,7 @@ Version updates and fixes:
                           Default: ui.ini
 
 * Added two new plug-in types - Device and Communication Device. Those are aimed for
-  communicating to different external devices like I/O boards, Arduinos, gamepads,
+  communicating to different external devices like I/O boards, Arduinos, game pads,
   robotic components, etc.
 * Added sandbox variables monitor, which allows inspecting values of variables stored
   in scripting host.
@@ -76,7 +84,7 @@ New modules added into the package:
         # Power Info - Provides information about power status of the system.
 
 * Gamepad Device plug-ins 1.0.0
-    ~ Provides "Gamepad" plug-in, which allows accessing gamepads and joysticks
+    ~ Provides "Gamepad" plug-in, which allows accessing game pads and joysticks
       connected to the systems.
 
 * Communication Device plug-ins 1.0.0

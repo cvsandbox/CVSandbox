@@ -1,6 +1,6 @@
 System Information Tools plug-ins 1.0.0
 -------------------------------------------
-xx.03.2019
+19.03.2019
 
 * The first release of the plug-ins' module for Computer Vision Sandbox.
   The plug-ins included are:

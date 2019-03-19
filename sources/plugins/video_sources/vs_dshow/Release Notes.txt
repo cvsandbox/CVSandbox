@@ -1,6 +1,6 @@
 DirectShow Video Sources 1.1.2
 -------------------------------------------
-xx.03.2019
+19.03.2019
 
 Version updates and fixes:
 
