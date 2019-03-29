@@ -1,4 +1,4 @@
-/*
+    /*
     FFMPEG video writing plug-ins of Computer Vision Sandbox
 
     Copyright (C) 2011-2019, cvsandbox
@@ -29,44 +29,44 @@ static XErrorCode UpdateAddTimeStampProperty( PropertyDescriptor* desc, const xv
 static XErrorCode UpdateVideoSplitDependentProperties( PropertyDescriptor* desc, const xvariant* parentValue );
 
 // Version of the plug-in
-static xversion PluginVersion = { 1, 0, 1 };
+static xversion PluginVersion = { 1, 0, 2 };
 
 // ID of the plug-in
 static xguid PluginID = { 0xAF000003, 0x00000000, 0x0000000C, 0x00000001 };
 
 // Destination Folder property
 static PropertyDescriptor destinationFolderProperty =
-{ XVT_String, "Destination folder", "folder", "Folder to write video files to.", PropertyFlag_PreferredEditor_FolderBrowser };
+{ XVT_String, "Destination Folder", "folder", "Folder to write video files to.", PropertyFlag_PreferredEditor_FolderBrowser };
 // File Name property
 static PropertyDescriptor fileNameProperty =
-{ XVT_String, "File name", "fileName", "Base file name of the video files.", PropertyFlag_None };
+{ XVT_String, "File Name", "fileName", "Base file name of the video files.", PropertyFlag_None };
 // Codec property
 static PropertyDescriptor codecProperty =
 { XVT_U1, "Codec", "codec", "Codec to use for compression.", PropertyFlag_SelectionByIndex };
 // Bit Rate property
 static PropertyDescriptor bitRateProperty =
-{ XVT_U2, "Bit rate", "bitRate", "Bit rate to use for compression (kbps).", PropertyFlag_None };
+{ XVT_U2, "Bit Rate", "bitRate", "Bit rate to use for compression (kbps).", PropertyFlag_None };
 // Frame Rate property
 static PropertyDescriptor frameRateProperty =
-{ XVT_U1, "Frame rate", "frameRate", "Frame rate of the output video files.", PropertyFlag_None };
+{ XVT_U1, "Frame Rate", "frameRate", "Frame rate of the output video files.", PropertyFlag_None };
 // Sync Presentation Time property
 static PropertyDescriptor syncPresentationTimeProperty =
-{ XVT_Bool, "Sync presentation time", "syncPresentationTime", "Synchronize or not frames presentation time with video source.", PropertyFlag_None };
+{ XVT_Bool, "Sync Presentation Time", "syncPresentationTime", "Synchronize or not frames presentation time with video source.", PropertyFlag_None };
 // Add Time Stamp property
 static PropertyDescriptor addTimeStampProperty =
-{ XVT_Bool, "Add time stamp", "addTimeStamp", "Specifies if time stamp should be added to video files' names.", PropertyFlag_Dependent };
+{ XVT_Bool, "Add Time Stamp", "addTimeStamp", "Specifies if time stamp should be added to video files' names.", PropertyFlag_Dependent };
 // Split Video Files property
 static PropertyDescriptor splitVideoFilesProperty =
-{ XVT_Bool, "Split video files", "splitVideoFiles", "Specifies if multiple files should be created of certain length.", PropertyFlag_None };
+{ XVT_Bool, "Split Video Files", "splitVideoFiles", "Specifies if multiple files should be created of certain length.", PropertyFlag_None };
 // Fragment Lenght property
 static PropertyDescriptor fragmentLengthProperty =
-{ XVT_U1, "Fragment length", "fragmentLength", "Video fragment length (in minutes) when splitting video into multiple files.", PropertyFlag_Dependent };
+{ XVT_U1, "Fragment Length", "fragmentLength", "Video fragment length (in minutes) when splitting video into multiple files.", PropertyFlag_Dependent };
 // Remove Old Files property
 static PropertyDescriptor removeOldFilesProperty =
-{ XVT_Bool, "Remove old files", "removeOldFiles", "Specifies if old files should be removed or not.", PropertyFlag_Dependent };
+{ XVT_Bool, "Remove Old Files", "removeOldFiles", "Specifies if old files should be removed or not.", PropertyFlag_Dependent };
 // Directory Size Limit property
 static PropertyDescriptor directorySizeLimitProperty =
-{ XVT_U4, "Directory size limit", "directorySizeLimit", "Directory size limit (Mb) after which old files will get deleted to free up space for new files.", PropertyFlag_Dependent };
+{ XVT_U4, "Directory Size Limit", "directorySizeLimit", "Directory size limit (Mb) after which old files will get deleted to free up space for new files.", PropertyFlag_Dependent };
 
 // Array of available properties
 static PropertyDescriptor* pluginProperties[] =
@@ -133,7 +133,7 @@ static void PluginInitializer( )
 
     // configure Bit Rate property
     bitRateProperty.DefaultValue.type = XVT_U2;
-    bitRateProperty.DefaultValue.value.usVal = 500;
+    bitRateProperty.DefaultValue.value.usVal = 10000;
 
     bitRateProperty.MinValue.type = XVT_U2;
     bitRateProperty.MinValue.value.usVal = 50;
@@ -176,7 +176,7 @@ static void PluginInitializer( )
     fragmentLengthProperty.DefaultValue.value.ubVal = 60;
 
     fragmentLengthProperty.MinValue.type = XVT_U1;
-    fragmentLengthProperty.MinValue.value.ubVal = 5;
+    fragmentLengthProperty.MinValue.value.ubVal = 1;
 
     fragmentLengthProperty.MaxValue.type = XVT_U1;
     fragmentLengthProperty.MaxValue.value.ubVal = 120;

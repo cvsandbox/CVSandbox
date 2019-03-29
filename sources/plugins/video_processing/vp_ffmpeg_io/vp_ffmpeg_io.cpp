@@ -26,7 +26,7 @@
 ModuleDescriptor moduleInfo =
 {
     { 0xAF000001, 0x00000000, 0x00000000, 0x0000000C },
-    { 1, 0, 1 },
+    { 1, 0, 2 },
     "FFmpeg Based Video Writing",
     "vp_ffmpeg_io",
     "The module contains different video writing plug-ins based on FFmpeg library.",

@@ -78,7 +78,7 @@ namespace Private
     {
     public:
         VideoFileWriterPluginData( ) : FolderToWrite( ), BaseFileName( DEFAULT_BASE_FILE_NAME ), BaseFullFileName( DEFAULT_BASE_FILE_NAME ),
-            FrameRate( 30 ), BitRate( 500 ), SyncPresentationTime( false ), AppendTimeStampToFileName( false ), SplitVideoFiles( false ),
+            FrameRate( 30 ), BitRate( 10000 ), SyncPresentationTime( false ), AppendTimeStampToFileName( false ), SplitVideoFiles( false ),
             FragmentLength( 60 ), RemoveOldFiles( false ), DirectorySizeLimit( 10000 ),
             Codec( XFFmpegVideoFileWriter::Codec::MPEG4 ),
             VideoWriter( XFFmpegVideoFileWriter::Create( ) ), FolderCleanupThread( ),
@@ -262,7 +262,7 @@ XErrorCode VideoFileWriterPlugin::SetProperty( int32_t id, const xvariant* value
             break;
 
         case 8:
-            mData->FragmentLength = XINRANGE( xvar.ToUByte( ), 5, 120 );
+            mData->FragmentLength = XINRANGE( xvar.ToUByte( ), 1, 120 );
             break;
 
         case 9:
@@ -316,9 +316,10 @@ XErrorCode VideoFileWriterPlugin::ProcessImage( ximage* src )
             {
                 auto currentLength = duration_cast<std::chrono::seconds>( steady_clock::now( ) - mData->VideoFileStartTime ).count( );
 
-                if ( currentLength  > mData->FragmentLength * 60 )
+                if ( currentLength > mData->FragmentLength * 60 )
                 {
                     mData->VideoWriter->Close( );
+                    mData->LastPresentationTime = -1;
                 }
             }
 

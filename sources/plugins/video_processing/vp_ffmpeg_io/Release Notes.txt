@@ -1,3 +1,15 @@
+FFmpeg Based Video Writing 1.0.2
+-------------------------------------------
+29.03.2019
+
+Version updates and fixes:
+
+* Fixed presentation time when splitting video into multiple files - it resets back to zero
+  when starting new video file.
+* Set minimum allowed fragment length to 1 minute.
+
+
+
 FFmpeg Based Video Writing 1.0.1
 -------------------------------------------
 11.10.2017
