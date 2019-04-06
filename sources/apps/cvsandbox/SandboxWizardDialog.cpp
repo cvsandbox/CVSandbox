@@ -60,7 +60,7 @@ SandboxWizardDialog::SandboxWizardDialog( const shared_ptr<SandboxProjectObject>
 {
     assert( po );
 
-    this->setWindowTitle( "Sandbox Wizard" );
+    this->setWindowTitle( QString( "Sandbox Wizard : %0" ).arg( po->Name( ).c_str( ) ) );
     this->setWindowIcon( QIcon( QString::fromUtf8( ":/images/icons/wizard.png" ) ) );
 
     // set up pages
