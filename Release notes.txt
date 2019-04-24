@@ -1,3 +1,16 @@
+Computer Vision Sandbox 2.0.1 release notes
+-------------------------------------------
+29.03.2019
+
+Updates and fixes for the modules included into the package:
+
+* FFmpeg Based Video Writing 1.0.2
+    ~ Fixed presentation time when splitting video into multiple files - it resets back to zero
+      when starting new video file.
+    ~ Set minimum allowed fragment length to 1 minute.
+
+
+
 Computer Vision Sandbox 2.0.0 release notes
 -------------------------------------------
 19.03.2019
