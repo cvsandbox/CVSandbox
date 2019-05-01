@@ -38,6 +38,7 @@
 #include "Wrapper_ScriptingEngine.hpp"
 #include "Wrapper_ScriptingApi.hpp"
 #include "Wrapper_ImageProcessing.hpp"
+#include "Wrapper_Detection.hpp"
 
 // Helper class to automate plugins registraton in C++ by defining a global variable
 class PluginRegister

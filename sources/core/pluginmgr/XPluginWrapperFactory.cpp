@@ -31,6 +31,7 @@
 #include "XCommunicationDevicePlugin.hpp"
 #include "XVideoProcessingPlugin.hpp"
 #include "XImageProcessingPlugin.hpp"
+#include "XDetectionPlugin.hpp"
 
 using namespace std;
 
@@ -76,6 +77,10 @@ shared_ptr<XPlugin> XPluginWrapperFactory::CreateWrapper( void* pluginObject, Pl
 
         case PluginType_VideoProcessing:
             pluginInstance = XVideoProcessingPlugin::Create( pluginObject, ownIt );
+            break;
+
+        case PluginType_Detection:
+            pluginInstance = XDetectionPlugin::Create( pluginObject, ownIt );
             break;
 
         case PluginType_ImageProcessing:

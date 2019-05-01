@@ -86,6 +86,9 @@
     <ClCompile Include="..\..\XCommunicationDevicePlugin.cpp">
       <Filter>Source Files\Plugins Wrappers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\XDetectionPlugin.cpp">
+      <Filter>Source Files\Plugins Wrappers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XFamiliesCollection.hpp">
@@ -155,6 +158,9 @@
       <Filter>Header Files\Plugins Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\XCommunicationDevicePlugin.hpp">
+      <Filter>Header Files\Plugins Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XDetectionPlugin.hpp">
       <Filter>Header Files\Plugins Wrappers</Filter>
     </ClInclude>
   </ItemGroup>

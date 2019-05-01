@@ -220,6 +220,22 @@ public:
     virtual void Reset( ) = 0;
 };
 
+// ===== Interface for detection plug-in (detection of motion/face/object/etc) =====
+class IDetectionPlugin : public IPluginBase
+{
+public:
+    // Check if the plug-in does changes to input video frames or not
+    virtual bool IsReadOnlyMode( ) = 0;
+    // Get pixel formats supported by the detection plug-in
+    virtual XErrorCode GetSupportedPixelFormats( XPixelFormat* pixelFormats, int32_t* count ) = 0;
+    // Process the specified image
+    virtual XErrorCode ProcessImage( ximage* src ) = 0;
+    // Check if the plug-in triggered detection on the last processed image
+    virtual bool Detected( ) = 0;
+    // Reset run time state of the detection plug-in
+    virtual void Reset( ) = 0;
+};
+
 // ===== Interface for scripting engine plug-in =====
 class IScriptingEnginePlugin : public IPluginBase
 {

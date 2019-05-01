@@ -21,6 +21,7 @@
     <ClInclude Include="..\..\iproperty.h" />
     <ClInclude Include="..\..\WrapperBaseForCppPlugin.hpp" />
     <ClInclude Include="..\..\Wrapper_CommunicationDevice.hpp" />
+    <ClInclude Include="..\..\Wrapper_Detection.hpp" />
     <ClInclude Include="..\..\Wrapper_Device.hpp" />
     <ClInclude Include="..\..\Wrapper_ImageExporter.hpp" />
     <ClInclude Include="..\..\Wrapper_ImageGenerator.hpp" />
