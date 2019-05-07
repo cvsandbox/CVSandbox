@@ -31,6 +31,7 @@
 #include <XDevicePlugin.hpp>
 #include <XCommunicationDevicePlugin.hpp>
 #include <XVideoProcessingPlugin.hpp>
+#include <XDetectionPlugin.hpp>
 #include <XVariantArray.hpp>
 
 extern "C"
@@ -62,6 +63,7 @@ static const char* METATABLE_IMAGE_PROCESSING_FILTER_PLUGIN2 = "CVSandbox.Plugin
 static const char* METATABLE_DEVICE_PLUGIN                   = "CVSandbox.Plugin.Device";
 static const char* METATABLE_COMMUNICATION_DEVICE_PLUGIN     = "CVSandbox.Plugin.CommunicationDevice";
 static const char* METATABLE_VIDEO_PROCESSING_PLUGIN         = "CVSandbox.Plugin.VideoProcessing";
+static const char* METATABLE_DETECTION_PLUGIN                = "CVSandbox.Plugin.Detection";
 static const char* METATABLE_IMAGE                           = "CVSandbox.Image";
 
 static int Plugin_ID( lua_State* luaState );
@@ -2073,7 +2075,7 @@ static int PluginVideoProcessing_ProcessImage( lua_State* luaState )
     return 0;
 }
 
-// // Reset run time state of the video processing plug-in
+// Reset run time state of the video processing plug-in
 static int PluginVideoProcessing_Reset( lua_State* luaState )
 {
     CheckArgumentsCount( luaState, 1 );
@@ -2091,6 +2093,95 @@ static const struct luaL_Reg VideoProcessingPluginFunctions[] =
     { "IsPixelFormatSupported", PluginVideoProcessing_IsPixelFormatSupported },
     { "ProcessImage",           PluginVideoProcessing_ProcessImage           },
     { "Reset",                  PluginVideoProcessing_Reset                  },
+    { nullptr, nullptr }
+};
+
+// ===== Detection plug-in's functions =====
+
+// Check if the plug-in does changes to input video frames or not
+static int PluginDetection_IsReadOnlyMode( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_DETECTION_PLUGIN );
+    bool         isReadOnly  = static_pointer_cast<XDetectionPlugin>( pluginShell->Plugin )->IsReadOnlyMode( );
+
+    lua_pushboolean( luaState, ( isReadOnly ) ? 1 : 0 );
+
+    return 1;
+}
+
+// Check if the plug-in supports the specified pixel format
+static int PluginDetection_IsPixelFormatSupported( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 2 );
+
+    PluginShell* pluginShell    = GetPluginShellFromLuaStack( luaState, 1, METATABLE_DETECTION_PLUGIN );
+    const char*  strPixelFormat = luaL_checkstring( luaState, 2 );
+    XPixelFormat pixelFormat    = XImageGetPixelFormatFromShortName( strPixelFormat );
+
+    if ( pixelFormat == XPixelFormatUnknown )
+    {
+        ReportError( luaState, STR_ERROR_UNKNOWN_PIXEL_FORMAT );
+    }
+    else
+    {
+        lua_pushboolean( luaState, ( static_pointer_cast<XDetectionPlugin>( pluginShell->Plugin )->
+            IsPixelFormatSupported( pixelFormat ) ) ? 1 : 0 );
+    }
+
+    return 1;
+}
+
+// Process the specified image
+static int PluginDetection_ProcessImage( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 2 );
+
+    PluginShell*       pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_DETECTION_PLUGIN );
+    shared_ptr<XImage> image       = GetImageFromLuaStack( luaState, 2 );
+    XErrorCode         errorCode   = static_pointer_cast<XDetectionPlugin>( pluginShell->Plugin )->ProcessImage( image );
+
+    if ( errorCode != SuccessCode )
+    {
+        ReportXError( luaState, errorCode );
+    }
+
+    return 0;
+}
+
+// Check if the plug-in triggered detection on the last processed image
+static int PluginDetection_Detected( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_DETECTION_PLUGIN );
+    bool         detected    = static_pointer_cast<XDetectionPlugin>( pluginShell->Plugin )->Detected( );
+
+    lua_pushboolean( luaState, ( detected ) ? 1 : 0 );
+
+    return 1;
+}
+
+// Reset run time state of the plug-in
+static int PluginDetection_Reset( lua_State* luaState )
+{
+    CheckArgumentsCount( luaState, 1 );
+
+    PluginShell* pluginShell = GetPluginShellFromLuaStack( luaState, 1, METATABLE_DETECTION_PLUGIN );
+
+    static_pointer_cast<XDetectionPlugin>( pluginShell->Plugin )->Reset( );
+
+    return 0;
+}
+
+static const struct luaL_Reg DetectionPluginFunctions[] =
+{
+    { "IsReadOnlyMode",         PluginDetection_IsReadOnlyMode         },
+    { "IsPixelFormatSupported", PluginDetection_IsPixelFormatSupported },
+    { "ProcessImage",           PluginDetection_ProcessImage           },
+    { "Detected",               PluginDetection_Detected               },
+    { "Reset",                  PluginDetection_Reset                  },
     { nullptr, nullptr }
 };
 
@@ -2441,6 +2532,9 @@ void CreateLuaUserDataForPlugin( lua_State* luaState,
     case PluginType_VideoProcessing:
         metatableName = METATABLE_VIDEO_PROCESSING_PLUGIN;
         break;
+    case PluginType_Detection:
+        metatableName = METATABLE_DEVICE_PLUGIN;
+        break;
     }
 
     PluginShell** pluginShell = (PluginShell**) lua_newuserdata( luaState, sizeof( PluginShell* ) );
@@ -2511,6 +2605,9 @@ void RegisterLuaUserDataTypes( lua_State* luaState )
 
     // register methods of video processing plug-in
     RegisterInheritedUserType( luaState, METATABLE_VIDEO_PROCESSING_PLUGIN, PluginFunctions, VideoProcessingPluginFunctions );
+
+    // register methods of detection plug-in
+    RegisterInheritedUserType( luaState, METATABLE_DETECTION_PLUGIN, PluginFunctions, DetectionPluginFunctions );
 
     // register image related methods
     RegisterUserType( luaState, METATABLE_IMAGE, ImageFunctions );
