@@ -74,7 +74,8 @@ static const PluginType PLUGIN_TYPES_TO_LOAD =
         PluginType_CommunicationDevice      |
         PluginType_ImageImporter            |
         PluginType_ImageExporter            |
-        PluginType_ScriptingApi;
+        PluginType_ScriptingApi             |
+        PluginType_Detection;
 
 namespace Private
 {
