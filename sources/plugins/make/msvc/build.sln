@@ -47,6 +47,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dev_raspberry", "..\..\devi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dev_com", "..\..\devices\dev_com\make\msvc\dev_com.vcxproj", "{5F2AB356-2038-4F7F-8EA6-D4CF3192B6F2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cv_motion", "..\..\computer_vision\cv_motion\make\msvc\cv_motion.vcxproj", "{6E9FE2A1-5AB9-4473-8DAF-BADBFF775819}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -142,6 +144,10 @@ Global
 		{5F2AB356-2038-4F7F-8EA6-D4CF3192B6F2}.Debug|Win32.Build.0 = Debug|Win32
 		{5F2AB356-2038-4F7F-8EA6-D4CF3192B6F2}.Release|Win32.ActiveCfg = Release|Win32
 		{5F2AB356-2038-4F7F-8EA6-D4CF3192B6F2}.Release|Win32.Build.0 = Release|Win32
+		{6E9FE2A1-5AB9-4473-8DAF-BADBFF775819}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E9FE2A1-5AB9-4473-8DAF-BADBFF775819}.Debug|Win32.Build.0 = Debug|Win32
+		{6E9FE2A1-5AB9-4473-8DAF-BADBFF775819}.Release|Win32.ActiveCfg = Release|Win32
+		{6E9FE2A1-5AB9-4473-8DAF-BADBFF775819}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
