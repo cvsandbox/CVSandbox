@@ -27,11 +27,11 @@
 #include "WrapperBaseForCppPlugin.hpp"
 
 // An internal class to register C++ Video Processing plug-in and wrap it into C structure
-class PluginRegister_PluginType_VideoProcessing : public PluginRegisterAndWrapper
+class PluginRegister_PluginType_Detection : public PluginRegisterAndWrapper
 {
 private:
     // Extended structure containing pointer to C++ object
-    typedef struct _CppVideoProcessingWrapper
+    typedef struct _CppDetectionWrapper
     {
         SDetectionPlugin  Api;
         IDetectionPlugin* PluginObject;
@@ -112,15 +112,15 @@ private:
     }
 
 public:
-    PluginRegister_PluginType_VideoProcessing( xguid id, xguid family,
+    PluginRegister_PluginType_Detection( xguid id, xguid family,
         PluginType type, xversion version,
         const char* name, const char* shortName, const char* description, const char* help,
         CreatePluginFunc creator,
-        const ximage* smallIcon = 0, const ximage* icon = 0,
-        int32_t propsCount = 0, PropertyDescriptor** props = 0,
-        PluginInitializationHandler init = 0, PluginCleanupHandler cleanup = 0,
-        PropertyDescriptorUpdater updater = 0,
-        int32_t functionsCount = 0, FunctionDescriptor** funcs = 0 )
+        const ximage* smallIcon = nullptr, const ximage* icon = nullptr,
+        int32_t propsCount = 0, PropertyDescriptor** props = nullptr,
+        PluginInitializationHandler init = nullptr, PluginCleanupHandler cleanup = nullptr,
+        PropertyDescriptorUpdater updater = nullptr,
+        int32_t functionsCount = 0, FunctionDescriptor** funcs = nullptr )
         :
         PluginRegisterAndWrapper( id, family, type, version, name, shortName,
                                   description, help, creator,
