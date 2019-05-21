@@ -74,7 +74,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_mjpeg+.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;libcurld.lib;jpeg.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_mjpeg+.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;libcurl.lib;jpeg.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"</Command>

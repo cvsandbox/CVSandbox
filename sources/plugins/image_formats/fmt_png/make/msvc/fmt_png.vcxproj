@@ -79,7 +79,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;libpng16.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"</Command>
@@ -102,7 +102,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\release\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;libpng16.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"</Command>

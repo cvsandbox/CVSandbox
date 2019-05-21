@@ -70,7 +70,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\..\..\..\build\msvc\debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging_formats.lib;afx_platform+.lib;afx_video_ffmpeg+.lib;avcodec.lib;avformat.lib;avutil.lib;swscale.lib;libpng16.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging_formats.lib;afx_platform+.lib;afx_video_ffmpeg+.lib;avcodec.lib;avformat.lib;avutil.lib;swscale.lib;libpng.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\build\msvc\debug\bin\"</Command>
@@ -93,7 +93,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\..\..\..\build\msvc\release\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging_formats.lib;afx_platform+.lib;afx_video_ffmpeg+.lib;avcodec.lib;avformat.lib;avutil.lib;swscale.lib;libpng16.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_imaging_formats.lib;afx_platform+.lib;afx_video_ffmpeg+.lib;avcodec.lib;avformat.lib;avutil.lib;swscale.lib;libpng.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\build\msvc\release\bin\"</Command>
