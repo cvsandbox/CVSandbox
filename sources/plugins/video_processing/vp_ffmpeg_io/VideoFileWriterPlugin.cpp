@@ -1,5 +1,5 @@
 /*
-    FFMPEG video writing plug-ins of Computer Vision Sandbox
+    Motion detection plug-ins for Computer Vision Sandbox
 
     Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html

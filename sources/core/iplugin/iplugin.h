@@ -50,6 +50,7 @@ static const PluginType PluginType_ScriptingEngine          = 0x0100;
 static const PluginType PluginType_ScriptingApi             = 0x0200;
 static const PluginType PluginType_ImageProcessing          = 0x0400;
 static const PluginType PluginType_CommunicationDevice      = 0x0800;
+static const PluginType PluginType_Detection                = 0x1000;
 static const PluginType PluginType_All                      = 0xFFFFFFFF;
 
 

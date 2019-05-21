@@ -610,6 +610,10 @@ const QString GetPluginType( const shared_ptr<const XPluginDescriptor>& pluginDe
         typeName = "Scripting APIs";
         break;
 
+    case PluginType_Detection:
+        typeName = "Detection";
+        break;
+
     default:
         typeName = "Unknown";
         break;

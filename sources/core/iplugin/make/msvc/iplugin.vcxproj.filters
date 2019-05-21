@@ -83,6 +83,9 @@
     <ClInclude Include="..\..\Wrapper_CommunicationDevice.hpp">
       <Filter>Header Files\C++ Types\Internal Wrappers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Wrapper_Detection.hpp">
+      <Filter>Header Files\C++ Types\Internal Wrappers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tools.c">

@@ -1,4 +1,4 @@
-    /*
+/*
     FFMPEG video writing plug-ins of Computer Vision Sandbox
 
     Copyright (C) 2011-2019, cvsandbox

@@ -5,7 +5,7 @@ VPATH = ../../
 
 # source files
 SRC = XCommunicationDevicePlugin.cpp \
-	XDevicePlugin.cpp \
+	XDetectionPlugin.cpp XDevicePlugin.cpp \
 	XFamiliesCollection.cpp XFamily.cpp XFunctionDescriptor.cpp \
 	XImageExportingPlugin.cpp XImageGenerationPlugin.cpp \
 	XImageImportingPlugin.cpp \

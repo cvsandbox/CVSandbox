@@ -7,6 +7,7 @@ BUILDS = image_processing\ip_stdimaging \
     image_formats\fmt_png \
     computer_vision\cv_bar_codes \
     computer_vision\cv_glyphs \
+    computer_vision\cv_motion \
     video_sources\vs_mjpeg \
     video_sources\vs_dshow \
     video_sources\vs_effects \

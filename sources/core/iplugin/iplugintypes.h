@@ -328,6 +328,32 @@ typedef struct SVideoProcessingPlugin_
 SVideoProcessingPlugin;
 
 
+// ===== Interface for detection plug-in (detection of motion/face/object/etc) =====
+struct SDetectionPlugin_;
+
+// Check if the plug-in does changes to input video frames or not
+typedef bool( *DTPlugin_IsReadOnlyMode )( struct SDetectionPlugin_* me );
+// Get pixel formats supported by the detection plug-in
+typedef XErrorCode( *DTPlugin_GetSupportedPixelFormats )( struct SDetectionPlugin_* me, XPixelFormat* pixelFormats, int32_t* count );
+// Process the specified image
+typedef XErrorCode( *DTPlugin_ProcessImage )( struct SDetectionPlugin_* me, ximage* src );
+// Check if the plug-in triggered detection on the last processed image
+typedef bool( *DTPlugin_Detected )( struct SDetectionPlugin_* me );
+// Reset run time state of the detection plug-in
+typedef void( *DTPlugin_Reset )( struct SDetectionPlugin_* me );
+
+typedef struct SDetectionPlugin_
+{
+    SPluginBase Base;
+    DTPlugin_IsReadOnlyMode             IsReadOnlyMode;
+    DTPlugin_GetSupportedPixelFormats   GetSupportedPixelFormats;
+    DTPlugin_ProcessImage               ProcessImage;
+    DTPlugin_Detected                   Detected;
+    DTPlugin_Reset                      Reset;
+}
+SDetectionPlugin;
+
+
 // ===== Interface for scripting engine plug-in =====
 struct SScriptingEnginePlugin_;
 

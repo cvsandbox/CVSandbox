@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\XCommunicationDevicePlugin.cpp" />
+    <ClCompile Include="..\..\XDetectionPlugin.cpp" />
     <ClCompile Include="..\..\XDevicePlugin.cpp" />
     <ClCompile Include="..\..\XFamiliesCollection.cpp" />
     <ClCompile Include="..\..\XFamily.cpp" />
@@ -36,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XCommunicationDevicePlugin.hpp" />
+    <ClInclude Include="..\..\XDetectionPlugin.hpp" />
     <ClInclude Include="..\..\XDevicePlugin.hpp" />
     <ClInclude Include="..\..\XFamiliesCollection.hpp" />
     <ClInclude Include="..\..\XFamily.hpp" />
