@@ -1030,6 +1030,9 @@ static int Plugin_Type( lua_State* luaState )
     case PluginType_VideoSource:
         strPluginType = "VideoSource";
         break;
+    case PluginType_Detection:
+        strPluginType = "Detection";
+        break;
     default:
         strPluginType = "Unknown";
         break;
@@ -2533,7 +2536,7 @@ void CreateLuaUserDataForPlugin( lua_State* luaState,
         metatableName = METATABLE_VIDEO_PROCESSING_PLUGIN;
         break;
     case PluginType_Detection:
-        metatableName = METATABLE_DEVICE_PLUGIN;
+        metatableName = METATABLE_DETECTION_PLUGIN;
         break;
     }
 
