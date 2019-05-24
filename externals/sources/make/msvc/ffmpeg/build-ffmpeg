@@ -1,35 +1,48 @@
 OUT_FOLDER=../../../../../build/msvc
 SRC_FOLDER=../../../ffmpeg
+BUILD_FOLDER=build
+ARCH=x86_32
+TARGET_OS=win32
+
+if [ "$2" == "64" ] ; then
+    BUILD_FOLDER=${BUILD_FOLDER}64
+    ARCH=x86_64
+    TARGET_OS=win64
+fi
 
 if [ "$1" != "clean" ] ; then
 
     if [ "$1" != "debug" ] ; then
         CONFIG_OPTIONS=--disable-debug
-        BUILD_FOLDER=${OUT_FOLDER}/release
+        OUT_FOLDER=${OUT_FOLDER}/release
     else
-        BUILD_FOLDER=${OUT_FOLDER}/debug
+        OUT_FOLDER=${OUT_FOLDER}/debug
+    fi
+    
+    if [ "$2" == "64" ] ; then
+        OUT_FOLDER=${OUT_FOLDER}64
     fi
     
     cd ../../../ffmpeg
 
     ./configure --toolchain=msvc --enable-shared --disable-static \
-                --arch=i386 --disable-programs --disable-doc \
+                --arch=${ARCH} --target-os=${TARGET_OS} --disable-programs --disable-doc \
                 --disable-avdevice --disable-bzlib --disable-iconv \
                 --disable-zlib --disable-pthreads --disable-postproc \
-                --prefix=./build ${CONFIG_OPTIONS}
+                --prefix=./${BUILD_FOLDER} ${CONFIG_OPTIONS}
     
     make
     make install
 
     cd -
     
-    mkdir -p ${BUILD_FOLDER}/include
-    mkdir -p ${BUILD_FOLDER}/bin
-    mkdir -p ${BUILD_FOLDER}/lib
+    mkdir -p ${OUT_FOLDER}/include
+    mkdir -p ${OUT_FOLDER}/bin
+    mkdir -p ${OUT_FOLDER}/lib
 
-    cp -f ${SRC_FOLDER}/build/bin/*.dll ${BUILD_FOLDER}/bin
-    cp -f ${SRC_FOLDER}/build/bin/*.lib ${BUILD_FOLDER}/lib
-    cp -rf ${SRC_FOLDER}/build/include/* ${BUILD_FOLDER}/include
+    cp -f ${SRC_FOLDER}/${BUILD_FOLDER}/bin/*.dll ${OUT_FOLDER}/bin
+    cp -f ${SRC_FOLDER}/${BUILD_FOLDER}/bin/*.lib ${OUT_FOLDER}/lib
+    cp -rf ${SRC_FOLDER}/${BUILD_FOLDER}/include/* ${OUT_FOLDER}/include
     
 else
     cd ${SRC_FOLDER}
@@ -37,7 +50,7 @@ else
     make uninstall
     make clean
     make distclean
-    rm -rf build
+    rm -rf ${BUILD_FOLDER}
     rm ffbuild/config.log
     rm libavcodec/*.ilk
     rm libavcodec/*.pdb

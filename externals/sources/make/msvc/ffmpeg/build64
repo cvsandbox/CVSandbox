@@ -1,0 +1,5 @@
+./build-ffmpeg clean 64
+./build-ffmpeg release 64
+./build-ffmpeg clean 64
+./build-ffmpeg debug 64
+./build-ffmpeg clean 64
