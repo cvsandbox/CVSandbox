@@ -49,4 +49,6 @@ if "%1"=="clean" (
 
     xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\debug\include\"
     xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\release\include\"
+    xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\debug64\include\"
+    xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\release64\include\"
 )
