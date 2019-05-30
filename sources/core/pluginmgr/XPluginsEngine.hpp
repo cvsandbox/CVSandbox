@@ -42,7 +42,7 @@ public:
     static const std::shared_ptr<XPluginsEngine> Create( );
 
     // Collect modules containing plug-ins of the specified types
-    int32_t CollectModules( const std::string& path, PluginType typesToCollect = PluginType_All );
+    size_t CollectModules( const std::string& path, PluginType typesToCollect = PluginType_All );
 
     // Get collection of loaded module
     const std::shared_ptr<const XModulesCollection> GetModules( ) const

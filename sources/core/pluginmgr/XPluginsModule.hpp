@@ -79,10 +79,10 @@ public:
     const std::shared_ptr<const XPluginsCollection> GetPluginsOfType( PluginType typesMask ) const;
 
     // Number of plug-ins loaded for the module (the module may have more than that)
-    int32_t Count( ) const;
+    size_t Count( ) const;
 
     // Number of plug-in descriptors of the specified type
-    int32_t CountType( PluginType typeMask ) const;
+    size_t CountType( PluginType typeMask ) const;
 
 private:
     static const ModuleDescriptor       BlankModuleDescriptor;

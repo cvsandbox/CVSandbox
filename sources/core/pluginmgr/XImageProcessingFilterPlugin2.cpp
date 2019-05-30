@@ -84,7 +84,7 @@ XPixelFormat XImageProcessingFilterPlugin2::GetOutputPixelFormat( XPixelFormat i
 {
     XPixelFormat ret = XPixelFormatUnknown;
 
-    for ( int i = 0, n = mSupportedInputFormats.size( ); i < n; i++ )
+    for ( size_t i = 0, n = mSupportedInputFormats.size( ); i < n; i++ )
     {
         if ( mSupportedInputFormats[i] == inputPixelFormat )
         {

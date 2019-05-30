@@ -193,13 +193,13 @@ const shared_ptr<const XPluginsCollection> XPluginsModule::GetPluginsOfType( Plu
 }
 
 // Number of plug-in loaded for the module (the module may have more than that)
-int32_t XPluginsModule::Count( ) const
+size_t XPluginsModule::Count( ) const
 {
     return mPlugins->Count( );
 }
 
 // Number of plug-in descriptors of the specified type
-int32_t XPluginsModule::CountType( PluginType typeMask ) const
+size_t XPluginsModule::CountType( PluginType typeMask ) const
 {
     return mPlugins->CountType( typeMask );
 }

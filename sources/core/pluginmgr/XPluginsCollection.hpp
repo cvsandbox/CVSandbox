@@ -45,7 +45,7 @@ public:
     // Create empty collection
     static const std::shared_ptr<XPluginsCollection> Create( );
     // Collect plug-ins given a pointer to a function which provides plug-in descriptors
-    int32_t CollectPlugins( GetDescriptorFunc pluginsNest, int32_t count, PluginType typesToCollec = PluginType_All );
+    size_t CollectPlugins( GetDescriptorFunc pluginsNest, int32_t count, PluginType typesToCollec = PluginType_All );
     // Create copy of the collection
     const std::shared_ptr<XPluginsCollection> Copy( ) const;
 
@@ -58,9 +58,9 @@ public:
     // Remove plug-in descriptor from the collection
     void Remove( const CVSandbox::XGuid& id );
     // Total count of descriptors in this collection
-    int32_t Count( ) const { return mPlugins.size( ); }
+    size_t Count( ) const { return mPlugins.size( ); }
     // Number of plug-in descriptors of the specified type
-    int32_t CountType( PluginType typeMask ) const;
+    size_t CountType( PluginType typeMask ) const;
 
     // Get plug-in descriptor by its short name
     const std::shared_ptr<const XPluginDescriptor> GetPlugin( const std::string& shortName ) const;

@@ -791,15 +791,15 @@ void XAutomationServer::GetVideoSourceCount( uint32_t* notStarted, uint32_t* run
 
     if ( notStarted != NULL )
     {
-        *notStarted = mData->AddedVideoSources.size( );
+        *notStarted = static_cast<uint32_t>( mData->AddedVideoSources.size( ) );
     }
     if ( running != NULL )
     {
-        *running = mData->RunningVideoSources.size( );
+        *running = static_cast<uint32_t>( mData->RunningVideoSources.size( ) );
     }
     if ( finalizing != NULL )
     {
-        *finalizing = mData->FinalizingVideoSources.size( );
+        *finalizing = static_cast<uint32_t>( mData->FinalizingVideoSources.size( ) );
     }
 }
 

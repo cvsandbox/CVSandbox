@@ -51,7 +51,7 @@ public:
     // Add new module to the collection
     void Add( const std::shared_ptr<const XPluginsModule>& module );
     // Get modules count in the collection
-    int32_t Count( ) const { return mModules.size( ); }
+    size_t Count( ) const { return mModules.size( ); }
 
     // Get plug-in descriptor by its short name
     const std::shared_ptr<const XPluginDescriptor> GetPlugin( const std::string& shortName ) const;

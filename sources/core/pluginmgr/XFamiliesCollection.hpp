@@ -52,7 +52,7 @@ public:
     // Add new family to the collection
     void Add( const std::shared_ptr<const XFamily>& family );
     // Get families count in the collection
-    int32_t Count( ) const { return mFamilies.size( ); }
+    size_t Count( ) const { return mFamilies.size( ); }
 
     // Get family by its ID
     const std::shared_ptr<const XFamily> GetFamily( const CVSandbox::XGuid& id ) const;

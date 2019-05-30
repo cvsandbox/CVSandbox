@@ -1963,7 +1963,7 @@ static int PluginCommunicationDevice_WriteString( lua_State* luaState )
     uint32_t     bytesWritten = 0;
 
     XErrorCode   errorCode = static_pointer_cast<XCommunicationDevicePlugin>( pluginShell->Plugin )->Write(
-                                        (const uint8_t*) strToSend, strlen( strToSend ), &bytesWritten );
+                                        (const uint8_t*) strToSend, static_cast<uint32_t>( strlen( strToSend ) ), &bytesWritten );
 
     lua_pushinteger( luaState, bytesWritten );
     lua_pushboolean( luaState, ( errorCode == SuccessCode ) );

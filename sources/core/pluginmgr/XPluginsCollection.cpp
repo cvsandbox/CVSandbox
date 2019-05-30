@@ -45,7 +45,7 @@ void XPluginsCollection::Clear( )
 }
 
 // Collect plug-ins given a pointer to a function which provides plug-in descriptors
-int32_t XPluginsCollection::CollectPlugins( GetDescriptorFunc pluginsNest, int32_t count, PluginType typesToCollec )
+size_t XPluginsCollection::CollectPlugins( GetDescriptorFunc pluginsNest, int32_t count, PluginType typesToCollec )
 {
     Clear( );
 
@@ -119,9 +119,9 @@ void XPluginsCollection::Remove( const XGuid& id )
 }
 
 // Number of plug-in descriptors of the specified type
-int32_t XPluginsCollection::CountType( PluginType typeMask ) const
+size_t XPluginsCollection::CountType( PluginType typeMask ) const
 {
-    int32_t count = 0;
+    size_t count = 0;
 
     for ( map<XGuid, shared_ptr<const XPluginDescriptor> >::const_iterator i = mPlugins.begin( ); i != mPlugins.end( ); i++ )
     {

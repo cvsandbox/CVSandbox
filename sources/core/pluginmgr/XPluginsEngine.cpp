@@ -49,13 +49,13 @@ const shared_ptr<XPluginsEngine> XPluginsEngine::Create( )
 }
 
 // Collect modules containing plug-ins of the specified types
-int32_t XPluginsEngine::CollectModules( const string& startPath, PluginType typesToCollect )
+size_t XPluginsEngine::CollectModules( const string& startPath, PluginType typesToCollect )
 {
     bool rootIsDone = false;
 
 #ifdef WIN32
     const wchar_t* moduleExtension = XModuleDefaultExtensionW( );
-    int            extLen          = wcslen( moduleExtension );
+    size_t         extLen          = wcslen( moduleExtension );
     int            charsRequired   = MultiByteToWideChar( CP_UTF8, 0, startPath.c_str( ), -1, NULL, 0 );
 
     if ( charsRequired > 0 )
@@ -91,7 +91,7 @@ int32_t XPluginsEngine::CollectModules( const string& startPath, PluginType type
                             }
                             else
                             {
-                                int fileNameLen = wcslen( ffData.cFileName );
+                                size_t fileNameLen = wcslen( ffData.cFileName );
 
                                 if ( ( fileNameLen > extLen ) &&
                                      ( wcscmp( &ffData.cFileName[fileNameLen - extLen], moduleExtension ) == 0 ) )
@@ -127,7 +127,7 @@ int32_t XPluginsEngine::CollectModules( const string& startPath, PluginType type
     }
 #else
     const char*     moduleExtension = XModuleDefaultExtension( );
-    int             extLen = strlen( moduleExtension );
+    size_t          extLen = strlen( moduleExtension );
     queue<string>   folders;
 
     folders.push( startPath );
@@ -144,7 +144,7 @@ int32_t XPluginsEngine::CollectModules( const string& startPath, PluginType type
         {
             while ( ( dirEntry = readdir( dirHandle ) ) != 0 )
             {
-                int fileNameLen = strlen( dirEntry->d_name );
+                size_t fileNameLen = strlen( dirEntry->d_name );
 
                 if ( ( fileNameLen > extLen ) &&
                      ( strcmp( &dirEntry->d_name[fileNameLen - extLen], moduleExtension ) == 0 ) )
