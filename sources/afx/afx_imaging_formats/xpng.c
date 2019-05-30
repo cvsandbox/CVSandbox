@@ -127,7 +127,8 @@ XErrorCode XDecodePng( const char* fileName, ximage** image )
     XErrorCode   ret  = SuccessCode;
 
     png_uint_32  width, height;
-    int          bitDepth, channelsCount, colorType, interlaceType, rowSize, bpp;
+    size_t       rowSize;
+    int          bitDepth, channelsCount, colorType, interlaceType, bpp;
 
     XPixelFormat outputPixelFormat = XPixelFormatUnknown;
     xpalette*    palette = 0;
@@ -324,7 +325,7 @@ XErrorCode XDecodePng( const char* fileName, ximage** image )
                             {
                                 png_read_rows( ptrPng, &rowPtr, NULL, 1 );
 
-                                if ( XImageSetLine( *image, y, rowPtr, rowSize ) != SuccessCode )
+                                if ( XImageSetLine( *image, y, rowPtr, (uint32_t) rowSize ) != SuccessCode )
                                 {
                                     ret = ErrorFailedImageDecoding;
                                     break;

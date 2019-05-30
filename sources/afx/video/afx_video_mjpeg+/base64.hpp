@@ -27,10 +27,10 @@ namespace CVSandbox { namespace Video { namespace MJpeg { namespace Private
 {
 
 // Get length of encoded source for the given length of a plain source
-int Base64EncodeLength( int sourceLength );
+size_t Base64EncodeLength( size_t sourceLength );
 
 // Encodes the specifed source using Base64 encoding
-int Base64Encode( char* encoded, const char* source, int sourceLength );
+size_t Base64Encode( char* encoded, const char* source, size_t sourceLength );
 
 } } } } // namespace CVSandbox::Video::MJpeg::Private
 

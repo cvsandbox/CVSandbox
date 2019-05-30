@@ -353,7 +353,7 @@ void XMjpegHttpStream::RunVideo( )
                     // because found a camera, which keeps rejecting libcurl's authorization
 
                     string  loginWithPassword = mData->UserName + ":" + mData->Password;
-                    int     authLen           = Private::Base64EncodeLength( loginWithPassword.size( ) + 21 );
+                    size_t  authLen           = Private::Base64EncodeLength( loginWithPassword.size( ) + 21 );
                     char*   authorization     = new char[authLen];
 
                     strcpy( authorization, "Authorization: Basic " );
@@ -659,7 +659,7 @@ namespace Private
             else
             {
                 memcpy( &( data->CommunicationBuffer[data->ReadSoFar] ), contents, realSize );
-                data->ReadSoFar += realSize;
+                data->ReadSoFar += static_cast<uint32_t>( realSize );
 
                 // some IP cameras claim that boundary is "myboundary",
                 // when it is really "--myboundary". this needs to be corrected.

@@ -307,10 +307,10 @@ XErrorCode XDrawingText( ximage* image, xstring text, int32_t x, int32_t y, xarg
     }
     else
     {
-        int len = strlen( text );
+        int len = (int) strlen( text );
         int b;
 
-        // do nothig if ...
+        // do nothing if ...
         if ( ( len != 0 ) &&                                                     // if nothing to print
              ( y + 8 + borderSize * 2 > 0 ) && ( y < image->height ) &&          // if text is out in Y direction
              ( x + 8 * len + borderSize * 2 > 0 ) && ( x < image->width ) &&     // if text is out in X direction

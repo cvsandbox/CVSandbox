@@ -857,7 +857,7 @@ XErrorCode XVariantToArgb( const xvariant* src, xargb* dst )
 
             case XVT_String:
                 {
-                    int len = strlen( src->value.strVal );
+                    size_t len = strlen( src->value.strVal );
 
                     if ( len == 8 )
                     {

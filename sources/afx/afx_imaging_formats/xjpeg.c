@@ -38,11 +38,18 @@ static XErrorCode CorrectJpegOrientation( const char* fileName, ximage** image )
 static XErrorCode PerformJpegDecoding( struct jpeg_decompress_struct* cinfo, ximage** image );
 
 // Structure which is used for custom error handling from libjpeg
+#ifdef _MSC_VER
+    #pragma warning( push )
+    #pragma warning( disable : 4324)
+#endif
 struct CustomeErrorManager
 {
     struct  jpeg_error_mgr pub;
     jmp_buf setjmpBuffer;
 };
+#ifdef _MSC_VER
+    #pragma warning( pop ) 
+#endif
 
 static void my_error_exit( j_common_ptr cinfo )
 {

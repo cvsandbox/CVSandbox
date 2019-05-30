@@ -340,7 +340,7 @@ size_t XHttpCommandsThreadData::CurlWriteMemoryCallback( void* contents, size_t 
     if ( realSize <= MaxBufferSize - data->ReadSoFar )
     {
         memcpy( &( data->CommunicationBuffer[data->ReadSoFar] ), contents, realSize );
-        data->ReadSoFar += realSize;
+        data->ReadSoFar += static_cast<uint32_t>( realSize );
     }
     else
     {
@@ -406,7 +406,7 @@ void XHttpCommandsThreadData::ControlLoop( )
                     // because found a camera, which keeps rejecting libcurl's authorization
 
                     string  loginWithPassword = UserName + ":" + Password;
-                    int     authLen           = Base64EncodeLength( loginWithPassword.size( ) + 21 );
+                    size_t  authLen           = Base64EncodeLength( loginWithPassword.size( ) + 21 );
                     char*   authorization     = new char[authLen];
 
                     strcpy( authorization, "Authorization: Basic " );
