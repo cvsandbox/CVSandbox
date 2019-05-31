@@ -12,16 +12,26 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "afx_video_ffmpeg+", "..\..\
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Debug|x64.ActiveCfg = Debug|x64
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Debug|x64.Build.0 = Debug|x64
 		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Debug|x86.ActiveCfg = Debug|Win32
 		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Debug|x86.Build.0 = Debug|Win32
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Release|x64.ActiveCfg = Release|x64
+		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Release|x64.Build.0 = Release|x64
 		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Release|x86.ActiveCfg = Release|Win32
 		{8D62D792-6B53-43D5-BAFB-8A3B5B18B3AE}.Release|x86.Build.0 = Release|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|x64.ActiveCfg = Debug|x64
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|x64.Build.0 = Debug|x64
 		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|x86.ActiveCfg = Debug|Win32
 		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Debug|x86.Build.0 = Debug|Win32
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|x64.ActiveCfg = Release|x64
+		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|x64.Build.0 = Release|x64
 		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|x86.ActiveCfg = Release|Win32
 		{A53BEE8B-4E71-4A19-8AAD-7A8F7D6A5A04}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection

@@ -227,7 +227,7 @@ int main( int , char* [] )
 
                 for ( size_t t = 0; t < graphTiming.size( ); t++ )
                 {
-                    printf( "Step %d : %.2f \n", t, graphTiming[t] );
+                    printf( "Step %zd : %.2f \n", t, graphTiming[t] );
                 }
 
                 if ( !server->FinalizeVideoSource( videoId1 ) )

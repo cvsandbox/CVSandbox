@@ -8,7 +8,7 @@ print('Host name: ' .. Host.Name())
 print('Host version: ' .. Host.Version())
 print();
 
-jpegImporter = Host.CreatePluginInstance('fmt_jpeg.JpegImporter')
+jpegImporter = Host.CreatePluginInstance('JpegImporter')
 pngImporter  = Host.CreatePluginInstance('PngImporter')
 invertPlugin  = Host.CreatePluginInstance('Invert')
 

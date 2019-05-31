@@ -140,7 +140,7 @@ int main( int argc, char* argv[] )
 void TestImageProcessingFilterPlugins( const shared_ptr<const XPluginsCollection>& plugins,
                                        const ImageMap& testImages )
 {
-    printf( "Plug-ins count: %d \n", plugins->Count( ) );
+    printf( "Plug-ins count: %zd \n", plugins->Count( ) );
 
     for_each( plugins->begin( ), plugins->end( ), [&testImages] ( const shared_ptr<const XPluginDescriptor>& pluginDesc )
     {
@@ -253,7 +253,7 @@ void TestImageProcessingFilterPlugins2( const shared_ptr<const XPluginsCollectio
                                         const ImageMap& testImages1,
                                         const ImageMap& testImages2 )
 {
-    printf( "Plug-ins count: %d \n", plugins->Count( ) );
+    printf( "Plug-ins count: %zd \n", plugins->Count( ) );
 
     for_each( plugins->begin( ), plugins->end( ), [&testImages1, &testImages2] ( const shared_ptr<const XPluginDescriptor>& pluginDesc )
     {
@@ -350,7 +350,7 @@ void TestImageProcessingFilterPlugins2( const shared_ptr<const XPluginsCollectio
 
 void TestImageGenerationPlugins( const shared_ptr<const XPluginsCollection>& plugins )
 {
-    printf( "Plug-ins count: %d \n", plugins->Count( ) );
+    printf( "Plug-ins count: %zd \n", plugins->Count( ) );
 
     for_each( plugins->begin( ), plugins->end( ), [] ( const shared_ptr<const XPluginDescriptor>& pluginDesc )
     {
@@ -410,7 +410,7 @@ void TestImageGenerationPlugins( const shared_ptr<const XPluginsCollection>& plu
 
 void TestImageImportingPlugins( const shared_ptr<const XPluginsCollection>& plugins, const ImageFilesMap& testFilesMap )
 {
-    printf( "Plug-ins count: %d \n", plugins->Count( ) );
+    printf( "Plug-ins count: %zd \n", plugins->Count( ) );
 
     for_each( plugins->begin( ), plugins->end( ), [&testFilesMap] ( const shared_ptr<const XPluginDescriptor>& pluginDesc )
     {
@@ -495,7 +495,7 @@ void TestImageImportingPlugins( const shared_ptr<const XPluginsCollection>& plug
 
 void TestImageImportingPlugins_Negative( const shared_ptr<const XPluginsCollection>& plugins, const ImageFilesMap& testFilesMap )
 {
-    printf( "Plug-ins count: %d \n", plugins->Count( ) );
+    printf( "Plug-ins count: %zd \n", plugins->Count( ) );
 
     for_each( plugins->begin( ), plugins->end( ), [&testFilesMap] ( const shared_ptr<const XPluginDescriptor>& pluginDesc )
     {
