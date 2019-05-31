@@ -208,7 +208,7 @@ string DeviceNameToString( const XDeviceName& device )
 XDeviceName DeviceNameFromString( const string& str )
 {
     XDeviceName deviceName = XDeviceName( string( ), string( ) );
-    int         newLinePos = str.find( '\n' );
+    size_t      newLinePos = str.find( '\n' );
 
     if ( newLinePos == static_cast<int>( string::npos ) )
     {
@@ -249,7 +249,7 @@ string ResolutionToString( const XDeviceCapabilities& cap )
 XDeviceCapabilities ResolutionFromString( const string& str, bool* foundMinMaxFps = nullptr )
 {
     XDeviceCapabilities cap;
-    int                 newLinePos = str.find( '\n' );
+    size_t              newLinePos = str.find( '\n' );
     int                 width      = 0, height = 0, bpp = 0, fps = 0, minFps = 0, maxFps = 0;
 
     if ( sscanf( str.c_str( ), "%d x %d, %d bpp, %d", &width, &height, &bpp, &fps ) == 4 )
@@ -332,12 +332,12 @@ XErrorCode UpdateProperties( PluginDescriptor* desc )
 
         // get video device choices
         vector<XDeviceName> devices      = XLocalVideoDevice::GetAvailableDevices( );
-        int                 devicesCount = devices.size( );
+        size_t              devicesCount = devices.size( );
 
         devProp->ChoicesCount = static_cast<uint16_t>( devicesCount );
         devProp->Choices      = static_cast<xvariant*>( XCAlloc( devProp->ChoicesCount, sizeof( xvariant ) ) );
 
-        for ( int i = 0; i < devicesCount; i++ )
+        for ( size_t i = 0; i < devicesCount; i++ )
         {
             devProp->Choices[i].type         = XVT_String;
             devProp->Choices[i].value.strVal = XStringAlloc( DeviceNameToString( devices[i] ).c_str( ) );

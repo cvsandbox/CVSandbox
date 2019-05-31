@@ -130,11 +130,11 @@ XErrorCode PutTextPlugin::ProcessImageInPlace( ximage* src )
 
         if ( ( alignment == 1 ) || ( alignment == 2 ) )
         {
-            x1 -= ( line1.length( ) * 8 + 2 );
-            x2 -= ( line2.length( ) * 8 + 2 );
-            x3 -= ( line3.length( ) * 8 + 2 );
-            x4 -= ( line4.length( ) * 8 + 2 );
-            x5 -= ( line5.length( ) * 8 + 2 );
+            x1 -= ( static_cast<int32_t>( line1.length( ) ) * 8 + 2 );
+            x2 -= ( static_cast<int32_t>( line2.length( ) ) * 8 + 2 );
+            x3 -= ( static_cast<int32_t>( line3.length( ) ) * 8 + 2 );
+            x4 -= ( static_cast<int32_t>( line4.length( ) ) * 8 + 2 );
+            x5 -= ( static_cast<int32_t>( line5.length( ) ) * 8 + 2 );
         }
 
         ret =
