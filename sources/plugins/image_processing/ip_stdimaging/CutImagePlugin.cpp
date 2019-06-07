@@ -32,7 +32,8 @@ enum CutTpes
 // Supported pixel formats of input/output images
 const XPixelFormat CutImagePlugin::supportedFormats[] =
 {
-    XPixelFormatGrayscale8, XPixelFormatRGB24, XPixelFormatRGBA32
+    XPixelFormatGrayscale8, XPixelFormatRGB24, XPixelFormatRGBA32,
+    XPixelFormatGrayscale16, XPixelFormatRGB48, XPixelFormatRGBA64
 };
 
 CutImagePlugin::CutImagePlugin( ) :
