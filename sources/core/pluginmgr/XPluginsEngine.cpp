@@ -41,6 +41,31 @@ XPluginsEngine::XPluginsEngine( ) :
 
 XPluginsEngine::~XPluginsEngine( )
 {
+#ifdef _MSC_VER
+    /*
+        Some of the plug-ins use OpenMP to do parallel image processing. Unloading a DLL,
+        which is built with OpenMP may cause a crash as described below:
+        https://stackoverflow.com/questions/34439956/vc-crash-when-freeing-a-dll-built-with-openmp
+
+        ------------------------------------------------------------------------------------------
+        For optimal performance, the openmp threadpool spin waits for about a second prior to
+        shutting down in case more work becomes available. If you unload a DLL that's in the process
+        of spin-waiting, it will crash in the manner you see (most of the time).
+
+        You can tell openmp not to spin-wait and the threads will immediately block after the loop
+        finishes. Just set OMP_WAIT_POLICY=passive in your environment, or call
+        SetEnvironmentVariable(L"OMP_WAIT_POLICY", L"passive"); in your function before loading
+        the dll. The default is "active" which tells the threadpool to spin wait. Use the
+        environment variable, or just wait a few seconds before calling FreeLibrary.
+        ---
+
+        So we choose to wait for a bit before unloading plug-in DLLs. Let the OMP threads
+        spin for a bit, as by default, so that extra work could be handled without the need of
+        creating threads again.
+    */
+
+    Sleep( 1200 );
+#endif
 }
 
 const shared_ptr<XPluginsEngine> XPluginsEngine::Create( )
