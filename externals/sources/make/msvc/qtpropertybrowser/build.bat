@@ -29,7 +29,7 @@ if "%QT_MSVC_BIN%"=="" (
     goto EOF
 )
 
-%QT_MSVC_BIN%\qmake.exe %PRO_FOLDER%\%PRO_NAME%
+%QT_MSVC_BIN%\qmake.exe -o Makefile %PRO_FOLDER%\%PRO_NAME%
 nmake -f Makefile.Debug
 nmake -f Makefile.Release
 
