@@ -14,12 +14,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     case DLL_PROCESS_ATTACH:
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
-        break;
     case DLL_PROCESS_DETACH:
-// http://connect.microsoft.com/VisualStudio/feedback/details/574669/main-program-crashes-after-unloading-a-dll-library-that-uses-openmp
-#ifdef _MSC_VER
-        Sleep( 1000 );
-#endif
         break;
     }
     return TRUE;
