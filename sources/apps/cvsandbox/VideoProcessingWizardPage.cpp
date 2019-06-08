@@ -220,7 +220,8 @@ VideoProcessingWizardPage::VideoProcessingWizardPage( QWidget* parent ) :
                                                          servicrManager.GetFavouritePluginsManager( )->PluginsCollection( ),
                                                          PluginType_ImageProcessingFilter |
                                                          PluginType_VideoProcessing |
-                                                         PluginType_ScriptingEngine );
+                                                         PluginType_ScriptingEngine |
+                                                         PluginType_Detection );
 
     // attach context menus to the tree of available plug-in
     ui->availablePluginsListFrame->SetPluginsContextMenu( mData->AvailablePluginsContextMenu,
@@ -681,6 +682,7 @@ void VideoProcessingWizardPageData::ConfigureSelectedProcessingStep( )
                     {
                     case PluginType_ImageProcessingFilter:
                     case PluginType_VideoProcessing:
+                    case PluginType_Detection:
                     case PluginType_ScriptingEngine:
 
                         ConfigurePluginPropertiesDialog configureForm( pluginDesc, plugin, false, UITools::GetParentDialog( Parent ) );

@@ -42,6 +42,10 @@ static const QString STR_COL1_WIDTH = QString( "wcol1" );
 static const QString STR_COL2_WIDTH = QString( "wcol2" );
 static const QString STR_COL3_WIDTH = QString( "wcol3" );
 
+// Types of plug-ins allowed to be configured at run time
+static const PluginType ConfigurablePluginTypes = PluginType_ImageProcessingFilter |
+                                                  PluginType_Detection;
+
 namespace Private
 {
     class VideoProcessingInfoDialogData
@@ -296,7 +300,7 @@ void VideoProcessingInfoDialog::on_processinGraphTreeView_itemSelectionChanged( 
     shared_ptr<const XPluginDescriptor> descriptor = mData->GetSelectedPluginDescriptor( nullptr );
 
     ui->pluginPropertiesButton->setEnabled( ( descriptor ) &&
-                                            ( descriptor->Type( ) == PluginType_ImageProcessingFilter ) &&
+                                            ( ( descriptor->Type( ) & ConfigurablePluginTypes ) != 0 ) &&
                                             ( descriptor->ConfigurablePropertiesCount( ) != 0 ) );
 }
 
@@ -357,7 +361,7 @@ void VideoProcessingInfoDialog::on_ProcessingStepsContextMenu_aboutToShow( )
     shared_ptr<const XPluginDescriptor> descriptor = mData->GetSelectedPluginDescriptor( nullptr );
 
     mData->ConfigurePluginAction->setEnabled( ( descriptor ) &&
-                                              ( descriptor->Type( ) == PluginType_ImageProcessingFilter ) &&
+                                              ( ( descriptor->Type( ) & ConfigurablePluginTypes ) != 0 ) &&
                                               ( descriptor->ConfigurablePropertiesCount( ) != 0 ) );
 }
 
@@ -526,7 +530,7 @@ void VideoProcessingInfoDialogData::EditPluginProperties( )
     ConfiguredStepDescriptor = GetSelectedPluginDescriptor( &ConfiguredStepIndex );
 
     if ( ( ConfiguredStepDescriptor ) &&
-         ( ConfiguredStepDescriptor->Type( ) == PluginType_ImageProcessingFilter ) &&
+         ( ( ConfiguredStepDescriptor->Type( ) & ConfigurablePluginTypes ) != 0 ) &&
          ( ConfiguredStepDescriptor->ConfigurablePropertiesCount( ) != 0 ) )
     {
         map<string, XVariant> pluginConfig = ServiceManager::Instance( ).GetAutomationServer( )->
