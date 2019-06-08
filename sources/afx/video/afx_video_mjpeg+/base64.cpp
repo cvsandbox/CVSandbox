@@ -19,6 +19,7 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
+#include <stdlib.h>
 #include "base64.hpp"
 
 namespace CVSandbox { namespace Video { namespace MJpeg { namespace Private

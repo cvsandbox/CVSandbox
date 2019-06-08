@@ -72,7 +72,11 @@ XErrorCode PerformanceInfoPlugin::Connect( )
         // 238 = Processor, 6 = % Processor Time
 
         // add all required counters
+#ifdef _UNICODE
         PdhAddCounter( data->PerformanceQuery, L"\\238(_Total)\\6", 0, &data->SystemLoadCounter );
+#else
+        PdhAddCounter( data->PerformanceQuery, "\\238(_Total)\\6", 0, &data->SystemLoadCounter );
+#endif
 
         // do initial query
         PdhCollectQueryData( data->PerformanceQuery );

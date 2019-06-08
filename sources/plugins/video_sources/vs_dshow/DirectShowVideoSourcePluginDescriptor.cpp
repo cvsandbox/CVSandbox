@@ -210,7 +210,7 @@ XDeviceName DeviceNameFromString( const string& str )
     XDeviceName deviceName = XDeviceName( string( ), string( ) );
     size_t      newLinePos = str.find( '\n' );
 
-    if ( newLinePos == static_cast<int>( string::npos ) )
+    if ( newLinePos == string::npos )
     {
         if ( str.find( "@device" ) == 0 )
         {
@@ -254,7 +254,7 @@ XDeviceCapabilities ResolutionFromString( const string& str, bool* foundMinMaxFp
 
     if ( sscanf( str.c_str( ), "%d x %d, %d bpp, %d", &width, &height, &bpp, &fps ) == 4 )
     {
-        if ( ( newLinePos != static_cast<int>( string::npos ) ) &&
+        if ( ( newLinePos != string::npos ) &&
              ( sscanf( str.substr( newLinePos + 1 ).c_str( ), "%d %d", &minFps, &maxFps ) == 2 ) )
         {
             if ( foundMinMaxFps ) *foundMinMaxFps = true;
