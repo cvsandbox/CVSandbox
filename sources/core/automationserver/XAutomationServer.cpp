@@ -36,6 +36,7 @@
 
 #include <XImageProcessingFilterPlugin.hpp>
 #include <XVideoProcessingPlugin.hpp>
+#include <XDetectionPlugin.hpp>
 #include <XScriptingEnginePlugin.hpp>
 
 using namespace std;
@@ -110,6 +111,7 @@ namespace Private
         void PerformNewFrameProcessing( );
         XErrorCode DoImageProcessingFilterPlugin( const shared_ptr<XImageProcessingFilterPlugin>& plugin, size_t& currrentGraphBufferIndex );
         XErrorCode DoVideoProcessingPlugin( const shared_ptr<XVideoProcessingPlugin>& plugin );
+        XErrorCode DoDetectionPlugin( const shared_ptr<XDetectionPlugin>& plugin );
         XErrorCode DoScriptingEnginePlugin( const shared_ptr<XScriptingEnginePlugin>& plugin );
 
     private:
@@ -1356,6 +1358,10 @@ void VideoSourceData::PerformNewFrameProcessing( )
                         errorCode = DoVideoProcessingPlugin( static_pointer_cast<XVideoProcessingPlugin>( plugin ) );
                         break;
 
+                    case PluginType_Detection:
+                        errorCode = DoDetectionPlugin( static_pointer_cast<XDetectionPlugin>( plugin ) );
+                        break;
+
                     case PluginType_ScriptingEngine:
                         errorCode = DoScriptingEnginePlugin( static_pointer_cast<XScriptingEnginePlugin>( plugin ) );
                         break;
@@ -1559,7 +1565,19 @@ XErrorCode VideoSourceData::DoVideoProcessingPlugin( const shared_ptr<XVideoProc
     }
 
     return ret;
+}
 
+// Run detection plug-in on the current image
+XErrorCode VideoSourceData::DoDetectionPlugin( const shared_ptr<XDetectionPlugin>& plugin )
+{
+    XErrorCode ret = ErrorUnsupportedPixelFormat;
+
+    if ( plugin->IsPixelFormatSupported( LastImage->Format( ) ) )
+    {
+        ret = plugin->ProcessImage( LastImage );
+    }
+
+    return ret;
 }
 
 // Run "Main" in a script loaded into scripting engine plug-in
