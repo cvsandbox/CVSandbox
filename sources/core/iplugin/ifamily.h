@@ -55,6 +55,8 @@ extern const xguid PluginFamilyID_VideoProcessing;
 
 extern const xguid PluginFamilyID_Scripting;
 
+extern const xguid PluginFamilyID_Detection;
+
 // Structure providing description of plug-ins' family
 typedef struct _FamilyDescriptor
 {

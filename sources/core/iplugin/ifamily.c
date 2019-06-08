@@ -66,6 +66,8 @@
 
 #define FamilyID_Scripting          { 0xAF000002, 0x00000000, 0x00000100, 0x00000001 }
 
+#define FamilyID_Detection          { 0xAF000002, 0x00000000, 0x00001000, 0x00000001 }
+
 const xguid PluginFamilyID_Default            = FamilyID_Default;
 const xguid PluginFamilyID_ColorFilter        = FamilyID_ColorFilter;
 const xguid PluginFamilyID_Thresholding       = FamilyID_Thresholding;
@@ -91,6 +93,7 @@ const xguid PluginFamilyID_VideoProcessing    = FamilyID_VideoProcessing;
 
 const xguid PluginFamilyID_Scripting          = FamilyID_Scripting;
 
+const xguid PluginFamilyID_Detection          = FamilyID_Detection;
 
 static FamilyDescriptor DefaultFamily =
     { FamilyID_Default, "Other Plug-ins", "Default plug-in family.",
@@ -172,6 +175,10 @@ static FamilyDescriptor ScriptingFamily =
     { FamilyID_Scripting, "Scripting", "Scripting engine plug-ins.",
     (ximage*) &image_scripting_plugin_16x16, 0 };
 
+static FamilyDescriptor DetectionFamily =
+    { FamilyID_Detection, "Detection", "Video processing plug-ins aimed for detection of specific objects/events.",
+    (ximage*) &image_default_plugin_16x16, 0 };
+
 
 const FamilyDescriptor* BuiltInPluginFamilites[] =
 {
@@ -198,7 +205,9 @@ const FamilyDescriptor* BuiltInPluginFamilites[] =
 
     &VideoProcessingFamily,
 
-    &ScriptingFamily
+    &ScriptingFamily,
+
+    &DetectionFamily
 };
 
 const int BuiltInPluginFamilitesCount = XARRAY_SIZE( BuiltInPluginFamilites );
