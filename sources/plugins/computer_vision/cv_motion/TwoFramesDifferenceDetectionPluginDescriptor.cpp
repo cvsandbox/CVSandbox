@@ -60,7 +60,7 @@ const PropertyDescriptor** TwoFramesDifferenceDetectionPlugin::propertiesDescrip
 REGISTER_CPP_PLUGIN_WITH_PROPS
 (
     PluginID,
-    PluginFamilyID_Default,
+    PluginFamilyID_Detection,
 
     PluginType_Detection,
     PluginVersion,
@@ -111,11 +111,11 @@ static void PluginInitializer( )
     highlightMotionProperty.DefaultValue.value.boolVal = false;
 
     // Highlight Color
-    highlightMotionProperty.DefaultValue.type = XVT_ARGB;
-    highlightMotionProperty.DefaultValue.value.argbVal.argb = 0xFFFF0000;
+    highlightColoProperty.DefaultValue.type = XVT_ARGB;
+    highlightColoProperty.DefaultValue.value.argbVal.argb = 0xFFFF0000;
 
-    highlightMotionProperty.ParentProperty = 3;
-    highlightMotionProperty.Updater = UpdateMotionHighlightProperty;
+    highlightColoProperty.ParentProperty = 3;
+    highlightColoProperty.Updater = UpdateMotionHighlightProperty;
 
     // Highlight Amount
     highlightAmountProperty.DefaultValue.type = XVT_U2;

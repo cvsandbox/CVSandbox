@@ -102,13 +102,14 @@ XErrorCode TwoFramesDifferenceDetectionPlugin::GetProperty( int32_t id, xvariant
         break;
 
     case 4:
-        value->type          = XVT_Any;
+        value->type          = XVT_ARGB;
         value->value.argbVal = mData->HiColor;
         break;
 
     case 5:
         value->type        = XVT_U2;
         value->value.usVal = static_cast<uint16_t>( mData->HighlightAmount * 100 );
+        break;
 
     default:
         ret = ErrorInvalidProperty;
@@ -154,7 +155,7 @@ XErrorCode TwoFramesDifferenceDetectionPlugin::SetProperty( int32_t id, const xv
             break;
 
         case 5:
-            mData->HighlightAmount = static_cast<float>( convertedValue.value.usVal ) / 100.0f;
+            mData->HighlightAmount = static_cast<float>( XINRANGE( convertedValue.value.usVal, 10, 100 ) ) / 100.0f;
             break;
 
         default:
