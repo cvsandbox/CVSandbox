@@ -17,6 +17,8 @@ if "%1"=="clean" (
     )
 
     del Makefile
+    del .qmake.stash
+    
     rd /S /Q debug
     rd /S /Q release
     rd /S /Q %PRO_FOLDER%\lib

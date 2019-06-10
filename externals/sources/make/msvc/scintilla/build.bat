@@ -7,8 +7,6 @@ set BUILD_FOLDER=..\..\..\..\..\build
 if "%1"=="clean" (
     echo "Cleaning ScintillaEdit MSVC build ..."
 
-    pushd %PRO_FOLDER%
-
     if exist Makefile.Debug (
         nmake -f Makefile.Debug clean
         del Makefile.Debug
@@ -21,12 +19,11 @@ if "%1"=="clean" (
     del Makefile
     del *.pro.user
     del ScintillaEdit_resource.rc
+    del .qmake.stash
 
     rd /S /Q debug
     rd /S /Q release
     rd /S /Q %PRO_FOLDER%\lib
-
-    popd
 
     goto EOF
 )
@@ -36,13 +33,9 @@ if "%QT_MSVC_BIN%"=="" (
     goto EOF
 )
 
-pushd %PRO_FOLDER%
-
-%QT_MSVC_BIN%\qmake.exe %PRO_NAME%
+%QT_MSVC_BIN%\qmake.exe -o Makefile %PRO_FOLDER%\%PRO_NAME%
 nmake -f Makefile.Debug
 nmake -f Makefile.Release
-
-popd
 
 xcopy /Y "%PRO_FOLDER%\lib\msvc\debug\*.dll" "%BUILD_FOLDER%\msvc\debug\bin"
 xcopy /Y "%PRO_FOLDER%\lib\msvc\debug\*.lib" "%BUILD_FOLDER%\msvc\debug\lib"

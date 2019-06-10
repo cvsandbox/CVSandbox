@@ -19,29 +19,39 @@ VERSION = 3.7.5
 
 message( $$MAKEFILE_GENERATOR )
 
+contains(QMAKE_TARGET.arch, x86_64) {
+    message( "64-bit build" )
+    LIBDIR = lib64
+} else {
+    message( "32-bit build" )
+    LIBDIR = lib
+}
+
 CONFIG (debug, debug|release) {
     message( "Debug build" )
 
-    SCINTILLA_EDIT_LIBDIR = $$PWD/lib/unknown/debug
+    SCINTILLA_EDIT_LIBDIR = $$PWD/$$LIBDIR/unknown/debug
 
     contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
-        SCINTILLA_EDIT_LIBDIR = $$PWD/lib/msvc/debug
+        SCINTILLA_EDIT_LIBDIR = $$PWD/$$LIBDIR/msvc/debug
     }
     contains(MAKEFILE_GENERATOR, "MINGW") {
-        SCINTILLA_EDIT_LIBDIR = $$PWD/lib/mingw/debug
+        SCINTILLA_EDIT_LIBDIR = $$PWD/$$LIBDIR/mingw/debug
     }
 } else {
     message( "Release build" )
 
-    SCINTILLA_EDIT_LIBDIR = $$PWD/lib/unknown/release
+    SCINTILLA_EDIT_LIBDIR = $$PWD/$$LIBDIR/unknown/release
 
     contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
-        SCINTILLA_EDIT_LIBDIR = $$PWD/lib/msvc/release
+        SCINTILLA_EDIT_LIBDIR = $$PWD/$$LIBDIR/msvc/release
     }
     contains(MAKEFILE_GENERATOR, "MINGW") {
-        SCINTILLA_EDIT_LIBDIR = $$PWD/lib/mingw/release
+        SCINTILLA_EDIT_LIBDIR = $$PWD/$$LIBDIR/mingw/release
     }
 }
+
+message( "Out: " $$QTPROPERTYBROWSER_LIBDIR )
 
 contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
     QMAKE_CXXFLAGS += /FS
