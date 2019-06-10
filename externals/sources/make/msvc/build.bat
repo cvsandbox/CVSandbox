@@ -4,9 +4,6 @@ if "%1"=="clean" (
     msbuild build.sln /t:Clean /p:Configuration=Debug /p:Platform=Win32
     msbuild build.sln /t:Clean /p:Configuration=Release /p:Platform=Win32
 
-    msbuild build.sln /t:Clean /p:Configuration=Debug /p:Platform=x64
-    msbuild build.sln /t:Clean /p:Configuration=Release /p:Platform=x64
-
     RD /Q /S Debug
     RD /Q /S Release
 
@@ -32,9 +29,6 @@ if "%1"=="clean" (
     msbuild build.sln /p:Configuration=Debug /p:Platform=Win32
     msbuild build.sln /p:Configuration=Release /p:Platform=Win32
 
-    msbuild build.sln /p:Configuration=Debug /p:Platform=x64
-    msbuild build.sln /p:Configuration=Release /p:Platform=x64
-
     pushd libjpeg-turbo
     call build
     popd
@@ -49,6 +43,4 @@ if "%1"=="clean" (
 
     xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\debug\include\"
     xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\release\include\"
-    xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\debug64\include\"
-    xcopy /Y "..\..\directshow\*.h" "..\..\..\..\build\msvc\release64\include\"
 )
