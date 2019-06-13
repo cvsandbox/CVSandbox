@@ -449,9 +449,9 @@ void VideoProcessingInfoDialogData::UpdateVideoProcessingGraph( )
         total = 1.0f;
     }
 
-    for ( int i = 0, n = timing.size( ); i < n; i++ )
+    for ( size_t i = 0, n = timing.size( ); i < n; i++ )
     {
-        QTreeWidgetItem* treeNode = Ui->processinGraphTreeView->topLevelItem( i );
+        QTreeWidgetItem* treeNode = Ui->processinGraphTreeView->topLevelItem( static_cast<int>( i ) );
 
         treeNode->setText( 1, QString::number( timing[i], 'f', 2 ) );
         treeNode->setText( 2, QString::number( timing[i] / total * 100, 'f', 1 ) );

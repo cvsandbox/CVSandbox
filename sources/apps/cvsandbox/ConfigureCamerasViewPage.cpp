@@ -550,7 +550,7 @@ void ConfigureCamerasViewPage::on_viewNameEdit_textChanged( const QString& arg1 
 // Add new view to the sandbox
 void ConfigureCamerasViewPage::on_addViewButton_clicked( )
 {
-    int viewsCount   = mData->ViewConfigurations.size( );
+    int viewsCount   = static_cast<int>( mData->ViewConfigurations.size( ) );
     int rowsCount    = 2;
     int columnsCount = 2;
     int cellWidth    = 320;
@@ -584,8 +584,8 @@ void ConfigureCamerasViewPage::on_addViewButton_clicked( )
 // Remove currently selected view from the sandbox
 void ConfigureCamerasViewPage::on_deleteViewButton_clicked( )
 {
-    int viewsCount    = mData->ViewConfigurations.size( );
-    int selectedIndex = ui->viewsComboBox->currentIndex( );
+    size_t viewsCount    = mData->ViewConfigurations.size( );
+    int    selectedIndex = ui->viewsComboBox->currentIndex( );
 
     if ( ( viewsCount > 1 ) && ( selectedIndex != - 1 ) )
     {
@@ -614,8 +614,8 @@ void ConfigureCamerasViewPage::on_setDefaultViewButton_clicked( )
 // Update status of buttons for Adding/Deleting/MakingDefault view
 void ConfigureCamerasViewPage::UpdateViewButtonsStatus( )
 {
-    int viewsCount    = mData->ViewConfigurations.size( );
-    int selectedIndex = ui->viewsComboBox->currentIndex( );
+    size_t viewsCount    = mData->ViewConfigurations.size( );
+    int    selectedIndex = ui->viewsComboBox->currentIndex( );
 
     ui->addViewButton->setEnabled( viewsCount < MAX_VIEWS_NUMBER );
     ui->deleteViewButton->setEnabled( viewsCount > 1 );

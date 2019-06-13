@@ -217,7 +217,7 @@ void PerformanceMonitorServiceData::UpdateFrameRateInfo( )
 
     TotalFps = 0;
 
-    for ( int i = 0, n = VideoSourceIds.size( ); i < n; i++ )
+    for ( size_t i = 0, n = VideoSourceIds.size( ); i < n; i++ )
     {
         if ( VideoSourceReportFpsState[VideoSourceIds[i]] )
         {

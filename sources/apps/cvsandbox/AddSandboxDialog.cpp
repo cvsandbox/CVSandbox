@@ -134,10 +134,10 @@ void AddSandboxDialog::OnChangingPage( int nextPage )
 
         if ( !mData->viewConfigurationIsCreated )
         {
-            int camerasCount = selectedObject.size( );
-            int gridSize     = ( camerasCount > 9 ) ? 4 :
-                               ( camerasCount > 4 ) ? 3 :
-                               ( camerasCount > 1 ) ? 2 : 1;
+            size_t camerasCount = selectedObject.size( );
+            int    gridSize     = ( camerasCount > 9 ) ? 4 :
+                                  ( camerasCount > 4 ) ? 3 :
+                                  ( camerasCount > 1 ) ? 2 : 1;
 
             vector<CamerasViewConfiguration> viewConfigurations;
             XGuid                            defaultViewId      = XGuidGenerator::Generate( );
