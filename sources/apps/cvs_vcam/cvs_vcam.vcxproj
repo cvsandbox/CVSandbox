@@ -127,7 +127,7 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\build\msvc\debug\bin\vcam\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\build\msvc\debug64\bin\vcam\"</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -186,10 +186,10 @@ xcopy /Y "$(ProjectDir)regsvr.bat" "$(ProjectDir)..\..\..\build\msvc\release\bin
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\build\msvc\release\bin\vcam\"
+      <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\build\msvc\release64\bin\vcam\"
 
-xcopy /Y "$(ProjectDir)Release Notes.txt" "$(ProjectDir)..\..\..\build\msvc\release\bin\vcam\"
-xcopy /Y "$(ProjectDir)regsvr.bat" "$(ProjectDir)..\..\..\build\msvc\release\bin\vcam\"
+xcopy /Y "$(ProjectDir)Release Notes.txt" "$(ProjectDir)..\..\..\build\msvc\release64\bin\vcam\"
+xcopy /Y "$(ProjectDir)regsvr.bat" "$(ProjectDir)..\..\..\build\msvc\release64\bin\vcam\"
 </Command>
     </PostBuildEvent>
     <ResourceCompile>
