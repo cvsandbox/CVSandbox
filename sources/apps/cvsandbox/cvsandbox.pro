@@ -18,16 +18,30 @@ INCLUDEPATH += ../../afx/afx_types/ \
 
 message( $$MAKEFILE_GENERATOR )
 
-contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
+contains(QMAKE_TARGET.arch, x86_64) {
+    message("64-bit build")
     CONFIG (debug, debug|release) {
-        message( "MSVC Debug build" )
-
-        MSVC_LIBS_DIR = $$PWD/../../../build/msvc/debug/lib
+        message( "Debug build" )
+        OUTDIR = debug64
     } else {
-        message( "MSVC Release build" )
-
-        MSVC_LIBS_DIR = $$PWD/../../../build/msvc/release/lib
+        message( "Release build" )
+        OUTDIR = release64
     }
+} else {
+    message("32-bit build")
+    CONFIG (debug, debug|release) {
+        message( "Debug build" )
+        OUTDIR = debug
+    } else {
+        message( "Release build" )
+        OUTDIR = release
+    }
+}
+
+contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
+    message( "MSVC build" )
+    
+    MSVC_LIBS_DIR = $$PWD/../../../build/msvc/$$OUTDIR/lib
 
     DESTDIR = $${MSVC_LIBS_DIR}/../bin
 
@@ -48,15 +62,9 @@ contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NE
 }
 
 contains(MAKEFILE_GENERATOR, "MINGW") {
-    CONFIG (debug, debug|release) {
-        message( "MinGW Debug build" )
+    message( "MinGW build" )
 
-        MINGW_LIBS_DIR = $$PWD/../../../build/mingw/debug/lib
-    } else {
-        message( "MinGW Release build" )
-
-        MINGW_LIBS_DIR = $$PWD/../../../build/mingw/release/lib
-    }
+    MINGW_LIBS_DIR = $$PWD/../../../build/mingw/$$OUTDIR/lib
 
     DESTDIR = $${MINGW_LIBS_DIR}/../bin
 
@@ -80,6 +88,8 @@ contains(MAKEFILE_GENERATOR, "MINGW") {
 contains(MAKEFILE_GENERATOR, "MSBUILD") || contains(MAKEFILE_GENERATOR, "MSVC.NET") {
     QMAKE_CXXFLAGS += /FS
 }
+
+message( "Out: " $$DESTDIR )
 
 SOURCES += main.cpp\
     MainWindow.cpp \
