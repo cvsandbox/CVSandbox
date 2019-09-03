@@ -1,7 +1,7 @@
 /*
     Imaging library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -115,7 +115,7 @@ XErrorCode ShiftImage( ximage* src, int dx, int dy, bool fillOpenSpace, xargb fi
         {
             if ( openYmin <= openYmax )
             {
-                XDrawingFillRectanle( src, 0, openYmin, width - 1, openYmax, fillColor );
+                XDrawingFillRectangle( src, 0, openYmin, width - 1, openYmax, fillColor );
             }
 
             if ( openXmin <= openXmax )
@@ -125,17 +125,17 @@ XErrorCode ShiftImage( ximage* src, int dx, int dy, bool fillOpenSpace, xargb fi
                     if ( openYmin == 0 )
                     {
                         // open space at the top
-                        XDrawingFillRectanle( src, openXmin, openYmax + 1, openXmax, height - 1, fillColor );
+                        XDrawingFillRectangle( src, openXmin, openYmax + 1, openXmax, height - 1, fillColor );
                     }
                     else
                     {
                         // open space at the bottom
-                        XDrawingFillRectanle( src, openXmin, 0, openXmax, openYmax - 1, fillColor );
+                        XDrawingFillRectangle( src, openXmin, 0, openXmax, openYmax - 1, fillColor );
                     }
                 }
                 else
                 {
-                    XDrawingFillRectanle( src, openXmin, 0, openXmax, height - 1, fillColor );
+                    XDrawingFillRectangle( src, openXmin, 0, openXmax, height - 1, fillColor );
                 }
             }
         }

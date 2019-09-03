@@ -1,7 +1,7 @@
 /*
     Image processing tools plug-ins of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -75,10 +75,10 @@ XErrorCode ImageDrawingPlugin::CallFunction( int32_t id, xvariant* returnValue, 
             break;
 
         case 1:
-            ret = XDrawingRectanle( arguments->elements[0].value.imageVal,
-                                    arguments->elements[1].value.pointVal.x, arguments->elements[1].value.pointVal.y,
-                                    arguments->elements[2].value.pointVal.x, arguments->elements[2].value.pointVal.y,
-                                    arguments->elements[3].value.argbVal );
+            ret = XDrawingRectangle( arguments->elements[0].value.imageVal,
+                                     arguments->elements[1].value.pointVal.x, arguments->elements[1].value.pointVal.y,
+                                     arguments->elements[2].value.pointVal.x, arguments->elements[2].value.pointVal.y,
+                                     arguments->elements[3].value.argbVal );
             break;
 
         case 2:
@@ -143,10 +143,10 @@ XErrorCode ImageDrawingPlugin::CallFunction( int32_t id, xvariant* returnValue, 
             break;
 
         case 8:
-            ret = XDrawingBlendRectanle( arguments->elements[0].value.imageVal,
-                                         arguments->elements[1].value.pointVal.x, arguments->elements[1].value.pointVal.y,
-                                         arguments->elements[2].value.pointVal.x, arguments->elements[2].value.pointVal.y,
-                                         arguments->elements[3].value.argbVal );
+            ret = XDrawingBlendRectangle( arguments->elements[0].value.imageVal,
+                                          arguments->elements[1].value.pointVal.x, arguments->elements[1].value.pointVal.y,
+                                          arguments->elements[2].value.pointVal.x, arguments->elements[2].value.pointVal.y,
+                                          arguments->elements[3].value.argbVal );
             break;
 
         case 9:

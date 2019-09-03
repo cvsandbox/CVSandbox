@@ -1,7 +1,7 @@
 /*
     Imaging library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -55,7 +55,7 @@ xhsv;
 // Draw line between the specified points (all coordinates are inclusive)
 XErrorCode XDrawingLine( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color );
 // Draw rectangle (all coordinates are inclusive)
-XErrorCode XDrawingRectanle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color );
+XErrorCode XDrawingRectangle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color );
 // Draw circle
 XErrorCode XDrawingCircle( ximage* image, int32_t xc, int32_t yc, int32_t r, xargb color );
 // Draw ellipse
@@ -63,7 +63,7 @@ XErrorCode XDrawingEllipse( ximage* image, int32_t xc, int32_t yc, int32_t rx, i
 // Draw one image on another at the specified location
 XErrorCode XDrawingImage( ximage* image, const ximage* imageToDraw, int32_t x, int32_t y );
 // Fill rectangle with alpha blending (all coordinates are inclusive)
-XErrorCode XDrawingBlendRectanle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color );
+XErrorCode XDrawingBlendRectangle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color );
 // Fill frame with alpha blending (all coordinates are inclusive)
 XErrorCode XDrawingBlendFrame( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, uint32_t xThickness, uint32_t yThickness, xargb color );
 // Fill circle (with alpha blending) in the specified image with the specfied color
@@ -78,7 +78,7 @@ XErrorCode XDrawingBlendConvexPolygon( ximage* image, const xpoint* points, uint
 // Fill ellipse (with alpha blending) in the specified image with the specfied color
 XErrorCode XDrawingBlendEllipse( ximage* image, int32_t xc, int32_t yc, int32_t rx, int32_t ry, xargb color );
 // Fill rectangle without alpha blending (all coordinates are inclusive)
-XErrorCode XDrawingFillRectanle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color );
+XErrorCode XDrawingFillRectangle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color );
 // Fill entire image with the specfied color
 XErrorCode XDrawingFillImage( ximage* image, xargb color );
 // Fill image with the specified color according to the mask image

@@ -1,7 +1,7 @@
 /*
     Imaging library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -318,7 +318,7 @@ XErrorCode XDrawingText( ximage* image, xstring text, int32_t x, int32_t y, xarg
         {
             for ( b = 0; b < borderSize; b++ )
             {
-                XDrawingRectanle( image, x + b, y + b, x + len * 8 + borderSize * 2 - b - 1, y + 8 + borderSize * 2 - b - 1, background );
+                XDrawingRectangle( image, x + b, y + b, x + len * 8 + borderSize * 2 - b - 1, y + 8 + borderSize * 2 - b - 1, background );
             }
 
             x += borderSize;

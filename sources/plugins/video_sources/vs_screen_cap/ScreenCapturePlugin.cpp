@@ -622,11 +622,11 @@ namespace Private
 
                                         if ( outW == outputWidth )
                                         {
-                                            XDrawingFillRectanle( resizedImage, 0, outH, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
+                                            XDrawingFillRectangle( resizedImage, 0, outH, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
                                         }
                                         else
                                         {
-                                            XDrawingFillRectanle( resizedImage, outW, 0, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
+                                            XDrawingFillRectangle( resizedImage, outW, 0, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
                                         }
                                     }
                                 }

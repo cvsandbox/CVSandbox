@@ -528,11 +528,11 @@ void ImageFolderVideoSourcePluginData::VideoSourceWorker( )
                                     {
                                         if ( outW == outputWidth )
                                         {
-                                            XDrawingFillRectanle( tempImage, 0, outH, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
+                                            XDrawingFillRectangle( tempImage, 0, outH, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
                                         }
                                         else
                                         {
-                                            XDrawingFillRectanle( tempImage, outW, 0, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
+                                            XDrawingFillRectangle( tempImage, outW, 0, outputWidth - 1, outputHeight - 1, { 0xFF000000 } );
                                         }
                                     }
                                 }

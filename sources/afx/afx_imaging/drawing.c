@@ -1,7 +1,7 @@
 /*
     Imaging library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -364,7 +364,7 @@ XErrorCode XDrawingLine( ximage* image, int32_t x1, int32_t y1, int32_t x2, int3
 }
 
 // Draw rectangle in the specified image with the specfied color (all coordinates are inclusive)
-XErrorCode XDrawingRectanle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color )
+XErrorCode XDrawingRectangle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color )
 {
     XErrorCode ret = SuccessCode;
 
@@ -707,7 +707,7 @@ XErrorCode XDrawingEllipse( ximage* image, int32_t xc, int32_t yc, int32_t rx, i
 }
 
 // Fill rectangle (with alpha blending) in the specified image with the specfied color (all coordinates are inclusive)
-XErrorCode XDrawingBlendRectanle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color )
+XErrorCode XDrawingBlendRectangle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color )
 {
     XErrorCode ret = SuccessCode;
 
@@ -875,10 +875,10 @@ XErrorCode XDrawingBlendFrame( ximage* image, int32_t x1, int32_t y1, int32_t x2
         y2t = yc;
     }
 
-    if ( ( ( ret = XDrawingBlendRectanle( image, x1, y1, x2, y1b, color ) ) == SuccessCode ) &&
-         ( ( ret = XDrawingBlendRectanle( image, x1, y1b + 1, x1r, y2t - 1, color ) ) == SuccessCode ) &&
-         ( ( ret = XDrawingBlendRectanle( image, x2l, y1b + 1, x2, y2t - 1, color ) ) == SuccessCode ) &&
-         ( ( ret = XDrawingBlendRectanle( image, x1, y2t, x2, y2, color ) ) == SuccessCode ) )
+    if ( ( ( ret = XDrawingBlendRectangle( image, x1, y1, x2, y1b, color ) ) == SuccessCode ) &&
+         ( ( ret = XDrawingBlendRectangle( image, x1, y1b + 1, x1r, y2t - 1, color ) ) == SuccessCode ) &&
+         ( ( ret = XDrawingBlendRectangle( image, x2l, y1b + 1, x2, y2t - 1, color ) ) == SuccessCode ) &&
+         ( ( ret = XDrawingBlendRectangle( image, x1, y2t, x2, y2, color ) ) == SuccessCode ) )
     {
         // Good then
     }
@@ -2155,7 +2155,7 @@ XErrorCode XDrawingBlendConvexPolygon( ximage* image, const xpoint* points, uint
 }
 
 // Fill rectangle (no alpha blending) in the specified image with the specfied color (all coordinates are inclusive)
-XErrorCode XDrawingFillRectanle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color )
+XErrorCode XDrawingFillRectangle( ximage* image, int32_t x1, int32_t y1, int32_t x2, int32_t y2, xargb color )
 {
     XErrorCode ret = SuccessCode;
 
@@ -2270,7 +2270,7 @@ XErrorCode XDrawingFillImage( ximage* image, xargb color )
     {
         if ( ( image->width != 0 ) && ( image->height != 0 ) )
         {
-            ret = XDrawingFillRectanle( image, 0, 0, image->width - 1, image->height - 1, color );
+            ret = XDrawingFillRectangle( image, 0, 0, image->width - 1, image->height - 1, color );
         }
     }
 

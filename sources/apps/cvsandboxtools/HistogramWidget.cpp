@@ -108,7 +108,7 @@ void HistogramWidget::paintEvent( QPaintEvent* )
     painter.begin( this );
     painter.setRenderHint( QPainter::Antialiasing, false );
 
-    // initial empty rectanle
+    // initial empty rectangle
     painter.fillRect( 0, 0, myRect.width( ), myRect.height( ), QBrush( QColor( 248, 248, 248 ), Qt::SolidPattern ) );
     painter.setPen( Qt::black );
     painter.drawRect( 0, 0, myRect.width( ) - 1, myRect.height( ) - 1 );
