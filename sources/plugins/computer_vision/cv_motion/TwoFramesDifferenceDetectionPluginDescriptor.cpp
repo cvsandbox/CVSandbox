@@ -21,6 +21,7 @@
 
 #include <iplugincpp.hpp>
 #include "TwoFramesDifferenceDetectionPlugin.hpp"
+#include <image_simple_motion_detection_16x16.h>
 
 static void PluginInitializer( );
 static XErrorCode UpdateMotionHighlightProperty( PropertyDescriptor* desc, const xvariant* parentValue );
@@ -64,14 +65,20 @@ REGISTER_CPP_PLUGIN_WITH_PROPS
 
     PluginType_Detection,
     PluginVersion,
-    "Two Frames Difference",
-    "TwoFramesDifference",
+    "Simple Motion Detector",
+    "SimpleMotionDetector",
     "Plug-in to detect motion in video stream based on two frames difference.",
 
     /* Long description */
-    "???"
+    "The plug-in implements simple motion detection algorithm based on difference "
+    "of two consecutive video frames. It compares all pixel values of current video "
+    "frame with corresponding pixel values of the previous frame. If the difference "
+    "value is greater than the specified <b>pixel threshold</b>, then the pixel "
+    "change is treated as significant. If number of significant changes is greater "
+    "than the specified <b>motion threshold</b>, then the plug-in reports that "
+    "motion is detected."
     ,
-    nullptr,
+    &image_simple_motion_detection_16x16,
     nullptr,
     TwoFramesDifferenceDetectionPlugin,
 
