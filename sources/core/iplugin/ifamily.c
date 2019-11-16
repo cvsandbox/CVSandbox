@@ -1,7 +1,7 @@
 /*
     Plug-ins' interface library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2018, cvsandbox
+    Copyright (C) 2011-2019, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -39,6 +39,7 @@
 #include <image_scripting_plugin_16x16.h>
 #include <image_blobs_processing_16x16.h>
 #include <image_convolution_16x16.h>
+#include <image_detection_plugin_16x16.h>
 
 // All defines stay here in this source file only and don't go to the outside world
 #define FamilyID_Default            { 0xAF000002, 0x00000000, 0x00000001, 0x00000000 }
@@ -177,7 +178,7 @@ static FamilyDescriptor ScriptingFamily =
 
 static FamilyDescriptor DetectionFamily =
     { FamilyID_Detection, "Detection", "Video processing plug-ins aimed for detection of specific objects/events.",
-    (ximage*) &image_default_plugin_16x16, 0 };
+    (ximage*) &image_detection_plugin_16x16, 0 };
 
 
 const FamilyDescriptor* BuiltInPluginFamilites[] =
