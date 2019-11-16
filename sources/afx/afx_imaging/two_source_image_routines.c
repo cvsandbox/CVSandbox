@@ -458,7 +458,7 @@ XErrorCode AddImages( ximage* image1, const ximage* image2, float factor2 )
 }
 
 // Subtract two images; image2 is multiplied by the specified factor which is in [0, 1] range and then
-// subctracted from image1 (result is put back to image1)
+// subtracted from image1 (result is put back to image1)
 XErrorCode SubtractImages( ximage* image1, const ximage* image2, float factor2 )
 {
     XErrorCode ret = CheckImages( image1, image2 );
@@ -508,7 +508,7 @@ XErrorCode SubtractImages( ximage* image1, const ximage* image2, float factor2 )
     return ret;
 }
 
-// Callculates images difference: image1 = abs( image1 - image2 )
+// Calculates images difference: image1 = abs( image1 - image2 )
 XErrorCode DiffImages( ximage* image1, const ximage* image2 )
 {
     XErrorCode ret = CheckImages( image1, image2 );
@@ -583,7 +583,7 @@ XErrorCode DiffImages( ximage* image1, const ximage* image2 )
     return ret;
 }
 
-// Callculates thresholded images difference: image1 = ( abs( image1 - image2 ) >= threshold ) ? hiColor : lowColor
+// Calculates thresholded images difference: image1 = ( abs( image1 - image2 ) >= threshold ) ? hiColor : lowColor
 XErrorCode DiffImagesThresholded( ximage* image1, const ximage* image2, int16_t threshold, uint32_t* diffPixels, xargb hiColor, xargb lowColor )
 {
     XErrorCode ret = CheckImages( image1, image2 );
