@@ -439,7 +439,7 @@ XErrorCode XImageCopyData( const ximage* src, ximage* dst )
         // copy palette for indexed images
         if ( ( src->format >= XPixelFormatIndexed1 ) && ( src->palette != 0 ) )
         {
-            XPalleteCopyOrCloneOr( src->palette, &(dst->palette) );
+            XPalleteClone( src->palette, &(dst->palette) );
         }
     }
     return ret;

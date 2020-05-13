@@ -46,7 +46,7 @@ void XPaletteFree( xpalette** pPalette );
 // Copy palette's colors
 XErrorCode XPalleteCopy( const xpalette* src, xpalette* dst );
 // Copy palette's colors. If destination palette is not allocated or does not match, then it will be (re)allocated.
-XErrorCode XPalleteCopyOrCloneOr( const xpalette* src, xpalette** dst );
+XErrorCode XPalleteClone( const xpalette* src, xpalette** dst );
 
 #ifdef __cplusplus
 }
