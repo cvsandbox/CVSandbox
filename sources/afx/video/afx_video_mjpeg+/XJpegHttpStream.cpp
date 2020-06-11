@@ -52,7 +52,7 @@ namespace Private
             Listener( 0 ),
             Sync( ), ExitEvent( ), BackgroundThread( ), FramesCounter( 0 ),
             TimeToSleepBeforeNextTry( 0 ), FailureDetected( false ),
-            CommunicationBuffer( 0 ), ReadSoFar( 0 )
+            CommunicationBuffer( nullptr), CommunicationBufferSize( 0 ), ReadSoFar( 0 )
         {
         }
 
@@ -80,6 +80,7 @@ namespace Private
         bool                  FailureDetected;
 
         uint8_t*              CommunicationBuffer;
+        int                   CommunicationBufferSize;
         uint32_t              ReadSoFar;
     };
 
@@ -87,8 +88,9 @@ namespace Private
     static const uint8_t JpegMagic[3]  = { 0xFF, 0xD8, 0xFF };
     static const int     JpegMagicSize = sizeof( JpegMagic );
 
-    // Maximum size of internal read buffer
-    static const int MaxBufferSize = 1024 * 1024;
+    // Initial/Maxim sizes of internal read buffer
+    static const int InitialBufferSize = 512 * 1024;
+    static const int MaxBufferSize     = 10 * 1024 * 1024;
 
     // Pause length (in milliseconds) to do when error happened
     static const uint32_t PauseOnErrorMs = 1000;
@@ -281,9 +283,15 @@ bool XJpegHttpStream::SetFrameInterval( uint16_t frameIntervalMs )
 void XJpegHttpStream::RunVideo( )
 {
     ximage*     image          = 0;
-    uint8_t*    buffer         = static_cast<uint8_t*>( malloc( Private::MaxBufferSize ) );
+    uint8_t*    buffer         = static_cast<uint8_t*>( malloc( Private::InitialBufferSize ) );
     char*       url            = static_cast<char*>( malloc( mData->JpegUrl.size( ) + 32 ) );
     char        paramSeparator = ( mData->JpegUrl.find( '?' ) == string::npos ) ? '?' : '&';
+
+    if ( buffer != nullptr )
+    {
+        mData->CommunicationBuffer     = buffer;
+        mData->CommunicationBufferSize = Private::InitialBufferSize;
+    }
 
     if ( ( buffer != nullptr ) && ( url != nullptr ) )
     {
@@ -294,7 +302,6 @@ void XJpegHttpStream::RunVideo( )
         int             stillRunning;
         bool            firstTry    = true;
 
-        mData->CommunicationBuffer      = buffer;
         mData->TimeToSleepBeforeNextTry = 0;
 
         srand( static_cast<uint32_t>( time( 0 ) ) );
@@ -548,15 +555,20 @@ void XJpegHttpStream::RunVideo( )
         {
             curl_easy_cleanup( curl );
         }
+
+
     }
     else
     {
         mData->NotifyError( "Fatal: Failed allocating communication buffer" );
     }
 
-    if ( buffer != nullptr )
+    if ( mData->CommunicationBuffer != nullptr )
     {
-        free( buffer );
+        free( mData->CommunicationBuffer );
+
+        mData->CommunicationBuffer     = nullptr;
+        mData->CommunicationBufferSize = 0;
     }
     if ( url != nullptr )
     {
@@ -599,14 +611,27 @@ namespace Private
         size_t                  realSize = size * nmemb;
         XJpegHttpStreamData*    data     = static_cast<XJpegHttpStreamData*>( userp );
 
-        if ( realSize <= MaxBufferSize - data->ReadSoFar )
+        // try reallocating communication buffer if possible
+        if ( realSize > data->CommunicationBufferSize - data->ReadSoFar )
         {
-            memcpy( &(data->CommunicationBuffer[data->ReadSoFar]), contents, realSize );
-            data->ReadSoFar += static_cast<uint32_t>( realSize );
+            size_t   newSize   = XMIN( MaxBufferSize, ( size_t ) ( ( realSize + data->ReadSoFar ) * 1.5f ) );
+            uint8_t* newBuffer = (uint8_t*) realloc( data->CommunicationBuffer, newSize );
+
+            if ( newBuffer )
+            {
+                data->CommunicationBuffer     = newBuffer;
+                data->CommunicationBufferSize = (int) newSize;
+            }
+        }
+
+        if ( realSize > data->CommunicationBufferSize - data->ReadSoFar )
+        {
+            data->NotifyError( "Too small communication buffer" );
         }
         else
         {
-            data->NotifyError( "Too small communication buffer" );
+            memcpy( &(data->CommunicationBuffer[data->ReadSoFar]), contents, realSize );
+            data->ReadSoFar += static_cast<uint32_t>( realSize );
         }
 
         return realSize;

@@ -52,7 +52,7 @@ namespace Private
             MjpegUrl( mjpegUrl ), UserName( ), Password( ), UserAgent( ), ForceBasicAuthorization( false ),
             Listener( 0 ),
             Sync( ), ExitEvent( ), BackgroundThread( ), FramesCounter( 0 ),
-            TimeToSleepBeforeNextTry( 0 ), CommunicationBuffer( 0 ), DecodedImage( 0 ),
+            TimeToSleepBeforeNextTry( 0 ), CommunicationBuffer( 0 ), CommunicationBufferSize( 0 ), DecodedImage( 0 ),
             ReadSoFar( 0 ), FailureDetected( false ), IsContentTypeChecked( false ), IsBoundaryChecked( false ),
             JpegBoundaryLength( 0 ), JpegBoundary( 0 ), SearchStartIndex( 0 ), JpegImageStart( -1 )
         {
@@ -100,6 +100,7 @@ namespace Private
         uint32_t              TimeToSleepBeforeNextTry;
 
         uint8_t*              CommunicationBuffer;
+        int                   CommunicationBufferSize;
         ximage*               DecodedImage;
 
         uint32_t              ReadSoFar;
@@ -122,8 +123,9 @@ namespace Private
     static const uint8_t JpegMagic[3]  = { 0xFF, 0xD8, 0xFF };
     static const int     JpegMagicSize = sizeof( JpegMagic );
 
-    // Maximum size of internal read buffer
-    static const int MaxBufferSize = 1024 * 1024;
+    // Initial/Maxim sizes of internal read buffer
+    static const int InitialBufferSize = 512 * 1024;
+    static const int MaxBufferSize     = 10 * 1024 * 1024;
 
     // Pause length (in milliseconds) to do when error happened
     static const uint32_t PauseOnErrorMs = 1000;
@@ -301,10 +303,12 @@ bool XMjpegHttpStream::SetForceBasicAuthorization( bool setForceBasic )
 // Run video acquisition loop
 void XMjpegHttpStream::RunVideo( )
 {
-    uint8_t*    buffer = (uint8_t*) malloc( Private::MaxBufferSize );
+    mData->CommunicationBuffer = (uint8_t*) malloc( Private::InitialBufferSize );
 
-    if ( buffer != 0 )
+    if ( mData->CommunicationBuffer != nullptr )
     {
+        uint8_t*        buffer      = mData->CommunicationBuffer;
+
         // initialize libcurl session
         CURL*           curl        = curl_easy_init( );
         CURLM*          multiHandle = curl_multi_init( );
@@ -312,7 +316,7 @@ void XMjpegHttpStream::RunVideo( )
         int             stillRunning;
         bool            firstTry    = true;
 
-        mData->CommunicationBuffer      = buffer;
+        mData->CommunicationBufferSize  = Private::InitialBufferSize;
         mData->TimeToSleepBeforeNextTry = 0;
 
 #ifdef DEBUG_MJPEG_STREAM
@@ -543,7 +547,11 @@ void XMjpegHttpStream::RunVideo( )
             curl_easy_cleanup( curl );
         }
 
-        free( buffer );
+        free( mData->CommunicationBuffer );
+
+        mData->CommunicationBuffer     = nullptr;
+        mData->CommunicationBufferSize = 0;
+
     }
     else
     {
@@ -652,7 +660,20 @@ namespace Private
         }
         else
         {
-            if ( realSize > MaxBufferSize - data->ReadSoFar )
+            // try reallocating communication buffer if possible
+            if ( realSize > data->CommunicationBufferSize - data->ReadSoFar )
+            {
+                size_t   newSize   = XMIN( MaxBufferSize, ( size_t ) ( ( realSize + data->ReadSoFar ) * 1.5f ) );
+                uint8_t* newBuffer = (uint8_t*) realloc( data->CommunicationBuffer, newSize );
+
+                if ( newBuffer )
+                {
+                    data->CommunicationBuffer     = newBuffer;
+                    data->CommunicationBufferSize = (int) newSize;
+                }
+            }
+            
+            if ( realSize > data->CommunicationBufferSize - data->ReadSoFar )
             {
                 data->NotifyError( "Too small communication buffer" );
             }
