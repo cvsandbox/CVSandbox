@@ -457,10 +457,10 @@ void XJpegHttpStream::RunVideo( )
 
                                         if ( mData->ReadSoFar != 0 )
                                         {
-                                            buffer[mData->ReadSoFar] = 0;
+                                            mData->CommunicationBuffer[mData->ReadSoFar] = 0;
 
                                             bool   isHtml    = false;
-                                            string htmlTitle = Private::ExtractTitle( (char*) buffer, &isHtml );
+                                            string htmlTitle = Private::ExtractTitle( (char*) mData->CommunicationBuffer, &isHtml );
 
                                             if ( !htmlTitle.empty( ) )
                                             {
@@ -469,10 +469,10 @@ void XJpegHttpStream::RunVideo( )
                                             }
                                             else if ( !isHtml )
                                             {
-                                                char* newLinePos = strchr( (char*) buffer, '\n' );
+                                                char* newLinePos = strchr( (char*) mData->CommunicationBuffer, '\n' );
 
                                                 errorMessage += ", ";
-                                                errorMessage += string( (char*) buffer, ( newLinePos == nullptr ) ? mData->ReadSoFar : ( (uint8_t*) newLinePos - buffer ) );
+                                                errorMessage += string( (char*) mData->CommunicationBuffer, ( newLinePos == nullptr ) ? mData->ReadSoFar : ( (uint8_t*) newLinePos - buffer ) );
                                             }
                                         }
                                     }
@@ -485,7 +485,7 @@ void XJpegHttpStream::RunVideo( )
                             {
                                 if ( !mData->FailureDetected )
                                 {
-                                    int jpegStartIndex = Private::MemFind( buffer, mData->ReadSoFar, Private::JpegMagic, Private::JpegMagicSize );
+                                    int jpegStartIndex = Private::MemFind( mData->CommunicationBuffer, mData->ReadSoFar, Private::JpegMagic, Private::JpegMagicSize );
 
                                     if ( jpegStartIndex >= 0 )
                                     {
@@ -496,7 +496,7 @@ void XJpegHttpStream::RunVideo( )
                                         if ( mData->Listener != 0 )
                                         {
                                             // decode image only if someone needs it
-                                            XErrorCode ret = XDecodeJpegFromMemory( &buffer[jpegStartIndex], mData->ReadSoFar - jpegStartIndex, &image );
+                                            XErrorCode ret = XDecodeJpegFromMemory( &mData->CommunicationBuffer[jpegStartIndex], mData->ReadSoFar - jpegStartIndex, &image );
 
                                             if ( ( ret == SuccessCode ) && ( !mData->ExitEvent.IsSignaled( ) ) )
                                             {

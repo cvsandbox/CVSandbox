@@ -307,8 +307,6 @@ void XMjpegHttpStream::RunVideo( )
 
     if ( mData->CommunicationBuffer != nullptr )
     {
-        uint8_t*        buffer      = mData->CommunicationBuffer;
-
         // initialize libcurl session
         CURL*           curl        = curl_easy_init( );
         CURLM*          multiHandle = curl_multi_init( );
@@ -476,10 +474,10 @@ void XMjpegHttpStream::RunVideo( )
 
                                         if ( mData->ReadSoFar != 0 )
                                         {
-                                            buffer[mData->ReadSoFar] = 0;
+                                            mData->CommunicationBuffer[mData->ReadSoFar] = 0;
 
                                             bool   isHtml    = false;
-                                            string htmlTitle = Private::ExtractTitle( (char*) buffer, &isHtml );
+                                            string htmlTitle = Private::ExtractTitle( (char*) mData->CommunicationBuffer, &isHtml );
 
                                             if ( !htmlTitle.empty( ) )
                                             {
@@ -488,10 +486,10 @@ void XMjpegHttpStream::RunVideo( )
                                             }
                                             else if ( !isHtml )
                                             {
-                                                char* newLinePos = strchr( (char*) buffer, '\n' );
+                                                char* newLinePos = strchr( (char*) mData->CommunicationBuffer, '\n' );
 
                                                 errorMessage += ", ";
-                                                errorMessage += string( (char*) buffer, ( newLinePos == nullptr ) ? mData->ReadSoFar : ( (uint8_t*) newLinePos - buffer ) );
+                                                errorMessage += string( (char*) mData->CommunicationBuffer, ( newLinePos == nullptr ) ? mData->ReadSoFar : ( (uint8_t*) newLinePos - mData->CommunicationBuffer ) );
                                             }
                                         }
                                     }
