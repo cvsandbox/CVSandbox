@@ -1,7 +1,7 @@
 /*
     DirectShow video source library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2019, cvsandbox
+    Copyright (C) 2011-2020, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -63,6 +63,8 @@ namespace Private
                                                                          IBaseFilter* pBaseFilter, const GUID* pCategory,
                                                                          const XDeviceCapabilities& capToSet,
                                                                          uint32_t requestedFps = 0 );
+    // Check if filter provides output pin supporting MEDIASUBTYPE_MJPG media subtype
+    static bool IsJpegEncodingAvailable( IBaseFilter* pBaseFilter );
     // Create filter described by the specified moniker string
     static IBaseFilter* CreateFilter( const string& moniker );
 
@@ -93,6 +95,9 @@ namespace Private
         bool                        IsCrossbarAvailable;
         XManualResetEvent           InfoCollectedEvent;
 
+        bool                        JpegEncodingPreferred;
+        bool                        JpegEncodingEnabled;
+
     private:
         IVideoSourceListener*       Listener;
 
@@ -116,6 +121,7 @@ namespace Private
         XLocalVideoDeviceData( const string& deviceMoniker ) :
             Sync( ), DeviceMoniker( deviceMoniker ), Resolution( ), RequestedFps( 0 ), VideoInput( ), NeedToSetVideoInput( false ),
             Capabilities( ), VideoPins( ), IsCrossbarAvailable( false ), InfoCollectedEvent( ),
+            JpegEncodingPreferred( false ), JpegEncodingEnabled( false ),
             Listener( nullptr ), ExitEvent( ), BackgroundThread( ),
             FramesCounter( 0 ),
             RunningSync( ), DeviceIsRunningEvent( ), DeviceIsRunning( false ), VideoProcAmp( nullptr ), CameraControl( nullptr ),
@@ -226,87 +232,102 @@ namespace Private
             // otherwise don't bother wasting time
             if ( ( mParent->Listener != nullptr ) && ( pBuffer != nullptr ) && ( bufferLen != 0 ) )
             {
-                if ( ( !mImage ) || ( mImage->Width( ) != mWidth ) || ( mImage->Height( ) != mHeight ) )
+                if ( !mParent->JpegEncodingEnabled )
                 {
-                    mImage = XImage::Allocate( mWidth, mHeight, XPixelFormatRGB24 );
-                }
-
-                int      dstStride = mImage->Stride( );
-                int      srcStride = bufferLen / mHeight;
-                uint8_t* dst       = mImage->Data( ) + dstStride * ( mHeight - 1 );
-
-                #ifdef PIXEL_FORMAT_BGRA
-                int toCopy = mWidth * 3;
-
-                for ( int y = 0; y < mHeight; y++ )
-                {
-                    memcpy( dst - y * dstStride, pBuffer + y * srcStride, toCopy );
-                }
-                #else
-                if ( !mSSSE3supported )
-                {
-                    for ( int y = 0; y < mHeight; y++ )
+                    if ( ( !mImage ) || ( mImage->Width( ) != mWidth ) || ( mImage->Height( ) != mHeight ) )
                     {
-                        uint8_t* dstRow = dst - y * dstStride;
-                        uint8_t* srcRow = pBuffer + y * srcStride;
+                        mImage = XImage::Allocate( mWidth, mHeight, XPixelFormatRGB24 );
+                    }
 
-                        for ( int x = 0; x < mWidth; x++, dstRow += 3, srcRow += 3 )
+                    if ( mImage )
+                    {
+                        int      dstStride = mImage->Stride( );
+                        int      srcStride = bufferLen / mHeight;
+                        uint8_t* dst       = mImage->Data( ) + dstStride * ( mHeight - 1 );
+
+                        #ifdef PIXEL_FORMAT_BGRA
+                        int toCopy = mWidth * 3;
+
+                        for ( int y = 0; y < mHeight; y++ )
                         {
-                            dstRow[BlueIndex]  = srcRow[0];
-                            dstRow[GreenIndex] = srcRow[1];
-                            dstRow[RedIndex]   = srcRow[2];
+                            memcpy( dst - y * dstStride, pBuffer + y * srcStride, toCopy );
                         }
+                        #else
+                        if ( !mSSSE3supported )
+                        {
+                            for ( int y = 0; y < mHeight; y++ )
+                            {
+                                uint8_t* dstRow = dst - y * dstStride;
+                                uint8_t* srcRow = pBuffer + y * srcStride;
+
+                                for ( int x = 0; x < mWidth; x++, dstRow += 3, srcRow += 3 )
+                                {
+                                    dstRow[BlueIndex]  = srcRow[0];
+                                    dstRow[GreenIndex] = srcRow[1];
+                                    dstRow[RedIndex]   = srcRow[2];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            int packs = mWidth / 16;
+                            int rem   = mWidth % 16;
+
+                            __m128i swapIndeces_0      = _mm_set_epi8( -1, 12, 13, 14,  9, 10, 11,  6,  7,  8,  3,  4,  5,  0,  1,  2 );
+                            __m128i swapIndeces_1      = _mm_set_epi8( 15, -1, 11, 12, 13,  8,  9, 10,  5,  6,  7,  2,  3,  4, -1,  0 );
+                            __m128i swapIndeces_2      = _mm_set_epi8( 13, 14, 15, 10, 11, 12,  7,  8,  9,  4,  5,  6,  1,  2,  3, -1 );
+                            __m128i chunk0IndecesFrom1 = _mm_set_epi8(  1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 );
+                            __m128i chunk2IndecesFrom1 = _mm_set_epi8( -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 14 );
+                            __m128i chunk1IndecesFrom0 = _mm_set_epi8( -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 15, -1 );
+                            __m128i chunk1IndecesFrom2 = _mm_set_epi8( -1,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 );
+
+                            for ( int y = 0; y < mHeight; y++ )
+                            {
+                                uint8_t* dstRow = dst - y * dstStride;
+                                uint8_t* srcRow = pBuffer + y * srcStride;
+                                __m128i  chunk0, chunk1, chunk2;
+
+                                for ( int x = 0; x < packs; x++, srcRow += 48, dstRow += 48 )
+                                {
+                                    chunk0 = _mm_loadu_si128( (__m128i*) srcRow );
+                                    chunk1 = _mm_loadu_si128( (__m128i*) ( srcRow + 16 ) );
+                                    chunk2 = _mm_loadu_si128( (__m128i*) ( srcRow + 32 ) );
+
+                                    _mm_storeu_si128( (__m128i*) dstRow,
+                                        _mm_or_si128( _mm_shuffle_epi8( chunk0, swapIndeces_0 ),
+                                                      _mm_shuffle_epi8( chunk1, chunk0IndecesFrom1 ) ) );
+
+                                    _mm_storeu_si128( (__m128i*) ( dstRow + 16 ),
+                                        _mm_or_si128(
+                                        _mm_or_si128( _mm_shuffle_epi8( chunk1, swapIndeces_1 ),
+                                                      _mm_shuffle_epi8( chunk0, chunk1IndecesFrom0 ) ),
+                                                      _mm_shuffle_epi8( chunk2, chunk1IndecesFrom2 ) ) );
+
+                                    _mm_storeu_si128( (__m128i*) ( dstRow + 32 ),
+                                        _mm_or_si128( _mm_shuffle_epi8( chunk2, swapIndeces_2 ),
+                                                      _mm_shuffle_epi8( chunk1, chunk2IndecesFrom1 ) ) );
+                                }
+
+                                for ( int x = 0; x < rem; x++, dstRow += 3, srcRow += 3 )
+                                {
+                                    dstRow[BlueIndex]  = srcRow[0];
+                                    dstRow[GreenIndex] = srcRow[1];
+                                    dstRow[RedIndex]   = srcRow[2];
+                                }
+                            }
+                        }
+                        #endif
                     }
                 }
                 else
                 {
-                    int packs = mWidth / 16;
-                    int rem   = mWidth % 16;
+                    shared_ptr<XImage> srcImage = XImage::Create( pBuffer, bufferLen, 1, bufferLen, XPixelFormatJPEG );
 
-                    __m128i swapIndeces_0      = _mm_set_epi8( -1, 12, 13, 14,  9, 10, 11,  6,  7,  8,  3,  4,  5,  0,  1,  2 );
-                    __m128i swapIndeces_1      = _mm_set_epi8( 15, -1, 11, 12, 13,  8,  9, 10,  5,  6,  7,  2,  3,  4, -1,  0 );
-                    __m128i swapIndeces_2      = _mm_set_epi8( 13, 14, 15, 10, 11, 12,  7,  8,  9,  4,  5,  6,  1,  2,  3, -1 );
-                    __m128i chunk0IndecesFrom1 = _mm_set_epi8(  1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 );
-                    __m128i chunk2IndecesFrom1 = _mm_set_epi8( -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 14 );
-                    __m128i chunk1IndecesFrom0 = _mm_set_epi8( -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 15, -1 );
-                    __m128i chunk1IndecesFrom2 = _mm_set_epi8( -1,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 );
-
-                    for ( int y = 0; y < mHeight; y++ )
+                    if ( srcImage )
                     {
-                        uint8_t* dstRow = dst - y * dstStride;
-                        uint8_t* srcRow = pBuffer + y * srcStride;
-                        __m128i  chunk0, chunk1, chunk2;
-
-                        for ( int x = 0; x < packs; x++, srcRow += 48, dstRow += 48 )
-                        {
-                            chunk0 = _mm_loadu_si128( (__m128i*) srcRow );
-                            chunk1 = _mm_loadu_si128( (__m128i*) ( srcRow + 16 ) );
-                            chunk2 = _mm_loadu_si128( (__m128i*) ( srcRow + 32 ) );
-
-                            _mm_storeu_si128( (__m128i*) dstRow,
-                                _mm_or_si128( _mm_shuffle_epi8( chunk0, swapIndeces_0 ),
-                                              _mm_shuffle_epi8( chunk1, chunk0IndecesFrom1 ) ) );
-
-                            _mm_storeu_si128( (__m128i*) ( dstRow + 16 ),
-                                _mm_or_si128(
-                                _mm_or_si128( _mm_shuffle_epi8( chunk1, swapIndeces_1 ),
-                                              _mm_shuffle_epi8( chunk0, chunk1IndecesFrom0 ) ),
-                                              _mm_shuffle_epi8( chunk2, chunk1IndecesFrom2 ) ) );
-
-                            _mm_storeu_si128( (__m128i*) ( dstRow + 32 ),
-                                _mm_or_si128( _mm_shuffle_epi8( chunk2, swapIndeces_2 ),
-                                              _mm_shuffle_epi8( chunk1, chunk2IndecesFrom1 ) ) );
-                        }
-
-                        for ( int x = 0; x < rem; x++, dstRow += 3, srcRow += 3 )
-                        {
-                            dstRow[BlueIndex]  = srcRow[0];
-                            dstRow[GreenIndex] = srcRow[1];
-                            dstRow[RedIndex]   = srcRow[2];
-                        }
+                        srcImage->CopyDataOrClone( mImage );
                     }
                 }
-                #endif
 
                 mParent->Listener->OnNewImage( mImage );
             }
@@ -393,6 +414,26 @@ void XLocalVideoDevice::SetVideoInput( const XDevicePinInfo& input )
 {
     mData->VideoInput = input;
     mData->NeedToSetVideoInput = true;
+}
+
+// Get JPEG encoding preference
+bool XLocalVideoDevice::IsJpegEncodingPreferred( ) const
+{
+    return mData->JpegEncodingPreferred;
+}
+
+// Set JPEG encoding preference
+void XLocalVideoDevice::PreferJpegEncoding( bool prefer )
+{
+    mData->JpegEncodingPreferred = prefer;
+}
+
+// Check if running device was configured to provide JPEG images. Always returns
+// false for not running devices. NOTE: provided image pixel format already will indicate
+// this, but having extra property may be handy.
+bool XLocalVideoDevice::IsJpegEncodingEnabled( ) const
+{
+    return mData->JpegEncodingEnabled;
 }
 
 // Start video device (start its background thread which manages video acquisition)
@@ -838,11 +879,17 @@ void XLocalVideoDeviceData::RunVideo( bool run )
                     // get interface to check for events. don't care if it fails.
                     pFilterGraph->QueryInterface( IID_IMediaEventEx, (void**) &pMediaEventEx );
 
+                    // check if we need and can do JPEG encoding
+                    if ( JpegEncodingPreferred )
+                    {
+                        JpegEncodingEnabled = IsJpegEncodingAvailable( pSourceFilter );
+                    }
+
                     // set media type we want
                     memset( &mediaType, 0, sizeof( AM_MEDIA_TYPE ) );
 
                     mediaType.majortype  = MEDIATYPE_Video;
-                    mediaType.subtype    = MEDIASUBTYPE_RGB24;
+                    mediaType.subtype    = ( JpegEncodingEnabled ) ? MEDIASUBTYPE_MJPG : MEDIASUBTYPE_RGB24;;
                     mediaType.formattype = GUID_NULL;
                     mediaType.pbFormat   = nullptr;
                     mediaType.cbFormat   = 0;
@@ -1032,6 +1079,8 @@ void XLocalVideoDeviceData::RunVideo( bool run )
     {
         CoUninitialize( );
     }
+
+    JpegEncodingEnabled = false;
 }
 
 // Check if device is running
@@ -1591,6 +1640,50 @@ vector<XDeviceCapabilities> GetPinCapabilitiesAndConfigureIt( ICaptureGraphBuild
     }
 
     return capabilites;
+}
+
+// Check if filter provides output pin supporting MEDIASUBTYPE_MJPG media subtype
+bool IsJpegEncodingAvailable( IBaseFilter* pBaseFilter )
+{
+    bool       ret      = false;
+    IEnumPins* pPinEnum = nullptr;
+    IPin*      pPin     = nullptr;
+
+    if ( SUCCEEDED( pBaseFilter->EnumPins( &pPinEnum ) ) )
+    {
+        while ( SUCCEEDED( pPinEnum->Next( 1, &pPin, 0 ) ) && ( !ret ) )
+        {
+            PIN_DIRECTION pinDir;
+
+            if ( SUCCEEDED( pPin->QueryDirection( &pinDir ) ) && ( pinDir == PINDIR_OUTPUT ) )
+            {
+                // enum preferred media types of the pin
+                IEnumMediaTypes* pMediaEnum = nullptr;
+                AM_MEDIA_TYPE*   pmt        = nullptr;
+
+                if ( SUCCEEDED( pPin->EnumMediaTypes( &pMediaEnum ) ) )
+                {
+                    while ( SUCCEEDED( pMediaEnum->Next( 1, &pmt, NULL ) ) && ( !ret ) )
+                    {
+                        if ( ( pmt->majortype == MEDIATYPE_Video ) && ( pmt->subtype == MEDIASUBTYPE_MJPG ) )
+                        {
+                            ret = true;
+                        }
+
+                        DeleteMediaType( pmt );
+                    }
+
+                    pMediaEnum->Release( );
+                }
+            }
+
+            pPin->Release( );
+        }
+
+        pPinEnum->Release( );
+    }
+
+    return ret;
 }
 
 // Create filter described by the specified moniker string

@@ -1,7 +1,7 @@
 /*
     DirectShow video source library of Computer Vision Sandbox
 
-    Copyright (C) 2011-2019, cvsandbox
+    Copyright (C) 2011-2020, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -97,6 +97,14 @@ public:
     bool SetResolution( const XDeviceCapabilities& resolution, uint32_t requestedFps = 0 );
     // Set video input of the device
     void SetVideoInput( const XDevicePinInfo& input );
+
+    // Get/Set JPEG encoding preference. Not guaranteed as device/driver may not support it.
+    bool IsJpegEncodingPreferred( ) const;
+    void PreferJpegEncoding( bool prefer );
+    // Check if running device was configured to provide JPEG images. Always returns
+    // false for not running devices. NOTE: provided image pixel format already will indicate
+    // this, but having extra property may be handy.
+    bool IsJpegEncodingEnabled( ) const;
 
     // Get capabilities of the device (resolutions and frame rates)
     const std::vector<XDeviceCapabilities> GetCapabilities( );
