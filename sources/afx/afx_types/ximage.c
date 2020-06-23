@@ -41,7 +41,8 @@ static char* pixelFormatNames[] =
     "8bpp Indexed",
     "32bpp Grayscale",
     "64bpp Grayscale",
-    "R4 Grayscale"
+    "R4 Grayscale",
+    "JPEG encoded"
 };
 
 // Pixel format short names (suitable for serialization, scripting, etc.)
@@ -61,7 +62,8 @@ static char* pixelFormatShortNames[] =
     "Indexed8",
     "Gray32",
     "Gray64",
-    "GrayR4"
+    "GrayR4",
+    "JPEG"
 };
 
 // Supported image size names
@@ -76,7 +78,7 @@ static char* supportedImageSizeNames[] =
 // Returns number of bits required for pixel in certain format
 uint32_t XImageBitsPerPixel( XPixelFormat format )
 {
-    static int sizes[] = { 0, 8, 24, 32, 16, 48, 64, 1, 1, 2, 4, 8, 32, 64, sizeof( float ) * 8 };
+    static int sizes[] = { 0, 8, 24, 32, 16, 48, 64, 1, 1, 2, 4, 8, 32, 64, sizeof( float ) * 8, 8 };
 
     return ( format >= XARRAY_SIZE( sizes ) ) ? 0 : sizes[format];
 }
@@ -255,7 +257,12 @@ static XErrorCode XImageAllocate_Internal( int32_t width, int32_t height, XPixel
 
         if ( temp != 0 )
         {
-            if ( ( temp->width == width ) && ( temp->height == height ) && ( temp->format == format ) )
+            if ( ( temp->format == XPixelFormatJPEG ) && ( temp->height == height ) && ( temp->stride >= width ) )
+            {
+                // reuse the buffer as it is large enough
+                temp->width = width;
+            }
+            else if ( ( temp->width == width ) && ( temp->height == height ) && ( temp->format == format ) )
             {
                 // free palette if it was set - don't reuse it
                 XPaletteFree( &(*image)->palette );
@@ -360,7 +367,14 @@ XErrorCode XImageCopyData( const ximage* src, ximage* dst )
     {
         ret = ErrorNullParameter;
     }
-    else if ( ( src->width != dst->width ) || ( src->height != dst->height ) || ( src->format != dst->format ) )
+    // for JPEGs we just make sure there is enough space to copy the image data,
+    // but for all uncompressed formats we check for exact match of width/height
+    else if ( ( src->height != dst->height ) || ( src->format != dst->format ) )
+    {
+        ret = ErrorImageParametersMismatch;
+    }
+    else if ( ( ( src->format != XPixelFormatJPEG ) && ( src->width != dst->width ) ) ||
+              ( ( src->format != XPixelFormatJPEG ) && ( src->stride > dst->stride ) ) )
     {
         ret = ErrorImageParametersMismatch;
     }
@@ -396,7 +410,7 @@ XErrorCode XImageCopyData( const ximage* src, ximage* dst )
             bitsLeftToCopy = ( dst->width & 1 ) << 2;
         }
 
-        // calculate mask for pixels which donot fit a whole byte
+        // calculate mask for pixels which do not fit a whole byte
         if ( bitsLeftToCopy != 0 )
         {
             // reduce number of bytes copy with memcpy()
@@ -440,6 +454,12 @@ XErrorCode XImageCopyData( const ximage* src, ximage* dst )
         if ( ( src->format >= XPixelFormatIndexed1 ) && ( src->palette != 0 ) )
         {
             XPalleteClone( src->palette, &(dst->palette) );
+        }
+
+        // set correct size of destionation JPEG image
+        if ( src->format == XPixelFormatJPEG )
+        {
+            dst->width = src->width;
         }
     }
     return ret;

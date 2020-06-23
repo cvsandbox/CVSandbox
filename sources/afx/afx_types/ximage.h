@@ -72,6 +72,12 @@ enum
     XPixelFormatGrayscale64,    // 64 bpp grayscale (again used internally - squared integral images, etc)
     XPixelFormatGrayscaleR4,    // grayscale image, which has values in [0.0, 255.0] range represented as real numbers with 32 bit precision (float)
 
+    XPixelFormatJPEG,           // JPEG encoded image. Can not be used for any image processing. Just a wrapper around
+                                // memory buffer containing encoded image, which may come from a camera supporting JPEG encoding.
+                                // 
+                                // Width of an image is the size of JPEG encoded image. Height is always set to 1.
+                                // Stride is set to the size of allocated buffer.
+
     XPixelFormatLastValue       // Last value in the enum
 };
 typedef uint32_t XPixelFormat;
