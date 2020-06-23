@@ -8,7 +8,7 @@ OUT_SUB_FOLDER = cvsplugins\vs_dshow
 
 LIBDIR = -L../../../../../../build/$(TARGET)/$(BUILD_TYPE)/lib
 
-LDFLAGS += -shared
+LDFLAGS += -fopenmp -shared
 
 include ../../../../../make/settings/mingw/build_app.mk
 

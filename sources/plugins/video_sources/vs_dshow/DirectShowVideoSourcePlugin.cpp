@@ -1,7 +1,7 @@
 /*
     DirectShow video source plug-ins of Computer Vision Sandbox
 
-    Copyright (C) 2011-2019, cvsandbox
+    Copyright (C) 2011-2020, cvsandbox
     http://www.cvsandbox.com/contacts.html
 
     This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include <string.h>
 #include <XVariant.hpp>
 #include <algorithm>
+#include <ximaging_formats.h>
 
 using namespace std;
 using namespace CVSandbox;
@@ -55,12 +56,15 @@ namespace Private
     public:
         DirectShowVideoSourcePluginData( ) :
             UserCallbacks( { 0 } ), UserParam( 0 ),
-            HaveCachedExposure( false ), HaveCachedExposureAuto( false )
+            DecodedImage( nullptr ),
+            HaveCachedExposure( false ), HaveCachedExposureAuto( false ),
+            CachedExposure( 0 ), CachedExposureAuto( false )
         {
         }
 
         ~DirectShowVideoSourcePluginData( )
         {
+            XImageFree( &DecodedImage );
         }
 
         virtual void OnNewImage( const std::shared_ptr<const XImage>& image );
@@ -69,6 +73,7 @@ namespace Private
     public:
         VideoSourcePluginCallbacks  UserCallbacks;
         void*                       UserParam;
+        ximage*                     DecodedImage;
 
         bool    HaveCachedExposure;
         bool    HaveCachedExposureAuto;
@@ -201,7 +206,7 @@ XErrorCode DirectShowVideoSourcePlugin::SetProperty( int32_t id, const xvariant*
     case 0:
         if ( xvar.Type( ) == XVT_String )
         {
-            string      str         = xvar.ToString( &ret );
+            string      str        = xvar.ToString( &ret );
             XDeviceName deviceName = DeviceNameFromString( str );
 
             if ( !deviceName.Moniker( ).empty( ) )
@@ -509,6 +514,8 @@ XErrorCode DirectShowVideoSourcePlugin::Start( )
 {
     vector<XDevicePinInfo> inputs = mDevice->GetInputVideoPins( );
 
+    mDevice->PreferJpegEncoding( true );
+
     if ( ( !inputs.empty( ) ) && ( mVideoInput < static_cast<uint8_t>( inputs.size( ) ) ) )
     {
         mDevice->SetVideoInput( inputs[mVideoInput] );
@@ -577,15 +584,29 @@ namespace Private
 // Handle new image arrived from video source
 void DirectShowVideoSourcePluginData::OnNewImage( const std::shared_ptr<const XImage>& image )
 {
-    if ( ( UserCallbacks.NewImageCallback != 0 ) && ( image ) )
+    if ( ( UserCallbacks.NewImageCallback != nullptr ) && ( image ) )
     {
-        UserCallbacks.NewImageCallback( UserParam, image->ImageData( ) );
+        if ( image->Format( ) != XPixelFormatJPEG )
+        {
+            UserCallbacks.NewImageCallback( UserParam, image->ImageData( ) );
+        }
+        else
+        {
+            if ( XDecodeJpegFromMemory( image->ImageData( )->data, image->ImageData( )->width, &DecodedImage ) == SuccessCode )
+            {
+                UserCallbacks.NewImageCallback( UserParam, DecodedImage );
+            }
+            else
+            {
+                OnError( "Failed decoding JPEG image" );
+            }
+        }
     }
 }
 
 void DirectShowVideoSourcePluginData::OnError( const std::string& errorMessage )
 {
-    if ( UserCallbacks.ErrorMessageCallback != 0 )
+    if ( UserCallbacks.ErrorMessageCallback != nullptr )
     {
         UserCallbacks.ErrorMessageCallback( UserParam, errorMessage.c_str( ) );
     }

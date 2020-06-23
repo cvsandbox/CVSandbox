@@ -106,7 +106,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VS_DSHOW_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_imaging_formats;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
@@ -114,7 +114,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug\bin\cvsplugins\$(ProjectName)\"
@@ -128,7 +128,7 @@ xcopy /Y "$(ProjectDir)..\..\*.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\d
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VS_DSHOW_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_imaging_formats;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
@@ -136,7 +136,7 @@ xcopy /Y "$(ProjectDir)..\..\*.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\d
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\debug64\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\debug64\bin\cvsplugins\$(ProjectName)\"
@@ -152,7 +152,7 @@ xcopy /Y "$(ProjectDir)..\..\*.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\d
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VS_DSHOW_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_imaging_formats;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -161,7 +161,7 @@ xcopy /Y "$(ProjectDir)..\..\*.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\d
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\release\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release\bin\cvsplugins\$(ProjectName)\"
@@ -177,7 +177,7 @@ xcopy /Y "$(ProjectDir)..\..\*.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\r
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VS_DSHOW_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\afx\afx_types;..\..\..\..\..\afx\afx_types+;..\..\..\..\..\afx\afx_imaging_formats;..\..\..\..\..\afx\afx_video+;..\..\..\..\..\afx\video\afx_video_dshow+;..\..\..\..\..\core\iplugin;..\..\..\..\..\images</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -186,7 +186,7 @@ xcopy /Y "$(ProjectDir)..\..\*.txt" "$(ProjectDir)..\..\..\..\..\..\build\msvc\r
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\..\..\..\..\build\msvc\release64\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;iplugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>afx_types.lib;afx_types+.lib;afx_video+.lib;afx_video_dshow+.lib;afx_platform+.lib;afx_imaging_formats.lib;iplugin.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(TargetPath)" "$(ProjectDir)..\..\..\..\..\..\build\msvc\release64\bin\cvsplugins\$(ProjectName)\"
